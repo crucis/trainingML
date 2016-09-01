@@ -1,5 +1,6 @@
 from keras.models import Sequential
 from keras.layers import Dense
+#import math
 import numpy
 
 # fix random seed for reproducibility
@@ -35,6 +36,8 @@ model.fit(X,Y, nb_epoch=150, batch_size=10, validation_data=(X_test,Y_test))
 
 # evaluate the model
 scores = model.evaluate(X, Y)
+scores2 = model.evaluate(X_test, Y_test)
 print("\n%s: %.2f%%" % (model.metrics_names[1],scores[1]*100))
+#print("\nval-acc: %.2f%%" % scores2[1]*100)
 
 
