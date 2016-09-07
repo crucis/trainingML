@@ -1,5 +1,5 @@
 #Ver overfitting: criar uma FC com duas camadas (Dense, Act, Dense, Act). Testar [10, 100, 1000, 10000] neuronios ocultos, treinando por algumas epochs. Para cada uma das 4 redes, plotar a trainAcc e validAcc de acordo com a epoch.
-
+m
 import keras
 from keras.models import Sequential
 from keras.layers import Dense
@@ -82,6 +82,7 @@ for i in hidden_nodes:
 		valacc = numpy.vstack([valacc,history.history['val_acc']])
 	j+=1
 # Plot	
+print("----------------------------------")
 print("Now plotting")
 for h in range(0, len(hidden_nodes)):
 	print(h)
