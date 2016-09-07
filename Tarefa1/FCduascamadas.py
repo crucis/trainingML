@@ -74,7 +74,6 @@ for i in hidden_nodes:
 	results = cross_val_score(estimator,X,dummy_y,cv=kfold)
 	#The results are summarized as both the mean and standard deviation of the model accuracy on the dataset. This is a reasonable estimation of the performance of the model on unseen data.
 	print("Baseline:%.2f%%(%.2f%%)" %(results.mean()*100,results.std()*100))
-	print(estimator.estimator.keys())
 	# Show time elapsed
 	print("elapsed time = %.2f s"%(time.time()-start_time))
 
