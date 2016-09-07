@@ -1,12 +1,8 @@
 #Ver overfitting: criar uma FC com duas camadas (Dense, Act, Dense, Act). Testar [10, 100, 1000, 10000] neuronios ocultos, treinando por algumas epochs. Para cada uma das 4 redes, plotar a trainAcc e validAcc de acordo com a epoch.
-m
 import keras
 from keras.models import Sequential
 from keras.layers import Dense
-from keras.wrappers.scikit_learn import KerasClassifier
 from keras.utils import np_utils
-from sklearn.cross_validation import cross_val_score
-from sklearn.cross_validation import KFold
 from sklearn.preprocessing import LabelEncoder
 from sklearn.pipeline import Pipeline
 import matplotlib.pyplot as plt
@@ -27,8 +23,7 @@ VALIDATIONPERC = 0.15
 
 hidden_nodes = [10,100,1000,10000] # Vector with hidden_nodes on second layer
 j = 0 # Used to count
-#acc = numpy.zeros(len(hidden_nodes)) # Used to store acc
-#valacc = numpy.zeros(len(hidden_nodes)) # Used to store val_acc
+
 
 ########################
 
@@ -85,7 +80,6 @@ for i in hidden_nodes:
 print("----------------------------------")
 print("Now plotting")
 for h in range(0, len(hidden_nodes)):
-	print(h)
 	plt.plot(acc[h,:])
 	plt.plot(valacc[h,:])
 	titlestr = "model accuracy for "+str(hidden_nodes[h])+" hidden nodes"
