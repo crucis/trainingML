@@ -1,3 +1,4 @@
+import keras
 from keras.models import Sequential
 from keras.layers import Dense
 #import math
@@ -32,7 +33,7 @@ model.add(Dense(1,init='uniform', activation='sigmoid'))
 model.compile(loss='binary_crossentropy',optimizer='adam',metrics=['accuracy'])
 
 # Fit the model
-model.fit(X,Y, nb_epoch=150, batch_size=10, validation_data=(X_test,Y_test))
+model.fit(X,Y, nb_epoch=150, batch_size=128, validation_data=(X_test,Y_test))
 
 # evaluate the model
 scores = model.evaluate(X, Y)
