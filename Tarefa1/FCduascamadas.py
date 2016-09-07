@@ -9,12 +9,13 @@ from sklearn.cross_validation import cross_val_score
 from sklearn.cross_validation import KFold
 from sklearn.preprocessing import LabelEncoder
 from sklearn.pipeline import Pipeline
+import matplotlib.pyplot as plt
 import numpy
 import pandas
 import time
 
 
-#CONSTANTS
+#CONSTANTS and VARIABLES
 
 # fix random seed for reproducibility
 SEED = 7
@@ -23,6 +24,11 @@ TRAININGPOINTSPERCENTAGE = 1
 BATCHSIZE = 5
 EPOCH = 200
 VALIDATIONPERC = 0.15
+
+hidden_nodes = [10,100,1000,10000] # Vector with hidden_nodes on second layer
+j = 0 # Used to count
+#acc = numpy.zeros(len(hidden_nodes)) # Used to store acc
+#valacc = numpy.zeros(len(hidden_nodes)) # Used to store val_acc
 
 ########################
 
@@ -40,10 +46,10 @@ encoded_Y = encoder.transform(Y)
 # convert integers to dummy variables (i.e. one hot encoded)
 dummy_y = np_utils.to_categorical(encoded_Y)
 
-# Vector with hidden_nodes on second layer
-hidden_nodes = [10,100,1000,10000]
+
 print("----------------------------------")
 print("Using Batch =",BATCHSIZE ,"Epoch = ",EPOCH, "Validation_split = ",VALIDATIONPERC)
+
 
 # Create len(hidden_nodes) neural networks
 for i in hidden_nodes:
@@ -67,6 +73,25 @@ for i in hidden_nodes:
 	print("val_acc = %.4f"%history.history["val_acc"][EPOCH-1]," acc = %.4f"%history.history["acc"][EPOCH-1])		
 	# Show time elapsed
 	print("Elapsed time = %.2f s"%(time.time()-start_time))
-
+	# Storing history
+	if (j == 0):
+		acc = numpy.array(history.history['acc'])
+		valacc = numpy.array(history.history['val_acc'])
+	else:
+		acc = numpy.vstack([acc,history.history['acc']])
+		valacc = numpy.vstack([valacc,history.history['val_acc']])
+	j+=1
+# Plot	
+print("Now plotting")
+for h in range(0, len(hidden_nodes)):
+	print(h)
+	plt.plot(acc[h,:])
+	plt.plot(valacc[h,:])
+	titlestr = "model accuracy for "+str(hidden_nodes[h])+" hidden nodes"
+	plt.title(titlestr)
+	plt.ylabel('accuracy')
+	plt.xlabel('epoch')
+	plt.legend(['train', 'test'], loc='lower right')
+	plt.show()
 
 # eof
