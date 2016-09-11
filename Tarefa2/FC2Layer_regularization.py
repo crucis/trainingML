@@ -13,18 +13,13 @@ import time
 
 #CONSTANTS and VARIABLES
 
-# Graphs options
-SHOW_GRAPHS = 0;
-SAVE_GRAPHS = 1;
-
 # fix random seed for reproducibility
 SEED = 7
 numpy.random.seed(SEED)
 TRAININGPOINTSPERCENTAGE = 1
-BATCHSIZE = 32
-EPOCH = 1000
+BATCHSIZE = 5
+EPOCH = 200
 VALIDATIONPERC = 0.15
-
 
 hidden_nodes = [10,100,1000,10000] # Vector with hidden_nodes on second layer
 j = 0 # Used to count
@@ -76,46 +71,22 @@ for i in hidden_nodes:
 	# Storing history
 	if (j == 0):
 		acc = numpy.array(history.history['acc'])
-		val_acc = numpy.array(history.history['val_acc'])
-		loss = numpy.array(history.history['loss'])
-		val_loss = numpy.array(history.history['val_loss'])
+		valacc = numpy.array(history.history['val_acc'])
 	else:
 		acc = numpy.vstack([acc,history.history['acc']])
-		val_acc = numpy.vstack([val_acc,history.history['val_acc']])
-		loss = numpy.vstack([loss,history.history['loss']])
-		val_loss = numpy.vstack([val_loss,history.history['val_loss']])
+		valacc = numpy.vstack([valacc,history.history['val_acc']])
 	j+=1
 # Plot	
 print("----------------------------------")
 print("Now plotting")
-#Plot Loss
-for h in range(0, len(hidden_nodes)):
-	plt.plot(loss[h,:])
-	plt.plot(val_loss[h,:])
-	titlestr = "model loss for "+str(hidden_nodes[h])+" hidden nodes"
-	plt.title(titlestr)
-	plt.ylabel('loss')
-	plt.xlabel('epoch')
-	plt.legend(['train', 'test'], loc='lower right')
-	if SHOW_GRAPHS == 1:
-		plt.show()
-	if SAVE_GRAPHS == 1:
-		figurestr = "results/"+str(hidden_nodes[h])+"hiddenNodes_acc.png"
-		plt.savefig(figurestr)
-	plt.clf()
-#Plot acc
 for h in range(0, len(hidden_nodes)):
 	plt.plot(acc[h,:])
-	plt.plot(val_acc[h,:])
-	titlestr = "model acc for "+str(hidden_nodes[h])+" hidden nodes"
+	plt.plot(valacc[h,:])
+	titlestr = "model accuracy for "+str(hidden_nodes[h])+" hidden nodes"
 	plt.title(titlestr)
-	plt.ylabel('acc')
+	plt.ylabel('accuracy')
 	plt.xlabel('epoch')
 	plt.legend(['train', 'test'], loc='lower right')
-	if SHOW_GRAPHS == 1:
-		plt.show()
-	if SAVE_GRAPHS == 1:
-		figurestr = "results/"+str(hidden_nodes[h])+"hiddenNodes_loss.png"
-		plt.savefig(figurestr)
-	plt.clf()
+	plt.show()
+
 # eof
