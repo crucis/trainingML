@@ -39,7 +39,7 @@ VALIDATIONPERC = 0.15
 l1Reg = 0.001
 l2Reg = 0.001
 dropout = 0.2
-hidden_nodes = [10,100,1000,10000] # Vector with hidden_nodes[h] on second layer
+hidden_nodes = [1000] # Vector with hidden_nodes on second layer use [x1, x2, x3, ..., xn]
 
 ########################
 #FUNCTIONS
@@ -84,7 +84,7 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 ########################
 
 #load iris dataset
-dataframe = pandas.read_csv("iris.csv",header=None)
+dataframe = pandas.read_csv("dataset/iris.csv",header=None)
 dataset = dataframe.values
 # training data
 X = dataset[:,0:4].astype(float)
