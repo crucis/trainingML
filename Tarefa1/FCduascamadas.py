@@ -100,7 +100,7 @@ for h in range(0, len(hidden_nodes)):
 	if SHOW_GRAPHS == 1:
 		plt.show()
 	if SAVE_GRAPHS == 1:
-		figurestr = "results/"+str(hidden_nodes[h])+"hiddenNodes_acc.png"
+		figurestr = "results/"+str(hidden_nodes[h])+"hiddenNodes_loss.png"
 		plt.savefig(figurestr)
 	plt.clf()
 #Plot acc
@@ -115,7 +115,7 @@ for h in range(0, len(hidden_nodes)):
 	if SHOW_GRAPHS == 1:
 		plt.show()
 	if SAVE_GRAPHS == 1:
-		figurestr = "results/"+str(hidden_nodes[h])+"hiddenNodes_loss.png"
+		figurestr = "results/"+str(hidden_nodes[h])+"hiddenNodes_acc.png"
 		plt.savefig(figurestr)
 	plt.clf()
 # eof
