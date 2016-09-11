@@ -19,7 +19,7 @@ import time
 ########################
 
 # Graphs options
-SHOW_GRAPHS = 1
+SHOW_GRAPHS = 0
 SAVE_GRAPHS = 1
 SHOW_LOSS = 1
 SHOW_ACC = 1
@@ -59,7 +59,7 @@ def plotGraph (filename, nodes, vec1, vec2, nameVec):
 	if SHOW_GRAPHS == 1:
 		plt.show()
 	if SAVE_GRAPHS == 1:
-		figurestr = "results/"+filename+"hiddenNodes_"+nameVec+".png"
+		figurestr = "results/"+filename+"_"+nameVec+".png"
 		plt.savefig(figurestr)
 	plt.clf()
 
