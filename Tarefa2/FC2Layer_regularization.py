@@ -39,7 +39,7 @@ VALIDATIONPERC = 0.15
 l1Reg = 0.001
 l2Reg = 0.001
 dropout = 0.2
-hidden_nodes = [1000] # Vector with hidden_nodes on second layer use [x1, x2, x3, ..., xn]
+hidden_nodes = [10, 100, 1000, 10000] # Vector with hidden_nodes on second layer use [x1, x2, x3, ..., xn]
 
 ########################
 #FUNCTIONS
@@ -118,17 +118,22 @@ for h in range(0, len(hidden_nodes)):
 		# creates layer with hidden_nodes nodes and chooses which regularization it will use
 		if i == 0:
 			model.add(Dense(hidden_nodes[h], input_dim=4, init='normal', activation='relu', W_regularizer = l1(l1Reg)))
+			# output layer
+			model.add(Dense(3, init='normal', activation='softmax', W_regularizer = l1(l1Reg)))
 			regStr = "L1_Regularization="+str(l1Reg)
 		elif i == 1:
 			model.add(Dense(hidden_nodes[h], input_dim=4, init='normal', activation='relu', W_regularizer = l2(l2Reg)))
 			regStr = "L2_Regularization="+str(l2Reg)
+			# output layer
+			model.add(Dense(3, init='normal', activation='softmax', W_regularizer = l2(l2Reg)))
 		else:
 			model.add(Dense(hidden_nodes[h], input_dim=4, init='normal', activation='relu'))
 			model.add(Dropout(dropout))
+			# output layer
+			model.add(Dense(3, init='normal', activation='softmax'))
 			regStr = "Dropout="+str(dropout)
 		print("Added",regStr)
-		# output layer
-		model.add(Dense(3, init='normal', activation='softmax'))
+
 		# Compile model
 		model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
