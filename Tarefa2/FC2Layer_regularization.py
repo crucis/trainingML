@@ -1,8 +1,11 @@
-#Ver overfitting: criar uma FC com duas camadas (Dense, Act, Dense, Act). Testar [10, 100, 1000, 10000] neuronios ocultos, treinando por algumas epochs. Para cada uma das 4 redes, plotar a trainAcc e validAcc de acordo com a epoch.
+#Aprender regularizacao: estudar regularizacao (no livro ou na internet), principalmente regularizacao L1, L2 e tecnica Dropout. Com 2 camadas e 1000 neuronios ocultos, criar redes com L1 = 0.001, L2 = 0.001 e dropout = 0.2 (total de 3 redes, cada tecnica individual em uma).Plotar trainAcc e validAcc para cada, de acordo com a epoch. 
 import keras
 from keras.models import Sequential
 from keras.layers import Dense
+from keras.layers import Dropout
 from keras.utils import np_utils
+from keras.regularizers import l2
+from keras.regularizers import l1
 from sklearn.preprocessing import LabelEncoder
 from sklearn.pipeline import Pipeline
 import matplotlib.pyplot as plt
@@ -11,20 +14,57 @@ import pandas
 import time
 
 
+########################
 #CONSTANTS and VARIABLES
+########################
+
+# Graphs options
+SHOW_GRAPHS = 1
+SAVE_GRAPHS = 1
+SHOW_LOSS = 1
+SHOW_ACC = 1
 
 # fix random seed for reproducibility
 SEED = 7
 numpy.random.seed(SEED)
 TRAININGPOINTSPERCENTAGE = 1
-BATCHSIZE = 5
-EPOCH = 200
+
+# Training Options
+BATCHSIZE = 32
+EPOCH = 1000
 VALIDATIONPERC = 0.15
 
-hidden_nodes = [10,100,1000,10000] # Vector with hidden_nodes on second layer
-j = 0 # Used to count
+# Model Options
+l1Reg = 0.001
+l2Reg = 0.001
+dropout = 0.2
+hidden_nodes = 1000 # Vector with hidden_nodes on second layer
 
+########################
+#FUNCTIONS
+########################
 
+# defining function to display and/or save graphs
+def plotGraph (filename, nodes, vec1, vec2, nameVec):
+	# Plot	
+	print("--Now plotting ",nameVec,"--")
+	#Plot Loss
+	plt.plot(vec1)
+	plt.plot(vec2)
+	titlestr = nameVec+" for "+str(nodes)+" hidden nodes with "+filename
+	plt.title(titlestr)
+	plt.ylabel(nameVec)
+	plt.xlabel('epoch')
+	plt.legend(['train', 'test'], loc='lower right')
+	if SHOW_GRAPHS == 1:
+		plt.show()
+	if SAVE_GRAPHS == 1:
+		figurestr = "results/"+filename+"hiddenNodes_"+nameVec+".png"
+		plt.savefig(figurestr)
+	plt.clf()
+
+########################
+#PROGRAM
 ########################
 
 #load iris dataset
@@ -46,47 +86,51 @@ print("----------------------------------")
 print("Using Batch =",BATCHSIZE ,"Epoch = ",EPOCH, "Validation_split = ",VALIDATIONPERC)
 
 
-# Create len(hidden_nodes) neural networks
-for i in hidden_nodes:
+# Create 3 neural networks, each with different regularization methods
+for i in range (0,3):
 	# time measure
 	start_time = time.time()
+
+	########################
 	# Model
 	print("----------------------------------")
-	print("Creating model with hidden_nodes =",i)
+	print("Creating model with hidden_nodes =",hidden_nodes)
 	# create model
-	def baseline_model():
-		model = Sequential()
-		# layer with i nodes
-		model.add(Dense(i, input_dim=4, init='normal', activation='relu'))
-		# output layer
-		model.add(Dense(3, init='normal', activation='softmax'))
-		# Compile model
-		model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-		return model
+
+	model = Sequential()
+	# layer with hidden_nodes nodes
+	if i == 0:
+		model.add(Dense(hidden_nodes, input_dim=4, init='normal', activation='relu', W_regularizer = l1(l1Reg)))
+		regStr = "L1_Regularization="+str(l1Reg)
+	elif i == 1:
+		model.add(Dense(hidden_nodes, input_dim=4, init='normal', activation='relu', W_regularizer = l2(l2Reg)))
+		regStr = "L2_Regularization="+str(l2Reg)
+	else:
+		model.add(Dense(hidden_nodes, input_dim=4, init='normal', activation='relu'))
+		model.add(Dropout(dropout))
+		regStr = "Dropout="+str(dropout)
+	print("Added",regStr)
+	# output layer
+	model.add(Dense(3, init='normal', activation='softmax'))
+	# Compile model
+	model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
 	# Fit model	
-	history = baseline_model().fit(X,dummy_y,validation_split=VALIDATIONPERC,nb_epoch=EPOCH,batch_size=BATCHSIZE,verbose=0)
-	print("val_acc = %.4f"%history.history["val_acc"][EPOCH-1]," acc = %.4f"%history.history["acc"][EPOCH-1])		
+	history = model.fit(X,dummy_y,validation_split=VALIDATIONPERC,nb_epoch=EPOCH,batch_size=BATCHSIZE,verbose=0)
+	print("val_acc = %.4f"%history.history["val_acc"][EPOCH-1]," acc = %.4f"%history.history["acc"][EPOCH-1])	
+	print("val_loss = %.4f"%history.history["val_loss"][EPOCH-1]," loss = %.4f"%history.history["loss"][EPOCH-1])	
 	# Show time elapsed
 	print("Elapsed time = %.2f s"%(time.time()-start_time))
 	# Storing history
-	if (j == 0):
-		acc = numpy.array(history.history['acc'])
-		valacc = numpy.array(history.history['val_acc'])
-	else:
-		acc = numpy.vstack([acc,history.history['acc']])
-		valacc = numpy.vstack([valacc,history.history['val_acc']])
-	j+=1
-# Plot	
-print("----------------------------------")
-print("Now plotting")
-for h in range(0, len(hidden_nodes)):
-	plt.plot(acc[h,:])
-	plt.plot(valacc[h,:])
-	titlestr = "model accuracy for "+str(hidden_nodes[h])+" hidden nodes"
-	plt.title(titlestr)
-	plt.ylabel('accuracy')
-	plt.xlabel('epoch')
-	plt.legend(['train', 'test'], loc='lower right')
-	plt.show()
+	acc = numpy.array(history.history['acc'])
+	val_acc = numpy.array(history.history['val_acc'])
+	loss = numpy.array(history.history['loss'])
+	val_loss = numpy.array(history.history['val_loss'])
+	# Plotting
+	if SHOW_ACC == 1:
+		plotGraph(regStr,nodes=hidden_nodes, vec1=acc, vec2=val_acc, nameVec="acc")
+	if SHOW_LOSS == 1:
+		plotGraph(regStr,nodes=hidden_nodes, vec1=loss, vec2=val_loss, nameVec="loss")
 
+print("----------------------------------")
 # eof
