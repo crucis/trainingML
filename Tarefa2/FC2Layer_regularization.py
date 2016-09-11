@@ -19,7 +19,7 @@ import time
 ########################
 
 # Graphs options
-SHOW_GRAPHS = 0
+SHOW_GRAPHS = 1
 SAVE_GRAPHS = 1
 SHOW_LOSS = 1
 SHOW_ACC = 1
@@ -45,22 +45,22 @@ hidden_nodes = 1000 # Vector with hidden_nodes on second layer
 ########################
 
 # defining function to display and/or save graphs
-def plotGraph (filename, nodes, vec1, vec2, nameVec):
+def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 	# Plot	
 	print("--Now plotting ",nameVec,"--")
 	#Plot Loss
-	plt.plot(vec1)
-	plt.plot(vec2)
+	plt.plot(vecTrain)
+	plt.plot(vecTest)
 	titlestr = nameVec+" for "+str(nodes)+" hidden nodes with "+filename
 	plt.title(titlestr)
 	plt.ylabel(nameVec)
 	plt.xlabel('epoch')
 	plt.legend(['train', 'test'], loc='lower right')
-	if SHOW_GRAPHS == 1:
-		plt.show()
 	if SAVE_GRAPHS == 1:
 		figurestr = "results/"+filename+"_"+nameVec+".png"
 		plt.savefig(figurestr)
+	if SHOW_GRAPHS == 1:
+		plt.show()
 	plt.clf()
 
 ########################
@@ -128,9 +128,9 @@ for i in range (0,3):
 	val_loss = numpy.array(history.history['val_loss'])
 	# Plotting
 	if SHOW_ACC == 1:
-		plotGraph(regStr,nodes=hidden_nodes, vec1=acc, vec2=val_acc, nameVec="acc")
+		plotGraph(regStr,nodes=hidden_nodes, vecTrain=acc, vecTest=val_acc, nameVec="acc")
 	if SHOW_LOSS == 1:
-		plotGraph(regStr,nodes=hidden_nodes, vec1=loss, vec2=val_loss, nameVec="loss")
+		plotGraph(regStr,nodes=hidden_nodes, vecTrain=loss, vecTest=val_loss, nameVec="loss")
 
 print("----------------------------------")
 # eof
