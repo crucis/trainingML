@@ -17,8 +17,8 @@ import time
 SEED = 7
 numpy.random.seed(SEED)
 TRAININGPOINTSPERCENTAGE = 1
-BATCHSIZE = 5
-EPOCH = 200
+BATCHSIZE = 32
+EPOCH = 1000
 VALIDATIONPERC = 0.15
 
 hidden_nodes = [10,100,1000,10000] # Vector with hidden_nodes on second layer
@@ -70,21 +70,21 @@ for i in hidden_nodes:
 	print("Elapsed time = %.2f s"%(time.time()-start_time))
 	# Storing history
 	if (j == 0):
-		acc = numpy.array(history.history['acc'])
-		valacc = numpy.array(history.history['val_acc'])
+		loss = numpy.array(history.history['loss'])
+		val_loss = numpy.array(history.history['val_loss'])
 	else:
-		acc = numpy.vstack([acc,history.history['acc']])
-		valacc = numpy.vstack([valacc,history.history['val_acc']])
+		loss = numpy.vstack([loss,history.history['loss']])
+		val_loss = numpy.vstack([val_loss,history.history['val_loss']])
 	j+=1
 # Plot	
 print("----------------------------------")
 print("Now plotting")
 for h in range(0, len(hidden_nodes)):
-	plt.plot(acc[h,:])
-	plt.plot(valacc[h,:])
-	titlestr = "model accuracy for "+str(hidden_nodes[h])+" hidden nodes"
+	plt.plot(loss[h,:])
+	plt.plot(val_loss[h,:])
+	titlestr = "model loss for "+str(hidden_nodes[h])+" hidden nodes"
 	plt.title(titlestr)
-	plt.ylabel('accuracy')
+	plt.ylabel('loss')
 	plt.xlabel('epoch')
 	plt.legend(['train', 'test'], loc='lower right')
 	plt.show()
