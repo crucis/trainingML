@@ -35,9 +35,9 @@ EPOCH = 10000
 VALIDATIONPERC = 0.15
 
 # Model Options
-l1Reg = 0.01
-l2Reg = 0.001
-dropout = 0.8
+l1Reg = 0.03 # 0.01>87%
+l2Reg = 0.04 # works with 0.001
+dropout = 0.97
 hidden_nodes = [1000] # Vector with hidden_nodes on second layer use [x1, x2, x3, ..., xn]
 
 ########################
@@ -70,7 +70,7 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 	plt.xlabel('epoch')
 	plt.legend(['train', 'test'], loc='lower right')
 	if SAVE_GRAPHS == 1:
-		output_dir="results/"+str(nodes)+"nodes"
+		output_dir="results/"+str(nodes)+"nodes/"+str(EPOCH)+"Epoch"
 		mkdir_p(output_dir) # Verifies if directory exists, and creates it if necessary
 		figurestr = output_dir+"/"+filename+"_"+nameVec+".png"
 		plt.savefig(figurestr)
