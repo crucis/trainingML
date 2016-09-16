@@ -1,4 +1,4 @@
-##Aprender a utilizar regularizacao: criar uma FC com 2 camadas, numero de neuronios ocultos a sua escolha. Utilizar a regularizacao que quiser (pode usar mais de uma ao mesmo tempo). Tentar maximizar valAcc 
+#Ver underfitting (breve): criar uma FC com 1000 neuronios ocultos. Para as tecnicas L1, L2 e Dropout, aumentar a regularizacao ate gerar underfitting. Gerar grafico eh opcional.
 
 import keras
 from keras.models import Sequential
