@@ -38,7 +38,7 @@ VALIDATIONPERC = 0.15
 # Model Options
 l1Reg = 0.001
 l2Reg = 0.001
-dropout = 0.4
+dropout = 0.8
 hidden_nodes = [1000] # Vector with hidden_nodes on second layer use [x1, x2, x3, ..., xn]
 
 ########################
@@ -86,9 +86,15 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 #load iris dataset
 dataframe = pandas.read_csv("dataset/iris.csv",header=None)
 dataset = dataframe.values
+numberOfPoints = len(dataset)
+trainPoints = int(numberOfPoints*VALIDATIONPERC)
 # training data
-X = dataset[:,0:4].astype(float)
-Y = dataset[:,4]
+X = dataset[:trainPoints,0:4].astype(float)
+Y = dataset[:trainPoints,4]
+# test data
+X_test = dataset[trainPoints:,0:4]
+Y_test = dataset[trainPoints:,4]
+
 
 # encode class values as integers
 encoder = LabelEncoder()
@@ -96,7 +102,13 @@ encoder.fit(Y)
 encoded_Y = encoder.transform(Y)
 # convert integers to dummy variables (i.e. one hot encoded)
 dummy_y = np_utils.to_categorical(encoded_Y)
-
+print("dummy_y.shape=",dummy_y.shape)
+# encode class values as integers
+encoder.fit(Y_test)
+encoded_Y_test = encoder.transform(Y_test)
+# convert integers to dummy variables (i.e. one hot encoded)
+dummy_y_test = np_utils.to_categorical(encoded_Y_test)
+print("dummy_y_test.shape=",dummy_y_test.shape)
 
 print("----------------------------------")
 print("Using Batch =",BATCHSIZE ,"Epoch = ",EPOCH, "Validation_split = ",VALIDATIONPERC)
@@ -138,7 +150,7 @@ for h in range(0, len(hidden_nodes)):
 		model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 		# Fit model	
-		history = model.fit(X,dummy_y,validation_split=VALIDATIONPERC,nb_epoch=EPOCH,batch_size=BATCHSIZE,verbose=0)
+		history = model.fit(X,dummy_y,validation_data=(X_test,dummy_y_test),nb_epoch=EPOCH,batch_size=BATCHSIZE,verbose=0)
 		print("val_acc = %.4f"%history.history["val_acc"][EPOCH-1]," acc = %.4f"%history.history["acc"][EPOCH-1])	
 		print("val_loss = %.4f"%history.history["val_loss"][EPOCH-1]," loss = %.4f"%history.history["loss"][EPOCH-1])	
 		# Show time elapsed
