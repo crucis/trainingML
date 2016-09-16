@@ -28,15 +28,14 @@ SHOW_ACC = 1
 # fix random seed for reproducibility
 SEED = 7
 numpy.random.seed(SEED)
-TRAININGPOINTSPERCENTAGE = 1
 
 # Training Options
 BATCHSIZE = 32
-EPOCH = 1000
+EPOCH = 10000
 VALIDATIONPERC = 0.15
 
 # Model Options
-l1Reg = 0.001
+l1Reg = 0.01
 l2Reg = 0.001
 dropout = 0.8
 hidden_nodes = [1000] # Vector with hidden_nodes on second layer use [x1, x2, x3, ..., xn]
@@ -87,13 +86,13 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 dataframe = pandas.read_csv("dataset/iris.csv",header=None)
 dataset = dataframe.values
 numberOfPoints = len(dataset)
-trainPoints = int(numberOfPoints*VALIDATIONPERC)
+trainPoints = int(numberOfPoints*(1-VALIDATIONPERC))
 # training data
 X = dataset[:trainPoints,0:4].astype(float)
-Y = dataset[:trainPoints,4]
+Y = dataset[:,4]
+
 # test data
-X_test = dataset[trainPoints:,0:4]
-Y_test = dataset[trainPoints:,4]
+X_test = dataset[trainPoints:,0:4].astype(float)
 
 
 # encode class values as integers
@@ -102,13 +101,8 @@ encoder.fit(Y)
 encoded_Y = encoder.transform(Y)
 # convert integers to dummy variables (i.e. one hot encoded)
 dummy_y = np_utils.to_categorical(encoded_Y)
-print("dummy_y.shape=",dummy_y.shape)
-# encode class values as integers
-encoder.fit(Y_test)
-encoded_Y_test = encoder.transform(Y_test)
-# convert integers to dummy variables (i.e. one hot encoded)
-dummy_y_test = np_utils.to_categorical(encoded_Y_test)
-print("dummy_y_test.shape=",dummy_y_test.shape)
+dummy_y_test = dummy_y[trainPoints:,:]
+dummy_y = dummy_y[:trainPoints,:]
 
 print("----------------------------------")
 print("Using Batch =",BATCHSIZE ,"Epoch = ",EPOCH, "Validation_split = ",VALIDATIONPERC)
