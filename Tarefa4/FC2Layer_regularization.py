@@ -36,7 +36,7 @@ VALIDATIONPERC = 0.15
 
 # Model Options
 l1Reg = 0.008 # 0.008>91%
-l2Reg = 0.001 # works with 0.001
+l2Reg = 0.013 # works with 0.001
 dropout = 0.1
 hidden_nodes = [15] # Vector with hidden_nodes on second layer use [x1, x2, x3, ..., xn]
 
