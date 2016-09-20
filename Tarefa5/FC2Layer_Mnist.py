@@ -4,14 +4,16 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
 from keras.utils import np_utils
+from keras.datasets import mnist
 from keras.regularizers import l2
 from keras.regularizers import l1
-from sklearn.preprocessing import LabelEncoder
-from sklearn.pipeline import Pipeline
+#from sklearn.preprocessing import LabelEncoder
+#from sklearn.pipeline import Pipeline
 import matplotlib.pyplot as plt
 import numpy
-import pandas
+#import pandas
 import time
+from datetime import timedelta
 
 
 ########################
@@ -29,15 +31,15 @@ SEED = 7
 numpy.random.seed(SEED)
 
 # Training Options
-BATCHSIZE = 32
-EPOCH = 10000
-VALIDATIONPERC = 0.15
+BATCHSIZE = 200
+EPOCH = 50
+
 
 # Model Options
-l1Reg = 0.008 # 0.008>91%
-l2Reg = 0.013 # works with 0.001
-dropout = 0.1
-hidden_nodes = [15] # Vector with hidden_nodes on second layer use [x1, x2, x3, ..., xn]
+l1Reg = [0.001] # 
+l2Reg = [0.001] # 
+dropout = [0.1]
+hidden_nodes = [200, 500, 784, 1000, 2000] 
 
 ########################
 #FUNCTIONS
@@ -68,6 +70,8 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 	plt.ylabel(nameVec)
 	plt.xlabel('epoch')
 	plt.legend(['train', 'test'], loc='best')
+	strAnnotation = "val_"+nameVec+"="+str(vecTest[len(vecTest)-1])
+	plt.text(2,min(vecTrain),strAnnotation, fontsize=14)
 	if SAVE_GRAPHS == 1:
 		output_dir="results/"+str(nodes)+"nodes/"+str(EPOCH)+"Epoch"
 		mkdir_p(output_dir) # Verifies if directory exists, and creates it if necessary
@@ -80,6 +84,65 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 ########################
 #PROGRAM
 ########################
+
+# load mnist dataset
+(X,Y),(X_test, Y_test) = mnist.load_data()
+# flatten 28*28 images to a 784 vector for each image
+num_pixels = X.shape[1]*X.shape[2]
+X = X.reshape(X.shape[0],num_pixels).astype('float32')
+X_test = X_test.reshape(X_test.shape[0],num_pixels).astype('float32')
+# Data Preprocessing
+X -= numpy.mean(X)
+X_test -= numpy.mean(X_test)
+# hot encode outputs
+Y = np_utils.to_categorical(Y)
+Y_test = np_utils.to_categorical(Y_test)
+num_classes = Y_test.shape[1]
+
+print("----------------------------------")
+print("Using Batch =",BATCHSIZE ,"Epoch = ",EPOCH)
+
+regStr = " "
+
+# define baseline model
+def baseline_model(nodes):
+
+	return model
+for h in range(0, len(hidden_nodes)):
+	for j in range(0,len(dropout)):	
+		for i in range(0,len(l1Reg)):
+			# time measure
+
+			start_time = time.time()
+			print("----------------------------------")
+			print("Creating model with hidden_nodes =",hidden_nodes[h])
+			# create model
+			model = Sequential()
+			# creates layer with hidden_nodes nodes and chooses which regularization it will use
+			model.add(Dense(hidden_nodes[h], input_dim=num_pixels, init='normal', activation='relu', W_regularizer = l1(l1Reg[i])))
+			regStr = "L1_Regularization="+str(l1Reg[i])#+" L2_Regularization="+str(l2Reg)
+			model.add(Dropout(dropout[j]))
+			regStr = regStr+"_Dropout=%.1f"%dropout[j]
+			# output layer
+			model.add(Dense(num_classes, init='normal', activation='softmax'))
+			print("Added",regStr)
+			# Compile model
+			model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+			history = model.fit(X,Y,validation_data=(X_test,Y_test),nb_epoch=EPOCH,batch_size=BATCHSIZE,verbose=2)
+			#print("val_acc = %.4f"%history.history["val_acc"][EPOCH-1]," acc = %.4f"%history.history["acc"][EPOCH-1])	
+			#print("val_loss = %.4f"%history.history["val_loss"][EPOCH-1]," loss = %.4f"%history.history["loss"][EPOCH-1])	
+			# Show time elapsed
+			print("Elapsed time = ",str(timedelta(seconds=(time.time()-start_time))))
+			# Storing history
+			acc = numpy.array(history.history['acc'])
+			val_acc = numpy.array(history.history['val_acc'])
+			loss = numpy.array(history.history['loss'])
+			val_loss = numpy.array(history.history['val_loss'])
+			# Plotting
+			if SHOW_ACC == 1:
+				plotGraph(regStr,nodes=hidden_nodes[h], vecTrain=acc, vecTest=val_acc, nameVec="acc")
+			if SHOW_LOSS == 1:
+				plotGraph(regStr,nodes=hidden_nodes[h], vecTrain=loss, vecTest=val_loss, nameVec="loss")
 
 
 print("----------------------------------")
