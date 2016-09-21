@@ -1,4 +1,5 @@
-#Aprender a utilizar regularizacao: criar uma FC com 2 camadas, numero de neuronios ocultos a sua escolha. Utilizar a regularizacao que quiser (pode usar mais de uma ao mesmo tempo). Tentar maximizar valAcc com o dataset MNIST.
+#Aprender convolution e pooling. Testar uma ConvNet basica na MNIST e ver os resultados.
+
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
@@ -32,11 +33,11 @@ numpy.random.seed(SEED)
 
 # Training Options
 BATCHSIZE = 200
-EPOCH = 25
+EPOCH = 10
 
 
 # Model Options
-size_kernel = 2 # Kernel = size_kernelxsize_kernel
+kernel1 =[32,2] # 32 Kernels = 2x2
 dropout = [0.2]
 hidden_nodes = [784] #[200, 500, 784] 
 
@@ -88,10 +89,8 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 (X,Y),(X_test, Y_test) = mnist.load_data()
 # reshape to be [samples][pixels][width][height]
 X = X.reshape(X.shape[0],1,X.shape[1],X.shape[2]).astype('float32')
-X_test = X_test.reshape(X_test.shape[0],1,X.shape[1],X.shape[2]).astype('float32')
+X_test = X_test.reshape(X_test.shape[0],1,X_test.shape[1],X_test.shape[2]).astype('float32')
 # Data Preprocessing
-#X -= numpy.mean(X)
-#X_test -= numpy.mean(X)
 X /= 255
 X_test /= 255
 # hot encode outputs
@@ -117,12 +116,12 @@ for h in range(0, len(hidden_nodes)):
 		print("Creating model with hidden_nodes =",hidden_nodes[h])
 		# create model
 		model = Sequential()
-		model.add(Convolution2D(num_kernel,size_kernel,size_kernel,border_mode='valid', input_shape(1,28,28), activation='relu')) # convolution layer
-		regStr = "Kernel="+str(size_kernel)+"*"+str(size_kernel)
+		model.add(Convolution2D(num_kernel, size_kernel, size_kernel, border_mode='valid', input_shape=(1, 28, 28), activation='relu')) # convolution layer
+		regStr = "KernelsOf"+str(kernel1[0])+"x"+str(kernel[1])+"x"+str(kernel[1])
 		model.add(Dropout(dropout[j]))
 		regStr = regStr+"_Dropout=%.2f"%dropout[j]
 		model.add(Flatten()) # converts 2D matrix data to vector
-		model.add(Dense(128,init='he_normal',activation='relu') #fully connected layer
+		model.add(Dense(hidden_nodes[h],init='he_normal',activation='relu')) #fully connected layer
 		# output layer
 		model.add(Dense(num_classes, init='he_normal', activation='softmax'))
 		print("Added",regStr)
