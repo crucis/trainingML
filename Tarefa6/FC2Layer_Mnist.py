@@ -1,17 +1,16 @@
 #Aprender a utilizar regularizacao: criar uma FC com 2 camadas, numero de neuronios ocultos a sua escolha. Utilizar a regularizacao que quiser (pode usar mais de uma ao mesmo tempo). Tentar maximizar valAcc com o dataset MNIST.
-import keras
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
+from keras.layers import Flatten
 from keras.utils import np_utils
 from keras.datasets import mnist
 from keras.regularizers import l2
 from keras.regularizers import l1
-#from sklearn.preprocessing import LabelEncoder
-#from sklearn.pipeline import Pipeline
+from keras.layers.convolutional import Convolution2D
+from keras.layers.convolutional import MaxPooling2D
 import matplotlib.pyplot as plt
 import numpy
-#import pandas
 import time
 from datetime import timedelta
 
@@ -37,9 +36,8 @@ EPOCH = 25
 
 
 # Model Options
-l1Reg = [0]#[0,0.0001,0.0005,0.001,0.005] # 
-l2Reg = [0.0001]#[0,0.0001,0.0005,0.001,0.005] # 
-dropout = [0.1]#[0.2]
+size_kernel = 2 # Kernel = size_kernelxsize_kernel
+dropout = [0.2]
 hidden_nodes = [784] #[200, 500, 784] 
 
 ########################
@@ -88,10 +86,9 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 
 # load mnist dataset
 (X,Y),(X_test, Y_test) = mnist.load_data()
-# flatten 28*28 images to a 784 vector for each image
-num_pixels = X.shape[1]*X.shape[2]
-X = X.reshape(X.shape[0],num_pixels).astype('float32')
-X_test = X_test.reshape(X_test.shape[0],num_pixels).astype('float32')
+# reshape to be [samples][pixels][width][height]
+X = X.reshape(X.shape[0],1,X.shape[1],X.shape[2]).astype('float32')
+X_test = X_test.reshape(X_test.shape[0],1,X.shape[1],X.shape[2]).astype('float32')
 # Data Preprocessing
 #X -= numpy.mean(X)
 #X_test -= numpy.mean(X)
@@ -113,41 +110,41 @@ if SAVE_CSV == 1:
 # define model
 for h in range(0, len(hidden_nodes)):
 	for j in range(0,len(dropout)):	
-		for i in range(0,len(l2Reg)):
-			# time measure
+		# time measure
 
-			start_time = time.time()
-			print("----------------------------------")
-			print("Creating model with hidden_nodes =",hidden_nodes[h])
-			# create model
-			model = Sequential()
-			# creates layer with hidden_nodes nodes and chooses which regularization it will use
-			model.add(Dense(hidden_nodes[h], input_dim=num_pixels, init='he_normal', activation='relu', W_regularizer = l2(l2Reg[i])))
-			regStr = "L2Regularization="+str(l2Reg[i])#+" L2_Regularization="+str(l2Reg)
-			model.add(Dropout(dropout[j]))
-			regStr = regStr+"_Dropout=%.2f"%dropout[j]
-			# output layer
-			model.add(Dense(num_classes, init='he_normal', activation='softmax'))
-			print("Added",regStr)
-			# Compile model
-			model.compile(loss='categorical_crossentropy', optimizer='nadam', metrics=['accuracy'])
-			history = model.fit(X,Y,validation_data=(X_test,Y_test),nb_epoch=EPOCH,batch_size=BATCHSIZE,verbose=2)
-			# Show time elapsed
-			print("Elapsed time = ",str(timedelta(seconds=(time.time()-start_time))))
-			# Storing history
-			acc = numpy.array(history.history['acc'])
-			val_acc = numpy.array(history.history['val_acc'])
-			loss = numpy.array(history.history['loss'])
-			val_loss = numpy.array(history.history['val_loss'])
-			# Storing in csvArray
-			if SAVE_CSV:
-				a = numpy.array([hidden_nodes[h],l1Reg[i],dropout[j],val_acc[EPOCH-1],acc[EPOCH-1],val_loss[EPOCH-1],loss[EPOCH-1]])
-				csvArray = numpy.vstack([csvArray,a])
-			# Plotting
-			if SHOW_ACC == 1:
-				plotGraph(regStr,nodes=hidden_nodes[h], vecTrain=acc, vecTest=val_acc, nameVec="acc")
-			if SHOW_LOSS == 1:
-				plotGraph(regStr,nodes=hidden_nodes[h], vecTrain=loss, vecTest=val_loss, nameVec="loss")
+		start_time = time.time()
+		print("----------------------------------")
+		print("Creating model with hidden_nodes =",hidden_nodes[h])
+		# create model
+		model = Sequential()
+		model.add(Convolution2D(num_kernel,size_kernel,size_kernel,border_mode='valid', input_shape(1,28,28), activation='relu')) # convolution layer
+		regStr = "Kernel="+str(size_kernel)+"*"+str(size_kernel)
+		model.add(Dropout(dropout[j]))
+		regStr = regStr+"_Dropout=%.2f"%dropout[j]
+		model.add(Flatten()) # converts 2D matrix data to vector
+		model.add(Dense(128,init='he_normal',activation='relu') #fully connected layer
+		# output layer
+		model.add(Dense(num_classes, init='he_normal', activation='softmax'))
+		print("Added",regStr)
+		# Compile model
+		model.compile(loss='categorical_crossentropy', optimizer='nadam', metrics=['accuracy'])
+		history = model.fit(X,Y,validation_data=(X_test,Y_test),nb_epoch=EPOCH,batch_size=BATCHSIZE,verbose=2)
+		# Show time elapsed
+		print("Elapsed time = ",str(timedelta(seconds=(time.time()-start_time))))
+		# Storing history
+		acc = numpy.array(history.history['acc'])
+		val_acc = numpy.array(history.history['val_acc'])
+		loss = numpy.array(history.history['loss'])
+		val_loss = numpy.array(history.history['val_loss'])
+		# Storing in csvArray
+		if SAVE_CSV:
+			a = numpy.array([hidden_nodes[h],l1Reg[i],dropout[j],val_acc[EPOCH-1],acc[EPOCH-1],val_loss[EPOCH-1],loss[EPOCH-1]])
+			csvArray = numpy.vstack([csvArray,a])
+		# Plotting
+		if SHOW_ACC == 1:
+			plotGraph(regStr,nodes=hidden_nodes[h], vecTrain=acc, vecTest=val_acc, nameVec="acc")
+		if SHOW_LOSS == 1:
+			plotGraph(regStr,nodes=hidden_nodes[h], vecTrain=loss, vecTest=val_loss, nameVec="loss")
 
 if SAVE_CSV:
 	print("Saving results to test.csv")
