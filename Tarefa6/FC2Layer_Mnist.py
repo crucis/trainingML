@@ -116,7 +116,7 @@ for h in range(0, len(hidden_nodes)):
 		print("Creating model with hidden_nodes =",hidden_nodes[h])
 		# create model
 		model = Sequential()
-		model.add(Convolution2D(num_kernel, size_kernel, size_kernel, border_mode='valid', input_shape=(1, 28, 28), activation='relu')) # convolution layer
+		model.add(Convolution2D(kernel1[0], kernel[1], kernel[1], border_mode='valid', input_shape=(1, 28, 28), activation='relu')) # convolution layer
 		regStr = "KernelsOf"+str(kernel1[0])+"x"+str(kernel[1])+"x"+str(kernel[1])
 		model.add(Dropout(dropout[j]))
 		regStr = regStr+"_Dropout=%.2f"%dropout[j]
