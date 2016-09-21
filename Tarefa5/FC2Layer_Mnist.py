@@ -33,7 +33,7 @@ numpy.random.seed(SEED)
 
 # Training Options
 BATCHSIZE = 200
-EPOCH = 50
+EPOCH = 25
 
 
 # Model Options
@@ -93,8 +93,8 @@ num_pixels = X.shape[1]*X.shape[2]
 X = X.reshape(X.shape[0],num_pixels).astype('float32')
 X_test = X_test.reshape(X_test.shape[0],num_pixels).astype('float32')
 # Data Preprocessing
-X -= numpy.mean(X)
-X_test -= numpy.mean(X)
+#X -= numpy.mean(X)
+#X_test -= numpy.mean(X)
 X /= 255
 X_test /= 255
 # hot encode outputs
