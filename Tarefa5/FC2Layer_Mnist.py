@@ -25,7 +25,7 @@ SHOW_GRAPHS = 0
 SAVE_GRAPHS = 1
 SHOW_LOSS = 1
 SHOW_ACC = 1
-SAVE_CSV = 1
+SAVE_CSV = 0
 
 # fix random seed for reproducibility
 SEED = 7
@@ -37,10 +37,10 @@ EPOCH = 50
 
 
 # Model Options
-l1Reg = [0.01]#[0,0.0001,0.0005,0.001,0.005] # 
-l2Reg = [0.01]#[0,0.0001,0.0005,0.001,0.005] # 
-dropout = [0.1]#[0.2]
-hidden_nodes = [500] #[200, 500, 784] 
+l1Reg = [0]#[0,0.0001,0.0005,0.001,0.005] # 
+l2Reg = [0]#[0,0.0001,0.0005,0.001,0.005] # 
+dropout = [0]#[0.2]
+hidden_nodes = [784] #[200, 500, 784] 
 
 ########################
 #FUNCTIONS
@@ -93,8 +93,10 @@ num_pixels = X.shape[1]*X.shape[2]
 X = X.reshape(X.shape[0],num_pixels).astype('float32')
 X_test = X_test.reshape(X_test.shape[0],num_pixels).astype('float32')
 # Data Preprocessing
-#X -= numpy.mean(X)
-#X_test -= numpy.mean(X)
+X -= numpy.mean(X)
+X_test -= numpy.mean(X)
+X /= 255
+X_test /= 255
 # hot encode outputs
 Y = np_utils.to_categorical(Y)
 Y_test = np_utils.to_categorical(Y_test)
@@ -108,10 +110,7 @@ if SAVE_CSV == 1:
 	csvArray = numpy.array(["hidden_nodes","l2Reg","dropout","val_acc","acc","val_loss","loss"])
 
 
-# define baseline model
-def baseline_model(nodes):
-
-	return model
+# define model
 for h in range(0, len(hidden_nodes)):
 	for j in range(0,len(dropout)):	
 		for i in range(0,len(l1Reg)):
@@ -124,14 +123,14 @@ for h in range(0, len(hidden_nodes)):
 			model = Sequential()
 			# creates layer with hidden_nodes nodes and chooses which regularization it will use
 			model.add(Dense(hidden_nodes[h], input_dim=num_pixels, init='he_normal', activation='relu'))#, W_regularizer = l2(l2Reg[i])))
-			regStr = "L2_Regularization="+str(l2Reg[i])#+" L2_Regularization="+str(l2Reg)
-			model.add(Dropout(dropout[j]))
-			regStr = regStr+"_Dropout=%.1f"%dropout[j]
+			regStr = "No L1-L2 Regularization"#+str(l2Reg[i])#+" L2_Regularization="+str(l2Reg)
+			#model.add(Dropout(dropout[j]))
+			regStr = regStr+"No Dropout"#%dropout[j]
 			# output layer
 			model.add(Dense(num_classes, init='he_normal', activation='softmax'))
 			print("Added",regStr)
 			# Compile model
-			model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+			model.compile(loss='categorical_crossentropy', optimizer='nadam', metrics=['accuracy'])
 			history = model.fit(X,Y,validation_data=(X_test,Y_test),nb_epoch=EPOCH,batch_size=BATCHSIZE,verbose=2)
 			# Show time elapsed
 			print("Elapsed time = ",str(timedelta(seconds=(time.time()-start_time))))
