@@ -37,9 +37,9 @@ EPOCH = 10
 
 
 # Model Options
-kernel1 =[8,2] # 32 Kernels = 2x2
-kernel2 = [16,2]
-kernel3 = [32,2]
+kernel1 =[8,3] # 32 Kernels = 2x2
+kernel2 = [16,3]
+kernel3 = [32,3]
 dropout = [0.2]
 pooling = 2
 hidden_nodes = [288] #[200, 500, 784] 
@@ -126,7 +126,6 @@ for h in range(0, len(hidden_nodes)):
 		regStr = regStr+"-"+str(kernel2[0])+"x"+str(kernel2[1])+"x"+str(kernel2[1])
 		model.add(MaxPooling2D(pool_size=(pooling,pooling))) # pooling
 		model.add(Convolution2D(kernel3[0], kernel3[1], kernel3[1], border_mode='valid', input_shape=(1, 28, 28), activation='relu')) # convolution layer
-		model.add(MaxPooling2D(pool_size=(pooling,pooling))) # pooling
 		regStr = regStr+"-"+str(kernel3[0])+"x"+str(kernel3[1])+"x"+str(kernel3[1])
 		model.add(Dropout(dropout[j]))
 		regStr = regStr+"_Dropout=%.2f"%dropout[j]
