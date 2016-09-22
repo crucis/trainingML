@@ -10,6 +10,7 @@ from keras.regularizers import l2
 from keras.regularizers import l1
 from keras.layers.convolutional import Convolution2D
 from keras.layers.convolutional import MaxPooling2D
+from keras.layers.convolutional import AveragePooling2D
 import matplotlib.pyplot as plt
 import numpy
 import time
@@ -37,9 +38,9 @@ EPOCH = 10
 
 
 # Model Options
-kernel1 =[8,3] # 32 Kernels = 2x2
-kernel2 = [16,3]
-kernel3 = [32,3]
+kernel1 =[8,2] # 32 Kernels = 2x2
+kernel2 = [16,2]
+kernel3 = [32,2]
 dropout = [0.2]
 pooling = 2
 hidden_nodes = [288] #[200, 500, 784] 
@@ -120,11 +121,11 @@ for h in range(0, len(hidden_nodes)):
 		# create model
 		model = Sequential()
 		model.add(Convolution2D(kernel1[0], kernel1[1], kernel1[1], border_mode='valid', input_shape=(1, 28, 28), activation='relu')) # convolution layer
-		regStr = "KernelsOf"+str(kernel1[0])+"x"+str(kernel1[1])+"x"+str(kernel1[1])
-		model.add(MaxPooling2D(pool_size=(pooling,pooling))) # pooling
+		regStr = "AvgPool_KernelsOf"+str(kernel1[0])+"x"+str(kernel1[1])+"x"+str(kernel1[1])
+		model.add(AveragePooling2D(pool_size=(pooling,pooling))) # pooling
 		model.add(Convolution2D(kernel2[0], kernel2[1], kernel2[1], border_mode='valid', input_shape=(1, 28, 28), activation='relu')) # convolution layer
 		regStr = regStr+"-"+str(kernel2[0])+"x"+str(kernel2[1])+"x"+str(kernel2[1])
-		model.add(MaxPooling2D(pool_size=(pooling,pooling))) # pooling
+		model.add(AveragePooling2D(pool_size=(pooling,pooling))) # pooling
 		model.add(Convolution2D(kernel3[0], kernel3[1], kernel3[1], border_mode='valid', input_shape=(1, 28, 28), activation='relu')) # convolution layer
 		regStr = regStr+"-"+str(kernel3[0])+"x"+str(kernel3[1])+"x"+str(kernel3[1])
 		model.add(Dropout(dropout[j]))
