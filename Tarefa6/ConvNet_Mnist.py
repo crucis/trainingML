@@ -10,7 +10,6 @@ from keras.regularizers import l2
 from keras.regularizers import l1
 from keras.layers.convolutional import Convolution2D
 from keras.layers.convolutional import MaxPooling2D
-from keras.layers.convolutional import AveragePooling2D
 import matplotlib.pyplot as plt
 import numpy
 import time
@@ -120,18 +119,26 @@ for h in range(0, len(hidden_nodes)):
 		print("Creating model with hidden_nodes =",hidden_nodes[h])
 		# create model
 		model = Sequential()
-		model.add(Convolution2D(kernel1[0], kernel1[1], kernel1[1], border_mode='valid',subsample=(2,2), input_shape=(1, 28, 28), activation='relu')) # convolution layer
-		regStr = "Stride2_KernelsOf"+str(kernel1[0])+"x"+str(kernel1[1])+"x"+str(kernel1[1])
-		#model.add(GlobalMaxPooling2D())#pool_size=(pooling,pooling))) # pooling
-		model.add(Convolution2D(kernel2[0], kernel2[1], kernel2[1], border_mode='valid', activation='relu')) # convolution layer
+		# Convolution Layer
+		model.add(Convolution2D(kernel1[0], kernel1[1], kernel1[1], border_mode='valid', input_shape=(1, 28, 28), activation='relu'))
+		#MaxPooling
+		regStr = "MaxPool_KernelsOf"+str(kernel1[0])+"x"+str(kernel1[1])+"x"+str(kernel1[1])
+		model.add(MaxPooling2D(pool_size=(pooling,pooling)))
+		# Convolution Layer
+		model.add(Convolution2D(kernel2[0], kernel2[1], kernel2[1], border_mode='valid', activation='relu'))
 		regStr = regStr+"-"+str(kernel2[0])+"x"+str(kernel2[1])+"x"+str(kernel2[1])
-		#model.add(GlobalMaxPooling2D())#pool_size=(pooling,pooling))) # pooling
-		model.add(Convolution2D(kernel3[0], kernel3[1], kernel3[1], border_mode='valid',subsample=(2,2), activation='relu')) # convolution layer
+		#MaxPooling
+		model.add(MaxPooling2D(pool_size=(pooling,pooling)))
+		# Convolution Layer
+		model.add(Convolution2D(kernel3[0], kernel3[1], kernel3[1], border_mode='valid', activation='relu'))
 		regStr = regStr+"-"+str(kernel3[0])+"x"+str(kernel3[1])+"x"+str(kernel3[1])
+		# Dropout
 		model.add(Dropout(dropout[j]))
-		regStr = regStr+"_Dropout=%.2f"%dropout[j]
+		regStr = regStr+"_Dropout=%.2f_2HiddenLayers"%dropout[j]
+		# Flatten
 		model.add(Flatten()) # converts 2D matrix data to vector
-		model.add(Dense(hidden_nodes[h],init='he_normal',activation='relu')) #fully connected layer
+		# Fully Connected
+		model.add(Dense(hidden_nodes[h],init='he_normal',activation='relu')) 
 		# output layer
 		model.add(Dense(num_classes, init='he_normal', activation='softmax'))
 		print("Added",regStr)
