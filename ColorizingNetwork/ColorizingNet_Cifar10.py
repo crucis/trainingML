@@ -1,15 +1,9 @@
-# Primeira versão da rede neural capaz de colorir fotos preto e brancas.
-
 from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import Dropout
-from keras.layers import Flatten
+from keras.layers import Dense, Dropout, Flatten, Lambda
 from keras.utils import np_utils
 from keras.datasets import cifar10
-from keras.regularizers import l2
-from keras.regularizers import l1
-from keras.layers.convolutional import Convolution2D
-from keras.layers.convolutional import MaxPooling2D
+from keras.regularizers import l2, l1
+from keras.layers.convolutional import Convolution2D, MaxPooling2D
 import matplotlib.pyplot as plt
 import numpy
 import time
@@ -33,7 +27,7 @@ numpy.random.seed(SEED)
 
 # Training Options
 BATCHSIZE = 64
-EPOCH = 250
+EPOCH = 50
 
 
 # Model Options
@@ -96,7 +90,7 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 ########################
 
 #### load cifar10 dataset
-(Y,a),(Y_test, a_test) = cifar10.load_data()
+(Y,_),(Y_test, _) = cifar10.load_data()
 X = numpy.zeros((Y.shape[0],1,Y.shape[2],Y.shape[3]))
 X_test = numpy.zeros((Y_test.shape[0],1,Y.shape[2],Y.shape[3]))
 
@@ -116,34 +110,27 @@ Y /= 255
 X_test /= 255
 Y_test /= 255
 
-# Limit size of dataset
-F = numpy.zeros((512,Y.shape[1],Y.shape[2],Y.shape[3]))
-G = numpy.zeros((512,X.shape[1],X.shape[2],X.shape[3]))
-F_test = numpy.zeros((128,Y_test.shape[1],Y_test.shape[2],Y_test.shape[3]))
-G_test = numpy.zeros((128,X_test.shape[1],X_test.shape[2],X_test.shape[3]))
-for i in range(0,F.shape[0]):
-	F[i] = Y[i]
-for i in range(0,G.shape[0]):
-	G[i] = X[i]
-for i in range(0,F_test.shape[0]):
-	F_test[i] = Y_test[i]
-for i in range(0,G_test.shape[0]):
-	G_test[i] = X_test[i]
+nImages = 512
+
+G = X[:nImages]
+F = Y[:nImages]
+G_test = X_test[:128]
+F_test = Y_test[:128]
 
 #### Model
 print("----------------------------------")
 print("Using Batch =",BATCHSIZE ,"Epoch = ",EPOCH)
 model = Sequential()
 # Layers
-model.add(Convolution2D(kernel1[0], kernel1[1], kernel1[1], border_mode='same', input_shape=(1, 32, 32), activation='relu'))
-model.add(Convolution2D(kernel2[0], kernel2[1], kernel2[1], border_mode='same', activation='relu'))
+model.add(Convolution2D(kernel1[0], kernel1[1], kernel1[1], border_mode='same', init='he_normal', input_shape=(1, 32, 32), activation='relu'))
+model.add(Convolution2D(kernel2[0], kernel2[1], kernel2[1], border_mode='same', init='he_normal', activation='relu'))
 
 # Compile
-model.compile(loss='mean_squared_error', optimizer='nadam', metrics=['accuracy'])
+model.compile(loss='mean_squared_error', optimizer='nadam', metrics=['mean_squared_error'])
 print(model.summary())
 
 # Fit
-history = model.fit(G,F,validation_data=(G_test,F_test),nb_epoch=EPOCH,batch_size=BATCHSIZE,verbose=0)
+history = model.fit(G,F,validation_data=(G_test,F_test),nb_epoch=EPOCH,batch_size=BATCHSIZE,verbose=1)
 
 #### Show results
 MSE = numpy.array(history.history['mean_squared_error'])
