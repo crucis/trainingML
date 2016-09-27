@@ -5,6 +5,7 @@ from keras.datasets import cifar10
 #from keras.regularizers import l2, l1
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, UpSampling2D, Deconvolution2D
 from keras import backend as K
+from random import uniform
 import matplotlib.pyplot as plt
 import numpy
 #import math
@@ -29,7 +30,7 @@ numpy.random.seed(SEED)
 
 # Training Options
 BATCHSIZE = 128
-EPOCH = 50
+EPOCH = 1
 
 
 # Model Options
@@ -183,17 +184,19 @@ print('MSE =',MSE[EPOCH-1],' val_MSE =',val_MSE[EPOCH-1],' loss =',loss[EPOCH-1]
 # Getting a result sample for model
 pred = model.predict(G)
 
-for i in range(G.shape[0]):
+for i in range(G.shape[0]*0.2):
 	_,((ax1,ax2),(ax3,_)) = plt.subplots(2,2,sharey='row',sharex='col')
+	
+	n = uniform(0,G.shape[0])
 
-	ax1.imshow(G[i,0,:,:],cmap='gray')
+	ax1.imshow(G[n,0,:,:],cmap='gray')
 	ax1.set_title('Input_%s'%i)
 
-	l = pred[i].transpose(1,2,0)
+	l = pred[n].transpose(1,2,0)
 	ax2.imshow(l)
 	ax2.set_title('Output_%s'%i)
 	
-	ax3.imshow(F[i].transpose(1,2,0))
+	ax3.imshow(F[n].transpose(1,2,0))
 	ax3.set_title('Original_%s'%i)
 
 	titlestr = 'Epochs='+str(EPOCH)+'MSE=%.4f'%MSE[EPOCH-1]
