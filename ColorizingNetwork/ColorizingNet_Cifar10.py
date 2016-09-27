@@ -143,10 +143,9 @@ model.compile(loss='mean_squared_error', optimizer='nadam', metrics=['accuracy']
 print(model.summary())
 
 # Fit
-#model.fit(G,F, validatation_data=(G_test,F_test),nb_epochs=EPOCH, batch_size=BATCHSIZE,verbose=2)
 history = model.fit(G,F,validation_data=(G_test,F_test),nb_epoch=EPOCH,batch_size=BATCHSIZE,verbose=0)
 
-# Show results
+#### Show results
 acc = numpy.array(history.history['acc'])
 val_acc = numpy.array(history.history['val_acc'])
 loss = numpy.array(history.history['loss'])
@@ -158,6 +157,21 @@ if SHOW_LOSS == 1:
 	plotGraph('ColorizingTest1',nodes=1, vecTrain=loss, vecTest=val_loss, nameVec="loss")
 
 print('acc =',acc[EPOCH-1],' val_acc =',val_acc[EPOCH-1],' loss =',loss[EPOCH-1],' val_loss =',loss[EPOCH-1])
+
+pred = model.predict(G)
+print(pred.shape)
+print(G.shape)
+plt.imshow(G[120,0,:,:],cmap='gray')
+mkdir_p('results/Test1')
+plt.savefig('results/Test1/input.png')
+plt.show()
+l = pred[120].transpose(1,2,0)
+plt.imshow(l)
+mkdir_p('results/Test1')
+titlestr = 'Epochs='+str(EPOCH)
+plt.title(titlestr)
+plt.savefig('results/Test1/output.png')
+plt.show()
 
 if SAVE_CSV:
 	print("Saving results to test.csv")
