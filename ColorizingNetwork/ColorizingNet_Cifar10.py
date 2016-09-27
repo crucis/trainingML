@@ -3,7 +3,8 @@ from keras.layers import Dense, Dropout, Flatten, Lambda
 from keras.utils import np_utils
 from keras.datasets import cifar10
 from keras.regularizers import l2, l1
-from keras.layers.convolutional import Convolution2D, MaxPooling2D
+from keras.layers.convolutional import Convolution2D, MaxPooling2D, UpSampling2D, Deconvolution2D
+from keras import backend as K
 import matplotlib.pyplot as plt
 import numpy
 import time
@@ -26,12 +27,12 @@ SEED = 7
 numpy.random.seed(SEED)
 
 # Training Options
-BATCHSIZE = 64
+BATCHSIZE = 128
 EPOCH = 50
 
 
 # Model Options
-kernel1 = [8,3] # 32 Kernels = 2x2
+kernel1 = [128,3] # 32 Kernels = 2x2
 kernel2 = [3,3]
 kernel3 = [64,3]
 dropout = [0.05, 0.1]
@@ -90,7 +91,11 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 ########################
 
 #### load cifar10 dataset
-(Y,_),(Y_test, _) = cifar10.load_data()
+(Y,labels),(Y_test, labels_test) = cifar10.load_data()
+
+Y = Y[(labels == 8)[:,0]]
+Y_test = Y_test[(labels_test == 8)[:,0]]
+
 X = numpy.zeros((Y.shape[0],1,Y.shape[2],Y.shape[3]))
 X_test = numpy.zeros((Y_test.shape[0],1,Y.shape[2],Y.shape[3]))
 
@@ -110,20 +115,26 @@ Y /= 255
 X_test /= 255
 Y_test /= 255
 
-nImages = 512
+nImages = 2048
 
 G = X[:nImages]
 F = Y[:nImages]
 G_test = X_test[:128]
 F_test = Y_test[:128]
 
+
 #### Model
 print("----------------------------------")
 print("Using Batch =",BATCHSIZE ,"Epoch = ",EPOCH)
 model = Sequential()
 # Layers
-model.add(Convolution2D(kernel1[0], kernel1[1], kernel1[1], border_mode='same', init='he_normal', input_shape=(1, 32, 32), activation='relu'))
-model.add(Convolution2D(kernel2[0], kernel2[1], kernel2[1], border_mode='same', init='he_normal', activation='relu'))
+model.add(Convolution2D(16, kernel1[1], kernel1[1], border_mode='same', init='he_normal', input_shape=(1, 32, 32), activation='relu'))
+model.add(Convolution2D(32, kernel1[1], kernel1[1], border_mode='same', init='he_normal', activation='relu'))
+model.add(Convolution2D(64, kernel1[1], kernel1[1], border_mode='same', init='he_normal', activation='relu'))
+model.add(Convolution2D(32, kernel1[1], kernel1[1], border_mode='same', init='he_normal', activation='relu'))
+model.add(Convolution2D(16, kernel1[1], kernel1[1], border_mode='same', init='he_normal', activation='relu'))
+model.add(Convolution2D(3 , kernel2[1], kernel2[1], border_mode='same', init='he_normal', activation='relu'))
+model.add(Lambda(lambda x: K.clip(x, 0.0, 1.0)))
 
 # Compile
 model.compile(loss='mean_squared_error', optimizer='nadam', metrics=['mean_squared_error'])
