@@ -158,9 +158,8 @@ if SHOW_LOSS == 1:
 
 print('acc =',acc[EPOCH-1],' val_acc =',val_acc[EPOCH-1],' loss =',loss[EPOCH-1],' val_loss =',loss[EPOCH-1])
 
+# Getting a result sample for model
 pred = model.predict(G)
-print(pred.shape)
-print(G.shape)
 plt.imshow(G[120,0,:,:],cmap='gray')
 mkdir_p('results/Test1')
 plt.savefig('results/Test1/input.png')
