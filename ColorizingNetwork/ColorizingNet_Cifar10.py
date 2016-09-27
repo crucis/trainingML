@@ -1,4 +1,3 @@
-# Primeira versão da rede neural capaz de colorir fotos preto e brancas.
 
 from keras.models import Sequential
 from keras.layers import Dense
@@ -37,7 +36,7 @@ EPOCH = 250
 
 
 # Model Options
-kernel1 = [8,3] # 32 Kernels = 2x2
+kernel1 = [32,3] # 32 Kernels = 2x2
 kernel2 = [3,3]
 kernel3 = [64,3]
 dropout = [0.05, 0.1]
@@ -64,6 +63,7 @@ def mkdir_p(mypath):
 
 def rgb2gray(rgb):
     return numpy.dot(rgb[...,:3], [0.299, 0.587, 0.114])
+
 def converter(a,b):
 	for i in range(0,b.shape[0]):
 		a[i,0,:,:] = rgb2gray(b[i,:,:,:].transpose(1,2,0))
@@ -96,7 +96,8 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 ########################
 
 #### load cifar10 dataset
-(Y,a),(Y_test, a_test) = cifar10.load_data()
+(Y,_),(Y_test, _) = cifar10.load_data()
+
 X = numpy.zeros((Y.shape[0],1,Y.shape[2],Y.shape[3]))
 X_test = numpy.zeros((Y_test.shape[0],1,Y.shape[2],Y.shape[3]))
 
@@ -116,9 +117,15 @@ Y /= 255
 X_test /= 255
 Y_test /= 255
 
+
+
+nImages = 512
+
+
+
 # Limit size of dataset
-F = numpy.zeros((512,Y.shape[1],Y.shape[2],Y.shape[3]))
-G = numpy.zeros((512,X.shape[1],X.shape[2],X.shape[3]))
+F = numpy.zeros((nImages,Y.shape[1],Y.shape[2],Y.shape[3]))
+G = numpy.zeros((nImages,X.shape[1],X.shape[2],X.shape[3]))
 F_test = numpy.zeros((128,Y_test.shape[1],Y_test.shape[2],Y_test.shape[3]))
 G_test = numpy.zeros((128,X_test.shape[1],X_test.shape[2],X_test.shape[3]))
 for i in range(0,F.shape[0]):
@@ -135,28 +142,28 @@ print("----------------------------------")
 print("Using Batch =",BATCHSIZE ,"Epoch = ",EPOCH)
 model = Sequential()
 # Layers
-model.add(Convolution2D(kernel1[0], kernel1[1], kernel1[1], border_mode='same', input_shape=(1, 32, 32), activation='relu'))
-model.add(Convolution2D(kernel2[0], kernel2[1], kernel2[1], border_mode='same', activation='relu'))
+model.add(Convolution2D(kernel1[0], kernel1[1], kernel1[1], border_mode='same', init='he_normal', input_shape=(1, 32, 32), activation='relu'))
+model.add(Convolution2D(kernel2[0], kernel2[1], kernel2[1], border_mode='same'))
 
 # Compile
-model.compile(loss='mean_squared_error', optimizer='nadam', metrics=['accuracy'])
+model.compile(loss='mean_squared_error', optimizer='nadam', metrics=['mean_squared_error'])
 print(model.summary())
 
 # Fit
-history = model.fit(G,F,validation_data=(G_test,F_test),nb_epoch=EPOCH,batch_size=BATCHSIZE,verbose=0)
+history = model.fit(G,F,validation_data=(G_test,F_test),nb_epoch=EPOCH,batch_size=BATCHSIZE,verbose=1)
 
 #### Show results
-acc = numpy.array(history.history['acc'])
-val_acc = numpy.array(history.history['val_acc'])
+acc = numpy.array(history.history['mean_squared_error'])
+val_acc = numpy.array(history.history['val_mean_squared_error'])
 loss = numpy.array(history.history['loss'])
 val_loss = numpy.array(history.history['val_loss'])
 # Plotting
 if SHOW_ACC == 1:
-	plotGraph('ColorizingTest1',nodes=1, vecTrain=acc, vecTest=val_acc, nameVec="acc")
+	plotGraph('ColorizingTest1',nodes=1, vecTrain=acc, vecTest=val_acc, nameVec="mean_squred_error")
 if SHOW_LOSS == 1:
 	plotGraph('ColorizingTest1',nodes=1, vecTrain=loss, vecTest=val_loss, nameVec="loss")
 
-print('acc =',acc[EPOCH-1],' val_acc =',val_acc[EPOCH-1],' loss =',loss[EPOCH-1],' val_loss =',loss[EPOCH-1])
+print('MSE =',acc[EPOCH-1],' val_MSE =',val_acc[EPOCH-1],' loss =',loss[EPOCH-1],' val_loss =',loss[EPOCH-1])
 
 # Getting a result sample for model
 pred = model.predict(G)
@@ -164,12 +171,15 @@ plt.imshow(G[120,0,:,:],cmap='gray')
 mkdir_p('results/Test2')
 plt.savefig('results/Test2/input.png')
 plt.show()
-l = pred[120].transpose(1,2,0)
-plt.imshow(l)
-titlestr = 'Epochs='+str(EPOCH)
-plt.title(titlestr)
-plt.savefig('results/Test2/output.png')
-plt.show()
+
+for i in range(128):
+    print (i)
+    l = pred[i].transpose(1,2,0)
+    plt.imshow(l)
+    titlestr = 'Epochs='+str(EPOCH)
+    plt.title(titlestr)
+    plt.savefig('results/Test2/output.png')
+    plt.show()
 
 if SAVE_CSV:
 	print("Saving results to test.csv")
