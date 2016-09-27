@@ -2,14 +2,14 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten, Lambda
 from keras.utils import np_utils
 from keras.datasets import cifar10
-from keras.regularizers import l2, l1
+#from keras.regularizers import l2, l1
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, UpSampling2D, Deconvolution2D
 from keras import backend as K
 import matplotlib.pyplot as plt
 import numpy
-import time
 import math
-from datetime import timedelta
+import sys
+
 
 
 ########################
@@ -29,7 +29,7 @@ numpy.random.seed(SEED)
 
 # Training Options
 BATCHSIZE = 128
-EPOCH = 50
+EPOCH = 2
 
 
 # Model Options
@@ -86,6 +86,23 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 	if SHOW_GRAPHS == 1:
 		plt.show()
 	plt.clf()
+
+class Logger(object):
+    def __init__(self):
+        self.terminal = sys.stdout
+        self.log = open("results/Test3/logfile.log", "a")
+
+    def write(self, message):
+        self.terminal.write(message)
+        self.log.write(message)  
+
+    def flush(self):
+        #this flush method is needed for python 3 compatibility.
+        #this handles the flush command by doing nothing.
+        #you might want to specify some extra behavior here.
+        pass    
+
+sys.stdout = Logger()
 
 ########################
 #PROGRAM
@@ -162,24 +179,27 @@ print('MSE =',MSE[EPOCH-1],' val_MSE =',val_MSE[EPOCH-1],' loss =',loss[EPOCH-1]
 pred = model.predict(G)
 
 for i in range(G.shape[0]):
+	_,((ax1,ax2),(ax3,_)) = plt.subplots(2,2,sharey='row',sharex='col')
 
-    plt.imshow(G[i,0,:,:],cmap='gray')
-    outDir = 'results/Test2/'
-    mkdir_p(outDir)
-    plt.savefig(outDir+'input_%s.png'%i)
-   # plt.show()
+	ax1.imshow(G[i,0,:,:],cmap='gray')
+	ax1.set_title('Input_%s'%i)
 
-    l = pred[i].transpose(1,2,0)
-    plt.imshow(l)
-    titlestr = 'Epochs='+str(EPOCH)+'MSE='+str(MSE[EPOCH-1])
-    plt.title(titlestr)
-    plt.savefig(outDir+'output_%s.png'%i)
-    #plt.show()
+	l = pred[i].transpose(1,2,0)
+	ax2.imshow(l)
+	ax2.set_title('Output_%s'%i)
+	
+	ax3.imshow(F[i].transpose(1,2,0))
+	ax3.set_title('Original_%s'%i)
 
-    plt.imshow(F[i].transpose(1,2,0))
-    plt.savefig(outDir+'original_%s.png'%i)
-    #plt.show()
+	titlestr = 'Epochs='+str(EPOCH)+'MSE=%.4f'%MSE[EPOCH-1]
+	plt.title(titlestr)
+	plt.grid(b=False)
 
+	outDir = 'results/Test3/'
+	mkdir_p(outDir)
+	plt.savefig(outDir+'sample_%s.png'%i)
+#	plt.show()
+	plt.clf()
 
 
 if SAVE_CSV:
