@@ -32,18 +32,18 @@ SEED = 7
 numpy.random.seed(SEED)
 
 # Training Options
-BATCHSIZE = 200
-EPOCH = 10
+BATCHSIZE = 64
+EPOCH = 250
 
 
 # Model Options
-kernel1 = [16,3] # 32 Kernels = 2x2
-kernel2 = [32,3]
+kernel1 = [8,3] # 32 Kernels = 2x2
+kernel2 = [3,3]
 kernel3 = [64,3]
 dropout = [0.05, 0.1]
 pooling = 2
-l1Reg = 0.001
-hidden_nodes = [288] #[200, 500, 784] 
+
+
 
 ########################
 #FUNCTIONS
@@ -67,6 +67,7 @@ def rgb2gray(rgb):
 def converter(a,b):
 	for i in range(0,b.shape[0]):
 		a[i,0,:,:] = rgb2gray(b[i,:,:,:].transpose(1,2,0))
+
 # defining function to display and/or save graphs
 def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 	# Plot	
@@ -94,19 +95,69 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 #PROGRAM
 ########################
 
-# load cifar10 dataset
+#### load cifar10 dataset
 (Y,a),(Y_test, a_test) = cifar10.load_data()
 X = numpy.zeros((Y.shape[0],1,Y.shape[2],Y.shape[3]))
 X_test = numpy.zeros((Y_test.shape[0],1,Y.shape[2],Y.shape[3]))
 
 # Convert RGB to grayscale to create our input
-#for i in range(0, Y.shape[0]):
-#	X[i,0,:,:] = rgb2gray(Y[i,:,:,:].transpose(1,2,0))
-#for i in range(0,Y_test.shape[0]):
-#	X_test[i,0,:,:] = rgb2gray(Y_test[i,:,:,:].transpose(1,2,0))
 converter(X,Y)
 converter(X_test,Y_test)
 
+#### Data Preprocessing
+# convert inputs and outputs to float32
+X = X.astype('float32')
+Y = Y.astype('float32')
+X_test = X_test.astype('float32')
+Y_test = Y_test.astype('float32')
+# normalize inputs and outputs from 0-255 to 0.0-1.0
+X /= 255
+Y /= 255
+X_test /= 255
+Y_test /= 255
+
+# Limit size of dataset
+F = numpy.zeros((512,Y.shape[1],Y.shape[2],Y.shape[3]))
+G = numpy.zeros((512,X.shape[1],X.shape[2],X.shape[3]))
+F_test = numpy.zeros((128,Y_test.shape[1],Y_test.shape[2],Y_test.shape[3]))
+G_test = numpy.zeros((128,X_test.shape[1],X_test.shape[2],X_test.shape[3]))
+for i in range(0,F.shape[0]):
+	F[i] = Y[i]
+for i in range(0,G.shape[0]):
+	G[i] = X[i]
+for i in range(0,F_test.shape[0]):
+	F_test[i] = Y_test[i]
+for i in range(0,G_test.shape[0]):
+	G_test[i] = X_test[i]
+
+#### Model
+print("----------------------------------")
+print("Using Batch =",BATCHSIZE ,"Epoch = ",EPOCH)
+model = Sequential()
+# Layers
+model.add(Convolution2D(kernel1[0], kernel1[1], kernel1[1], border_mode='same', input_shape=(1, 32, 32), activation='relu'))
+model.add(Convolution2D(kernel2[0], kernel2[1], kernel2[1], border_mode='same', activation='relu'))
+
+# Compile
+model.compile(loss='mean_squared_error', optimizer='nadam', metrics=['accuracy'])
+print(model.summary())
+
+# Fit
+#model.fit(G,F, validatation_data=(G_test,F_test),nb_epochs=EPOCH, batch_size=BATCHSIZE,verbose=2)
+history = model.fit(G,F,validation_data=(G_test,F_test),nb_epoch=EPOCH,batch_size=BATCHSIZE,verbose=0)
+
+# Show results
+acc = numpy.array(history.history['acc'])
+val_acc = numpy.array(history.history['val_acc'])
+loss = numpy.array(history.history['loss'])
+val_loss = numpy.array(history.history['val_loss'])
+# Plotting
+if SHOW_ACC == 1:
+	plotGraph('ColorizingTest1',nodes=1, vecTrain=acc, vecTest=val_acc, nameVec="acc")
+if SHOW_LOSS == 1:
+	plotGraph('ColorizingTest1',nodes=1, vecTrain=loss, vecTest=val_loss, nameVec="loss")
+
+print('acc =',acc[EPOCH-1],' val_acc =',val_acc[EPOCH-1],' loss =',loss[EPOCH-1],' val_loss =',loss[EPOCH-1])
 
 if SAVE_CSV:
 	print("Saving results to test.csv")
