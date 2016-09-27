@@ -7,7 +7,7 @@ from keras.layers.convolutional import Convolution2D, MaxPooling2D, UpSampling2D
 from keras import backend as K
 import matplotlib.pyplot as plt
 import numpy
-import math
+#import math
 import sys
 
 
@@ -21,7 +21,7 @@ SHOW_GRAPHS = 0
 SAVE_GRAPHS = 1
 SHOW_LOSS = 1
 SHOW_ACC = 1
-SAVE_CSV = 0
+
 
 # fix random seed for reproducibility
 SEED = 7
@@ -29,7 +29,7 @@ numpy.random.seed(SEED)
 
 # Training Options
 BATCHSIZE = 128
-EPOCH = 2
+EPOCH = 50
 
 
 # Model Options
@@ -90,7 +90,7 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 class Logger(object):
     def __init__(self):
         self.terminal = sys.stdout
-        self.log = open("results/Test3/logfile.log", "a")
+        self.log = open("results/Test4/logfile.log", "a")
 
     def write(self, message):
         self.terminal.write(message)
@@ -102,7 +102,7 @@ class Logger(object):
         #you might want to specify some extra behavior here.
         pass    
 
-sys.stdout = Logger()
+
 
 ########################
 #PROGRAM
@@ -135,28 +135,33 @@ Y_test /= 255
 
 nImages = 2048
 
-G = X[:nImages]
-F = Y[:nImages]
-G_test = X_test[:math.ceil(nImages/5)]
-F_test = Y_test[:math.ceil(nImages/5)]
-
+#G = X[:nImages]
+#F = Y[:nImages]
+#G_test = X_test[:math.ceil(nImages/5)]
+#F_test = Y_test[:math.ceil(nImages/5)]
+G = X
+F = Y
+G_test = X_test
+F_test = Y_test
 
 #### Model
 print("----------------------------------")
 print("Using Batch =",BATCHSIZE ,"Epoch = ",EPOCH)
 model = Sequential()
 # Layers
-model.add(Convolution2D(16, kernel1[1], kernel1[1], border_mode='same', init='he_normal', input_shape=(1, 32, 32), activation='relu'))
+model.add(Convolution2D(8, kernel1[1], kernel1[1], border_mode='same', init='he_normal', input_shape=(1, 32, 32), activation='relu'))
+model.add(Convolution2D(16, kernel1[1], kernel1[1], border_mode='same', init='he_normal', activation='relu'))
 model.add(Convolution2D(32, kernel1[1], kernel1[1], border_mode='same', init='he_normal', activation='relu'))
 model.add(Convolution2D(64, kernel1[1], kernel1[1], border_mode='same', init='he_normal', activation='relu'))
 model.add(Convolution2D(32, kernel1[1], kernel1[1], border_mode='same', init='he_normal', activation='relu'))
 model.add(Convolution2D(16, kernel1[1], kernel1[1], border_mode='same', init='he_normal', activation='relu'))
+model.add(Convolution2D(8, kernel1[1], kernel1[1], border_mode='same', init='he_normal', activation='relu'))
 model.add(Convolution2D(3 , kernel2[1], kernel2[1], border_mode='same', init='he_normal', activation='relu'))
 model.add(Lambda(lambda x: K.clip(x, 0.0, 1.0)))
 
 # Compile
 model.compile(loss='mean_squared_error', optimizer='nadam', metrics=['mean_squared_error'])
-print(model.summary())
+
 
 # Fit
 history = model.fit(G,F,validation_data=(G_test,F_test),nb_epoch=EPOCH,batch_size=BATCHSIZE,verbose=1)
@@ -195,16 +200,14 @@ for i in range(G.shape[0]):
 	plt.title(titlestr)
 	plt.grid(b=False)
 
-	outDir = 'results/Test3/'
+	outDir = 'results/Test4/'
 	mkdir_p(outDir)
 	plt.savefig(outDir+'sample_%s.png'%i)
 #	plt.show()
 	plt.clf()
+sys.stdout = Logger()
+print(model.summary())
 
-
-if SAVE_CSV:
-	print("Saving results to test.csv")
-	numpy.savetxt("test.csv",csvArray,delimiter=",",fmt="%s")
 
 print("----------------------------------")
 # eof
