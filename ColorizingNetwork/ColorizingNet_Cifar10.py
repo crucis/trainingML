@@ -95,13 +95,16 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 # load cifar10 dataset
 (Y,a),(Y_test, a_test) = cifar10.load_data()
 X = numpy.zeros((Y.shape[0],1,Y.shape[2],Y.shape[3]))
-print('X-',X.shape)
-print('Y-',Y.shape)
+X_test = numpy.zeros((Y_test.shape[0],1,Y.shape[2],Y.shape[3]))
+
 # Convert RGB to grayscale to create our input
 for i in range(0, Y.shape[0]):
 	X[i,0,:,:] = rgb2gray(Y[i,:,:,:].transpose(1,2,0))
 for i in range(0,Y_test.shape[0]):
-	X_test[i,0,:,:] = rgb2gray(Y_test[i,:,:,:]).transpose(1,2,0))
+	X_test[i,0,:,:] = rgb2gray(Y_test[i,:,:,:].transpose(1,2,0))
+
+
+
 if SAVE_CSV:
 	print("Saving results to test.csv")
 	numpy.savetxt("test.csv",csvArray,delimiter=",",fmt="%s")
