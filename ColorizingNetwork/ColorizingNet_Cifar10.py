@@ -8,7 +8,7 @@ from keras import backend as K
 from random import uniform
 import matplotlib.pyplot as plt
 import numpy
-#import math
+import math
 import sys
 
 
@@ -29,9 +29,9 @@ SEED = 7
 numpy.random.seed(SEED)
 
 # Training Options
-BATCHSIZE = 128
-EPOCH = 1
-
+BATCHSIZE = 256
+EPOCH = 50
+nImages = pow(2,14)
 
 # Model Options
 kernel1 = [128,3] # 32 Kernels = 2x2
@@ -39,7 +39,8 @@ kernel2 = [3,3]
 kernel3 = [64,3]
 dropout = [0.05, 0.1]
 pooling = 2
-
+folder = "Test4/"
+outDir = 'results/'+folder
 
 
 ########################
@@ -58,6 +59,8 @@ def mkdir_p(mypath):
         if exc.errno == EEXIST and path.isdir(mypath):
             pass
         else: raise
+
+
 
 def rgb2gray(rgb):
     return numpy.dot(rgb[...,:3], [0.299, 0.587, 0.114])
@@ -91,7 +94,7 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 class Logger(object):
     def __init__(self):
         self.terminal = sys.stdout
-        self.log = open("results/Test4/logfile.log", "a")
+        self.log = open(outDir+"logfile.log", "a")
 
     def write(self, message):
         self.terminal.write(message)
@@ -108,12 +111,15 @@ class Logger(object):
 ########################
 #PROGRAM
 ########################
+# Create folder for tests
+mkdir_p(outDir)
 
 #### load cifar10 dataset
 (Y,labels),(Y_test, labels_test) = cifar10.load_data()
 
-Y = Y[(labels == 8)[:,0]]
-Y_test = Y_test[(labels_test == 8)[:,0]]
+# Choosing only boats
+#Y = Y[(labels == 8)[:,0]]
+#Y_test = Y_test[(labels_test == 8)[:,0]]
 
 X = numpy.zeros((Y.shape[0],1,Y.shape[2],Y.shape[3]))
 X_test = numpy.zeros((Y_test.shape[0],1,Y.shape[2],Y.shape[3]))
@@ -134,16 +140,13 @@ Y /= 255
 X_test /= 255
 Y_test /= 255
 
-nImages = 2048
 
-#G = X[:nImages]
-#F = Y[:nImages]
-#G_test = X_test[:math.ceil(nImages/5)]
-#F_test = Y_test[:math.ceil(nImages/5)]
-G = X
-F = Y
-G_test = X_test
-F_test = Y_test
+
+G = X[:nImages]
+F = Y[:nImages]
+G_test = X_test[:math.ceil(nImages/5)]
+F_test = Y_test[:math.ceil(nImages/5)]
+
 
 #### Model
 print("----------------------------------")
@@ -178,16 +181,17 @@ if SHOW_ACC == 1:
 if SHOW_LOSS == 1:
 	plotGraph('ColorizingTest1',nodes=1, vecTrain=loss, vecTest=val_loss, nameVec="loss")
 
-print('MSE =',MSE[EPOCH-1],' val_MSE =',val_MSE[EPOCH-1],' loss =',loss[EPOCH-1],' val_loss =',loss[EPOCH-1])
 
+# Save model for future tests
+model.save(outDir+'my_model.h5')
 
 # Getting a result sample for model
 pred = model.predict(G)
 
-for i in range(G.shape[0]*0.2):
+for i in range(math.floor(G.shape[0]*0.02)):
 	_,((ax1,ax2),(ax3,_)) = plt.subplots(2,2,sharey='row',sharex='col')
 	
-	n = uniform(0,G.shape[0])
+	n = math.floor(uniform(0,G.shape[0]))
 
 	ax1.imshow(G[n,0,:,:],cmap='gray')
 	ax1.set_title('Input_%s'%i)
@@ -203,14 +207,16 @@ for i in range(G.shape[0]*0.2):
 	plt.title(titlestr)
 	plt.grid(b=False)
 
-	outDir = 'results/Test4/'
-	mkdir_p(outDir)
+
 	plt.savefig(outDir+'sample_%s.png'%i)
 #	plt.show()
 	plt.clf()
+
+# Print important parameters to logfile.log
 sys.stdout = Logger()
+print('Total samples = ', G.shape[0], ' Batch size =', BATCHSIZE, ' Epochs = ', EPOCH)
+print('MSE =',MSE[EPOCH-1],' val_MSE =',val_MSE[EPOCH-1],' loss =',loss[EPOCH-1],' val_loss =',loss[EPOCH-1])
+print("----------------------------------")
 print(model.summary())
-
-
 print("----------------------------------")
 # eof
