@@ -39,7 +39,7 @@ kernel2 = [3,3]
 kernel3 = [64,3]
 dropout = [0.05, 0.1]
 pooling = 2
-folder = "Test4/"
+folder = "Test4"
 outDir = 'results/'+folder
 
 
@@ -69,13 +69,14 @@ def converter(a,b):
 		a[i,0,:,:] = rgb2gray(b[i,:,:,:].transpose(1,2,0))
 
 # defining function to display and/or save graphs
-def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
+def plotGraph (filename, vecTrain, vecTest, nameVec):
 	# Plot	
 	print("--Now plotting ",nameVec,"--")
 	#Plot Loss
 	plt.plot(vecTrain)
 	plt.plot(vecTest)
-	titlestr = nameVec+" for "+str(nodes)+" hidden nodes with "+filename
+	filename= filename
+	titlestr = "Graphs for "+filename
 	plt.title(titlestr)
 	plt.ylabel(nameVec)
 	plt.xlabel('epoch')
@@ -83,9 +84,9 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 	strAnnotation = "val_"+nameVec+"="+str(vecTest[len(vecTest)-1])
 	plt.text(2,min(vecTrain),strAnnotation, fontsize=14)
 	if SAVE_GRAPHS == 1:
-		output_dir="results/"+str(nodes)+"nodes/"+str(EPOCH)+"Epoch"
+		output_dir=outDir+"/graphs/"
 		mkdir_p(output_dir) # Verifies if directory exists, and creates it if necessary
-		figurestr = output_dir+"/"+filename+"_"+nameVec+".png"
+		figurestr = output_dir+filename+"_"+nameVec+".png"
 		plt.savefig(figurestr)
 	if SHOW_GRAPHS == 1:
 		plt.show()
@@ -94,7 +95,7 @@ def plotGraph (filename, nodes, vecTrain, vecTest, nameVec):
 class Logger(object):
     def __init__(self):
         self.terminal = sys.stdout
-        self.log = open(outDir+"logfile.log", "a")
+        self.log = open(outDir+"/logfile.log", "a")
 
     def write(self, message):
         self.terminal.write(message)
@@ -113,6 +114,7 @@ class Logger(object):
 ########################
 # Create folder for tests
 mkdir_p(outDir)
+mkdir_p(outDir+'/samples')
 
 #### load cifar10 dataset
 (Y,labels),(Y_test, labels_test) = cifar10.load_data()
@@ -177,13 +179,13 @@ loss = numpy.array(history.history['loss'])
 val_loss = numpy.array(history.history['val_loss'])
 # Plotting
 if SHOW_ACC == 1:
-	plotGraph('ColorizingTest1',nodes=1, vecTrain=MSE, vecTest=val_MSE, nameVec="mean_squared_error")
+	plotGraph('Colorizing'+folder, vecTrain=MSE, vecTest=val_MSE, nameVec="MSE")
 if SHOW_LOSS == 1:
-	plotGraph('ColorizingTest1',nodes=1, vecTrain=loss, vecTest=val_loss, nameVec="loss")
+	plotGraph('Colorizing'+folder, vecTrain=loss, vecTest=val_loss, nameVec="loss")
 
 
 # Save model for future tests
-model.save(outDir+'my_model.h5')
+model.save(outDir+'/my_model.h5')
 
 # Getting a result sample for model
 pred = model.predict(G)
@@ -208,7 +210,7 @@ for i in range(math.floor(G.shape[0]*0.02)):
 	plt.grid(b=False)
 
 
-	plt.savefig(outDir+'sample_%s.png'%i)
+	plt.savefig(outDir+'/samples/sample_%s.png'%i)
 #	plt.show()
 	plt.clf()
 
