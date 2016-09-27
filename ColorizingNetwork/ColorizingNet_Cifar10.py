@@ -146,30 +146,33 @@ print(model.summary())
 history = model.fit(G,F,validation_data=(G_test,F_test),nb_epoch=EPOCH,batch_size=BATCHSIZE,verbose=0)
 
 #### Show results
-acc = numpy.array(history.history['acc'])
-val_acc = numpy.array(history.history['val_acc'])
+mean_squared_error = numpy.array(history.history['mean_squared_error'])
+val_mean_squared_error = numpy.array(history.history['val_mean_squared_error'])
 loss = numpy.array(history.history['loss'])
 val_loss = numpy.array(history.history['val_loss'])
 # Plotting
 if SHOW_ACC == 1:
-	plotGraph('ColorizingTest1',nodes=1, vecTrain=acc, vecTest=val_acc, nameVec="acc")
+	plotGraph('ColorizingTest1',nodes=1, vecTrain=mean_squared_error, vecTest=val_mean_squared_error, nameVec="mean_squared_error")
 if SHOW_LOSS == 1:
 	plotGraph('ColorizingTest1',nodes=1, vecTrain=loss, vecTest=val_loss, nameVec="loss")
 
-print('acc =',acc[EPOCH-1],' val_acc =',val_acc[EPOCH-1],' loss =',loss[EPOCH-1],' val_loss =',loss[EPOCH-1])
+print('mean_squared_error =',acc[EPOCH-1],' val_mean_squared_error =',val_mean_squared_error[EPOCH-1],' loss =',loss[EPOCH-1],' val_loss =',loss[EPOCH-1])
 
 # Getting a result sample for model
 pred = model.predict(G)
 plt.imshow(G[120,0,:,:],cmap='gray')
-mkdir_p('results/Test2')
-plt.savefig('results/Test2/input.png')
+outDir = 'results/Test2/'
+mkdir_p(outDir)
+plt.savefig(outDir+'input.png')
 plt.show()
 l = pred[120].transpose(1,2,0)
 plt.imshow(l)
 titlestr = 'Epochs='+str(EPOCH)
 plt.title(titlestr)
-plt.savefig('results/Test2/output.png')
+plt.savefig(outDir+'output.png')
 plt.show()
+plt.imshow(F[120].transpose(1,2,0))
+plt.savefig(outDir+'original.png')
 
 if SAVE_CSV:
 	print("Saving results to test.csv")
