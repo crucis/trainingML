@@ -7,6 +7,7 @@ from keras.layers.convolutional import Convolution2D, MaxPooling2D
 import matplotlib.pyplot as plt
 import numpy
 import time
+import math
 from datetime import timedelta
 
 
@@ -114,8 +115,8 @@ nImages = 512
 
 G = X[:nImages]
 F = Y[:nImages]
-G_test = X_test[:128]
-F_test = Y_test[:128]
+G_test = X_test[:math.ceil(nImages/5)]
+F_test = Y_test[:math.ceil(nImages/5)]
 
 #### Model
 print("----------------------------------")
@@ -145,6 +146,7 @@ if SHOW_LOSS == 1:
 
 print('MSE =',MSE[EPOCH-1],' val_MSE =',val_MSE[EPOCH-1],' loss =',loss[EPOCH-1],' val_loss =',loss[EPOCH-1])
 
+
 # Getting a result sample for model
 pred = model.predict(G)
 
@@ -154,18 +156,20 @@ for i in range(G.shape[0]):
     outDir = 'results/Test2/'
     mkdir_p(outDir)
     plt.savefig(outDir+'input_%s.png'%i)
-    plt.show()
+   # plt.show()
 
     l = pred[i].transpose(1,2,0)
     plt.imshow(l)
-    titlestr = 'Epochs='+str(EPOCH)+'MSE='+str(MSE)
+    titlestr = 'Epochs='+str(EPOCH)+'MSE='+str(MSE[EPOCH-1])
     plt.title(titlestr)
     plt.savefig(outDir+'output_%s.png'%i)
-    plt.show()
+    #plt.show()
 
     plt.imshow(F[i].transpose(1,2,0))
     plt.savefig(outDir+'original_%s.png'%i)
-    plt.show()
+    #plt.show()
+
+
 
 if SAVE_CSV:
 	print("Saving results to test.csv")
