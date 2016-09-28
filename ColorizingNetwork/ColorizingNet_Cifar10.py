@@ -39,7 +39,7 @@ kernel2 = [3,3]
 kernel3 = [64,3]
 dropout = [0.05, 0.1]
 pooling = 2
-folder = "Test4"
+folder = "Test5"
 outDir = 'results/'+folder
 
 
@@ -67,6 +67,7 @@ def rgb2gray(rgb):
 def converter(a,b):
 	for i in range(0,b.shape[0]):
 		a[i,0,:,:] = rgb2gray(b[i,:,:,:].transpose(1,2,0))
+
 
 # defining function to display and/or save graphs
 def plotGraph (filename, vecTrain, vecTest, nameVec):
@@ -120,8 +121,8 @@ mkdir_p(outDir+'/samples')
 (Y,labels),(Y_test, labels_test) = cifar10.load_data()
 
 # Choosing only boats
-#Y = Y[(labels == 8)[:,0]]
-#Y_test = Y_test[(labels_test == 8)[:,0]]
+Y = Y[(labels == 8)[:,0]]
+Y_test = Y_test[(labels_test == 8)[:,0]]
 
 X = numpy.zeros((Y.shape[0],1,Y.shape[2],Y.shape[3]))
 X_test = numpy.zeros((Y_test.shape[0],1,Y.shape[2],Y.shape[3]))
