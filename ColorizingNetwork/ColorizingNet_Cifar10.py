@@ -39,7 +39,7 @@ kernel2 = [3,3]
 kernel3 = [64,3]
 dropout = [0.05, 0.1]
 pooling = 2
-folder = "Test5"
+folder = "Test6"
 outDir = 'results/'+folder
 
 
@@ -188,7 +188,7 @@ if SHOW_LOSS == 1:
 # Save model for future tests
 model.save(outDir+'/my_model.h5')
 
-# Getting a result sample for model
+# Choose ramdonly samples from the database
 pred = model.predict(G)
 
 for i in range(math.floor(G.shape[0]*0.02)):
