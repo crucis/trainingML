@@ -34,12 +34,12 @@ SEED = 7
 numpy.random.seed(SEED)
 
 # Training Options
-BATCH_SIZE = 256
+BATCH_SIZE = 512
 EPOCH = 50
 nImages = pow(2,15)
 
 # Model Options
-folder = "Test2"
+folder = "Test3"
 outDir = 'results/'+folder
 
 
@@ -169,8 +169,8 @@ Y_test /= 255
 
 G = X[:nImages]
 F = Y[:nImages]
-G_test = X_test[:math.ceil(nImages/5)]
-F_test = Y_test[:math.ceil(nImages/5)]
+G_test = X_test[nImages:nImages+math.ceil(nImages/5)]
+F_test = Y_test[nImages:nImages+math.ceil(nImages/5)]
 
 
 #### Models
@@ -186,7 +186,7 @@ def generator_model():
 	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal', activation='relu'))
 	model.add(Convolution2D(16, 3, 3, border_mode='same', init='he_normal', activation='relu'))
 	model.add(Convolution2D(8, 3, 3, border_mode='same', init='he_normal', activation='relu'))
-	model.add(Convolution2D(3 , 3, 3, border_mode='same', init='he_normal', activation='tanh'))
+	model.add(Convolution2D(3 , 3, 3, border_mode='same', init='he_normal', activation='relu'))
 	model.add(Lambda(lambda x: K.clip(x, 0.0, 1.0)))
 	return model
 
@@ -209,7 +209,7 @@ def discriminator_model():
 	model.add(Dense(256,init='he_normal',activation='linear'))
 	model.add(LeakyReLU(alpha=.2))
 	model.add(Dropout(0.2))
-	model.add(Dense(1,init='he_normal',activation='sigmoid'))
+	model.add(Dense(1,init='he_normal',activation='tanh'))
 	return model
 
 # Generator with Discriminator
