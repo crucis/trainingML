@@ -36,7 +36,7 @@ numpy.random.seed(SEED)
 # Training Options
 BATCH_SIZE = 256
 EPOCH = 50
-nImages = pow(2,14)
+nImages = pow(2,15)
 
 # Model Options
 folder = "Test2"
