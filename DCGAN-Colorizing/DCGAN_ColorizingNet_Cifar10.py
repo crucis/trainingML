@@ -35,11 +35,11 @@ numpy.random.seed(SEED)
 
 # Training Options
 BATCH_SIZE = 256
-EPOCH = 5
+EPOCH = 50
 nImages = pow(2,14)
 
 # Model Options
-folder = "Test1"
+folder = "Test2"
 outDir = 'results/'+folder
 
 
@@ -127,7 +127,8 @@ def save3images(inp,out,original,folder):
 		titlestr = 'Epochs='+str(epoch)+' BATCH_SIZE='+str(BATCH_SIZE)
 		plt.title(titlestr)
 		plt.grid(b=False)
-
+		
+		mkdir_p(outDir+'/samples/epoch'+str(folder))
 
 		plt.savefig(outDir+'/samples/epoch'+str(folder)+'/sample_%s.png'%i)
 		plt.clf()
@@ -137,7 +138,6 @@ def save3images(inp,out,original,folder):
 ########################
 # Create folder for tests
 mkdir_p(outDir)
-mkdir_p(outDir+'/samples')
 
 #### load cifar10 dataset
 (Y,labels),(Y_test, labels_test) = cifar10.load_data()
@@ -250,12 +250,11 @@ for epoch in range(EPOCH):
 			#print("Training generator...")
 			g_loss = discriminator_on_generator.train_on_batch(BW_image_batch,[1]*BW_image_batch.shape[0])
 			print("Generator loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss),"For batch",index)
-		if index % 10 ==9:
-			print("Saving weights...")
-			generator.save_weights(outDir+'/generator_weights',True)
-			discriminator.save_weights(outDir+'/discriminator_weights',True)
-			print("Saving images")
-			save3images(BW_image_batch,generated_images,image_batch,epoch)
+	print("Saving weights...")
+	generator.save_weights(outDir+'/generator_weights',True)
+	discriminator.save_weights(outDir+'/discriminator_weights',True)
+	print("Saving images...")
+	save3images(BW_image_batch,generated_images,image_batch,epoch)
 
 	print("Elapsed time in epoch = ",str(timedelta(seconds=(time.time()-start_time))))
 	print("----------------------------------")
@@ -265,6 +264,7 @@ for epoch in range(EPOCH):
 # Print important parameters to logfile.log
 sys.stdout = Logger()
 print('Total samples = ', G.shape[0], ' Batch size =', BATCH_SIZE, ' Epochs = ', EPOCH)
+print("Generator loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss))
 #print('MSE =',MSE[EPOCH-1],' val_MSE =',val_MSE[EPOCH-1],' loss =',loss[EPOCH-1],' val_loss =',loss[EPOCH-1])
 print("----------------------------------")
 print("---DISCRIMINATOR---")
