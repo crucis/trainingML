@@ -4,6 +4,7 @@ from keras.layers.advanced_activations import LeakyReLU
 from keras.optimizers import Adam
 from keras.utils import np_utils
 from keras.datasets import cifar10
+from keras.layers.normalization import BatchNormalization
 #from keras.regularizers import l2, l1
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, UpSampling2D, Deconvolution2D
 from keras import backend as K
@@ -34,12 +35,12 @@ SEED = 7
 numpy.random.seed(SEED)
 
 # Training Options
-BATCH_SIZE = 512
+BATCH_SIZE = 256
 EPOCH = 50
 nImages = pow(2,15)
 
 # Model Options
-folder = "Test3"
+folder = "Test5"
 outDir = 'results/'+folder
 
 
@@ -109,7 +110,7 @@ class Logger(object):
         pass    
 
 def save3images(inp,out,original,folder):
-	for i in range(math.floor(inp.shape[0]*0.02)):
+	for i in range(math.floor(original.shape[0]*0.02)):
 		_,((ax1,ax2),(ax3,_)) = plt.subplots(2,2,sharey='row',sharex='col')
 
 		n = math.floor(uniform(0,inp.shape[0]))
@@ -117,8 +118,7 @@ def save3images(inp,out,original,folder):
 		ax1.imshow(inp[n,0,:,:],cmap='gray')
 		ax1.set_title('Input_%s'%i)
 
-		l = out[n].transpose(1,2,0)
-		ax2.imshow(l)
+		ax2.imshow(out[n].transpose(1,2,0))
 		ax2.set_title('Output_%s'%i)
 
 		ax3.imshow(original[n].transpose(1,2,0))
@@ -182,11 +182,14 @@ def generator_model():
 	model.add(Convolution2D(8, 3, 3, border_mode='same', init='he_normal', input_shape=(1, 32, 32), activation='relu'))
 	model.add(Convolution2D(16, 3, 3, border_mode='same', init='he_normal', activation='relu'))
 	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal', activation='relu'))
+	model.add(BatchNormalization())
 	model.add(Convolution2D(64, 3, 3, border_mode='same', init='he_normal', activation='relu'))
+	model.add(BatchNormalization())	
 	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal', activation='relu'))
+	model.add(BatchNormalization())
 	model.add(Convolution2D(16, 3, 3, border_mode='same', init='he_normal', activation='relu'))
 	model.add(Convolution2D(8, 3, 3, border_mode='same', init='he_normal', activation='relu'))
-	model.add(Convolution2D(3 , 3, 3, border_mode='same', init='he_normal', activation='relu'))
+	model.add(Convolution2D(3 , 3, 3, border_mode='same', init='he_normal', activation='tanh'))
 	model.add(Lambda(lambda x: K.clip(x, 0.0, 1.0)))
 	return model
 
@@ -206,6 +209,9 @@ def discriminator_model():
 	model.add(LeakyReLU(alpha=.2)) 
 	model.add(MaxPooling2D(pool_size=(2,2)))
 	model.add(Flatten())
+	model.add(Dense(512,init='he_normal',activation='linear'))
+	model.add(LeakyReLU(alpha=.2))
+	model.add(Dropout(0.2))
 	model.add(Dense(256,init='he_normal',activation='linear'))
 	model.add(LeakyReLU(alpha=.2))
 	model.add(Dropout(0.2))
@@ -238,12 +244,21 @@ for epoch in range(EPOCH):
 	start_time = time.time()
 	for index in range(int(F.shape[0]/BATCH_SIZE)):
 		image_batch = F[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
-		BW_image_batch = G[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
+		if index == 0:
+			BW_image_batch = G[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
+		elif index == F.shape[0]/BATCH_SIZE-1:
+			BW_image_batch = G[(index-1)*BATCH_SIZE:index*BATCH_SIZE]
+		else:
+			BW_image_batch = G[(index-1)*BATCH_SIZE:(index+1)*BATCH_SIZE]
+
 		#print("Generating images...")
 		generated_images = generator.predict(BW_image_batch)
-		#print("Generated...")
+		# Creating inputs for train_on_batch
 		M = numpy.concatenate((image_batch,generated_images))
 		z = [1]*image_batch.shape[0]+[0]*generated_images.shape[0]
+		# Shuffling M and z
+		#c = numpy.c_[M,z]
+		#c = np.random.shuffle(c)
 		#print("Training discriminator...")
 		d_loss = discriminator.train_on_batch(M,z)
 		for j in range(1):
@@ -265,7 +280,6 @@ for epoch in range(EPOCH):
 sys.stdout = Logger()
 print('Total samples = ', G.shape[0], ' Batch size =', BATCH_SIZE, ' Epochs = ', EPOCH)
 print("Generator loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss))
-#print('MSE =',MSE[EPOCH-1],' val_MSE =',val_MSE[EPOCH-1],' loss =',loss[EPOCH-1],' val_loss =',loss[EPOCH-1])
 print("----------------------------------")
 print("---DISCRIMINATOR---")
 print(discriminator.summary())
