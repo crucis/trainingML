@@ -40,7 +40,7 @@ EPOCH = 50
 nImages = pow(2,15)
 
 # Model Options
-folder = "Test5"
+folder = "Test6"
 outDir = 'results/'+folder
 
 
@@ -113,7 +113,7 @@ def save3images(inp,out,original,folder):
 	for i in range(math.floor(original.shape[0]*0.02)):
 		_,((ax1,ax2),(ax3,_)) = plt.subplots(2,2,sharey='row',sharex='col')
 
-		n = math.floor(uniform(0,inp.shape[0]))
+		n = math.floor(uniform(0,original.shape[0]))
 
 		ax1.imshow(inp[n,0,:,:],cmap='gray')
 		ax1.set_title('Input_%s'%i)
@@ -233,7 +233,7 @@ discriminator_on_generator = generator_containing_discriminator(generator,discri
 # Optimizer
 adam=Adam(lr=0.0002, beta_1=0.5, beta_2=0.999, epsilon=1e-08)
 # Compile generator
-generator.compile(loss='binary_crossentropy',optimizer=adam)
+generator.compile(loss='mean_squared_error',optimizer='nadam')
 discriminator_on_generator.compile(loss='binary_crossentropy',optimizer=adam)
 discriminator.trainable = True
 discriminator.compile(loss='binary_crossentropy',optimizer=adam)
@@ -257,8 +257,10 @@ for epoch in range(EPOCH):
 		M = numpy.concatenate((image_batch,generated_images))
 		z = [1]*image_batch.shape[0]+[0]*generated_images.shape[0]
 		# Shuffling M and z
-		#c = numpy.c_[M,z]
-		#c = np.random.shuffle(c)
+		perm = numpy.random.permutation(len(z))
+		M = M[perm]
+		z = numpy.array(z)
+		z = z[perm]
 		#print("Training discriminator...")
 		d_loss = discriminator.train_on_batch(M,z)
 		for j in range(1):
