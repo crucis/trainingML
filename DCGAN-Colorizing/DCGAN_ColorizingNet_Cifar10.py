@@ -40,7 +40,7 @@ EPOCH = 50
 nImages = pow(2,15)
 
 # Model Options
-folder = "Test6"
+folder = "Test7"
 outDir = 'results/'+folder
 
 
@@ -189,7 +189,7 @@ def generator_model():
 	model.add(BatchNormalization())
 	model.add(Convolution2D(16, 3, 3, border_mode='same', init='he_normal', activation='relu'))
 	model.add(Convolution2D(8, 3, 3, border_mode='same', init='he_normal', activation='relu'))
-	model.add(Convolution2D(3 , 3, 3, border_mode='same', init='he_normal', activation='tanh'))
+	model.add(Convolution2D(3 , 3, 3, border_mode='same', init='he_normal', activation='relu'))
 	model.add(Lambda(lambda x: K.clip(x, 0.0, 1.0)))
 	return model
 
@@ -215,7 +215,7 @@ def discriminator_model():
 	model.add(Dense(256,init='he_normal',activation='linear'))
 	model.add(LeakyReLU(alpha=.2))
 	model.add(Dropout(0.2))
-	model.add(Dense(1,init='he_normal',activation='tanh'))
+	model.add(Dense(1,init='he_normal',activation='sigmoid'))
 	return model
 
 # Generator with Discriminator
@@ -244,13 +244,8 @@ for epoch in range(EPOCH):
 	start_time = time.time()
 	for index in range(int(F.shape[0]/BATCH_SIZE)):
 		image_batch = F[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
-		if index == 0:
-			BW_image_batch = G[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
-		elif index == F.shape[0]/BATCH_SIZE-1:
-			BW_image_batch = G[(index-1)*BATCH_SIZE:index*BATCH_SIZE]
-		else:
-			BW_image_batch = G[(index-1)*BATCH_SIZE:(index+1)*BATCH_SIZE]
-
+		BW_image_batch = G[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
+		gAloneloss = generator.train_on_batch(BW_image_batch,image_batch)
 		#print("Generating images...")
 		generated_images = generator.predict(BW_image_batch)
 		# Creating inputs for train_on_batch
