@@ -136,6 +136,8 @@ def save3images(inp,out,original,folder):
 ########################
 #PROGRAM
 ########################
+
+sys.stdout = Logger()
 # Create folder for tests
 mkdir_p(outDir)
 
@@ -236,18 +238,21 @@ adam=Adam(lr=0.0002, beta_1=0.5, beta_2=0.999, epsilon=1e-08)
 generator.compile(loss='mean_squared_error',optimizer='nadam')
 discriminator_on_generator.compile(loss='binary_crossentropy',optimizer=adam)
 discriminator.trainable = True
-discriminator.compile(loss='binary_crossentropy',optimizer=adam)
+discriminator.compile(loss='binary_crossentropy',optimizer='nadam')
 
 for epoch in range(EPOCH):
 	print("Epoch is", epoch,"of",EPOCH)
 	print("Number of batches",int(F.shape[0]/BATCH_SIZE))
 	start_time = time.time()
+
+
 	for index in range(int(F.shape[0]/BATCH_SIZE)):
 		image_batch = F[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
 		BW_image_batch = G[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
 		gAlone_loss = generator.train_on_batch(BW_image_batch,image_batch)
 		#print("Generating images...")
 		generated_images = generator.predict(BW_image_batch)
+
 		# Creating inputs for train_on_batch
 		M = numpy.concatenate((image_batch,generated_images))
 		z = [1]*image_batch.shape[0]+[0]*generated_images.shape[0]
@@ -264,9 +269,9 @@ for epoch in range(EPOCH):
 			g_loss = discriminator_on_generator.train_on_batch(BW_image_batch,[1]*BW_image_batch.shape[0])
 			print("Generator loss %.4f"%gAlone_loss,"GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss+gAlone_loss),"For batch",index)
 	# Test if discriminator is working
-	print("Imagem REAL=",discriminator.predict(image_batch[index]))
-	print("Imagen FAKE=",discriminator.predict(generated_images[index]))
-
+	print("DISCRIMINATOR_Imagem REAL=",discriminator.predict(image_batch)[index])
+	print("DISCRIMINATOR_Imagem FAKE=",discriminator.predict(generator.predict(BW_image_batch))[index])
+	print("GAN_Imagem FAKE=",discriminator_on_generator.predict(BW_image_batch)[index])
 
 	print("Saving weights...")
 	generator.save_weights(outDir+'/generator_weights',True)
@@ -280,7 +285,7 @@ for epoch in range(EPOCH):
 
 
 # Print important parameters to logfile.log
-sys.stdout = Logger()
+
 print('Total samples = ', G.shape[0], ' Batch size =', BATCH_SIZE, ' Epochs = ', EPOCH)
 print("Generator loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss))
 print("----------------------------------")
