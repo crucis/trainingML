@@ -40,7 +40,7 @@ EPOCH = 50
 nImages = pow(2,15)
 
 # Model Options
-folder = "Test7"
+folder = "Test8"
 outDir = 'results/'+folder
 
 
@@ -245,7 +245,7 @@ for epoch in range(EPOCH):
 	for index in range(int(F.shape[0]/BATCH_SIZE)):
 		image_batch = F[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
 		BW_image_batch = G[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
-		gAloneloss = generator.train_on_batch(BW_image_batch,image_batch)
+		gAlone_loss = generator.train_on_batch(BW_image_batch,image_batch)
 		#print("Generating images...")
 		generated_images = generator.predict(BW_image_batch)
 		# Creating inputs for train_on_batch
@@ -258,10 +258,16 @@ for epoch in range(EPOCH):
 		z = z[perm]
 		#print("Training discriminator...")
 		d_loss = discriminator.train_on_batch(M,z)
+
 		for j in range(1):
 			#print("Training generator...")
 			g_loss = discriminator_on_generator.train_on_batch(BW_image_batch,[1]*BW_image_batch.shape[0])
-			print("Generator loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss),"For batch",index)
+			print("Generator loss %.4f"%gAlone_loss,"GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss+gAlone_loss),"For batch",index)
+	# Test if discriminator is working
+	print("Imagem REAL=",discriminator.predict(image_batch[index]))
+	print("Imagen FAKE=",discriminator.predict(generated_images[index]))
+
+
 	print("Saving weights...")
 	generator.save_weights(outDir+'/generator_weights',True)
 	discriminator.save_weights(outDir+'/discriminator_weights',True)
