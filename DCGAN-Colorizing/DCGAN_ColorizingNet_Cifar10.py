@@ -5,6 +5,7 @@ from keras.optimizers import Adam
 from keras.utils import np_utils
 from keras.datasets import cifar10
 from keras.layers.normalization import BatchNormalization
+from keras.regularizers import l2
 #from keras.regularizers import l2, l1
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, UpSampling2D, Deconvolution2D
 from keras import backend as K
@@ -15,6 +16,7 @@ import math
 import sys
 import time
 from datetime import timedelta
+import subprocess
 
 
 
@@ -40,7 +42,7 @@ EPOCH = 50
 nImages = pow(2,15)
 
 # Model Options
-folder = "Test8"
+folder = "Test11"
 outDir = 'results/'+folder
 
 
@@ -72,7 +74,7 @@ def converter(a,b):
 
 # defining function to display and/or save graphs
 def plotGraph (filename, vecTrain, vecTest, nameVec):
-	# Plot	
+	# Plot
 	print("--Now plotting ",nameVec,"--")
 	#Plot Loss
 	plt.plot(vecTrain)
@@ -101,13 +103,13 @@ class Logger(object):
 
     def write(self, message):
         self.terminal.write(message)
-        self.log.write(message)  
+        self.log.write(message)
 
     def flush(self):
         #this flush method is needed for python 3 compatibility.
         #this handles the flush command by doing nothing.
         #you might want to specify some extra behavior here.
-        pass    
+        pass
 
 def save3images(inp,out,original,folder):
 	for i in range(math.floor(original.shape[0]*0.02)):
@@ -127,7 +129,7 @@ def save3images(inp,out,original,folder):
 		titlestr = 'Epochs='+str(epoch)+' BATCH_SIZE='+str(BATCH_SIZE)
 		plt.title(titlestr)
 		plt.grid(b=False)
-		
+
 		mkdir_p(outDir+'/samples/epoch'+str(folder))
 
 		plt.savefig(outDir+'/samples/epoch'+str(folder)+'/sample_%s.png'%i)
@@ -136,11 +138,10 @@ def save3images(inp,out,original,folder):
 ########################
 #PROGRAM
 ########################
-
-sys.stdout = Logger()
 # Create folder for tests
 mkdir_p(outDir)
-
+# Logger
+sys.stdout = Logger()
 #### load cifar10 dataset
 (Y,labels),(Y_test, labels_test) = cifar10.load_data()
 
@@ -186,7 +187,7 @@ def generator_model():
 	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal', activation='relu'))
 	model.add(BatchNormalization())
 	model.add(Convolution2D(64, 3, 3, border_mode='same', init='he_normal', activation='relu'))
-	model.add(BatchNormalization())	
+	model.add(BatchNormalization())
 	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal', activation='relu'))
 	model.add(BatchNormalization())
 	model.add(Convolution2D(16, 3, 3, border_mode='same', init='he_normal', activation='relu'))
@@ -198,23 +199,23 @@ def generator_model():
 # DISCRIMINATOR
 def discriminator_model():
 	model = Sequential()
-	model.add(Convolution2D(8,3,3,border_mode='same',init='he_normal',input_shape=(3,32,32),activation='linear'))
-	model.add(LeakyReLU(alpha=.2)) 
+	model.add(Convolution2D(8,3,3,border_mode='same',init='he_normal',input_shape=(3,32,32),activation='linear',W_regularizer = l2(0.001)))
+	model.add(LeakyReLU(alpha=.2))
 	model.add(MaxPooling2D(pool_size=(2,2)))
-	model.add(Convolution2D(16,3,3,border_mode='same',init='he_normal',activation='linear'))
-	model.add(LeakyReLU(alpha=.2)) 
+	model.add(Convolution2D(16,3,3,border_mode='same',init='he_normal',activation='linear',W_regularizer = l2(0.001)))
+	model.add(LeakyReLU(alpha=.2))
 	model.add(MaxPooling2D(pool_size=(2,2)))
-	model.add(Convolution2D(32,3,3,border_mode='same',init='he_normal',activation='linear'))
-	model.add(LeakyReLU(alpha=.2)) 
+	model.add(Convolution2D(32,3,3,border_mode='same',init='he_normal',activation='linear',W_regularizer = l2(0.001)))
+	model.add(LeakyReLU(alpha=.2))
 	model.add(MaxPooling2D(pool_size=(2,2)))
-	model.add(Convolution2D(64,3,3,border_mode='same',init='he_normal',activation='linear'))
-	model.add(LeakyReLU(alpha=.2)) 
+	model.add(Convolution2D(64,3,3,border_mode='same',init='he_normal',activation='linear',W_regularizer = l2(0.001)))
+	model.add(LeakyReLU(alpha=.2))
 	model.add(MaxPooling2D(pool_size=(2,2)))
 	model.add(Flatten())
-	model.add(Dense(512,init='he_normal',activation='linear'))
+	model.add(Dense(512,init='he_normal',activation='linear',W_regularizer = l2(0.001)))
 	model.add(LeakyReLU(alpha=.2))
 	model.add(Dropout(0.2))
-	model.add(Dense(256,init='he_normal',activation='linear'))
+	model.add(Dense(256,init='he_normal',activation='linear',W_regularizer = l2(0.001)))
 	model.add(LeakyReLU(alpha=.2))
 	model.add(Dropout(0.2))
 	model.add(Dense(1,init='he_normal',activation='sigmoid'))
@@ -231,14 +232,20 @@ def generator_containing_discriminator(generator,discriminator):
 #### Training
 discriminator = discriminator_model()
 generator = generator_model()
+# LOADING GENERATOR FROM TEST8
+generator.load_weights("results/Test8/generator_weights")
 discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
 # Optimizer
 adam=Adam(lr=0.0002, beta_1=0.5, beta_2=0.999, epsilon=1e-08)
 # Compile generator
 generator.compile(loss='mean_squared_error',optimizer='nadam')
 discriminator_on_generator.compile(loss='binary_crossentropy',optimizer=adam)
-discriminator.trainable = True
+#discriminator.trainable = True
 discriminator.compile(loss='binary_crossentropy',optimizer='nadam')
+
+# Initialize d_loss
+d_predict_real = 0
+d_loss = 1
 
 for epoch in range(EPOCH):
 	print("Epoch is", epoch,"of",EPOCH)
@@ -249,7 +256,7 @@ for epoch in range(EPOCH):
 	for index in range(int(F.shape[0]/BATCH_SIZE)):
 		image_batch = F[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
 		BW_image_batch = G[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
-		gAlone_loss = generator.train_on_batch(BW_image_batch,image_batch)
+		#gAlone_loss = generator.train_on_batch(BW_image_batch,image_batch)
 		#print("Generating images...")
 		generated_images = generator.predict(BW_image_batch)
 
@@ -261,15 +268,25 @@ for epoch in range(EPOCH):
 		M = M[perm]
 		z = numpy.array(z)
 		z = z[perm]
+
 		#print("Training discriminator...")
-		d_loss = discriminator.train_on_batch(M,z)
+        # Does not train discriminator if it is close to overfitting
+		if d_loss < 0.1:
+			discriminator.trainable = False
+		else:
+			discriminator.trainable = True
+			d_loss = discriminator.train_on_batch(M,z)
+
+
 
 		for j in range(1):
 			#print("Training generator...")
 			g_loss = discriminator_on_generator.train_on_batch(BW_image_batch,[1]*BW_image_batch.shape[0])
-			print("Generator loss %.4f"%gAlone_loss,"GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss+gAlone_loss),"For batch",index)
+			print("GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss),"For batch",index)
+            #print("Generator loss %.4f"%gAlone_loss,"GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss+gAlone_loss),"For batch",index)
 	# Test if discriminator is working
-	print("DISCRIMINATOR_Imagem REAL=",discriminator.predict(image_batch)[index])
+	d_predict_real = discriminator.predict(image_batch)[index]
+	print("DISCRIMINATOR_Imagem REAL=",d_predict_real)
 	print("DISCRIMINATOR_Imagem FAKE=",discriminator.predict(generator.predict(BW_image_batch))[index])
 	print("GAN_Imagem FAKE=",discriminator_on_generator.predict(BW_image_batch)[index])
 
@@ -298,4 +315,6 @@ print("----------------------------------")
 print("---GAN---")
 print(discriminator_on_generator.summary())
 print("----------------------------------")
+subprocess.call(['speech-dispatcher'])        #start speech dispatcher
+subprocess.call(['spd-say', '"your process has finished"'])
 # eof
