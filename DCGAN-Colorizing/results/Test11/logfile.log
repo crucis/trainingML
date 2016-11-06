@@ -1,0 +1,424 @@
+----------------------------------
+Epoch is 0 of 50
+Number of batches 19
+GAN loss 23.6574  Discriminator loss 18.5750 Total: 42.2324 For batch 0
+----------------------------------
+Epoch is 0 of 50
+Number of batches 19
+GAN loss 23.6574  Discriminator loss 18.5750 Total: 42.2324 For batch 0
+----------------------------------
+Epoch is 0 of 50
+Number of batches 19
+GAN loss 8.7039  Discriminator loss 2.6298 Total: 11.3337 For batch 0
+GAN loss 2.9398  Discriminator loss 5.1386 Total: 8.0784 For batch 1
+GAN loss 2.3048  Discriminator loss 2.5398 Total: 4.8446 For batch 2
+GAN loss 2.4393  Discriminator loss 2.4498 Total: 4.8892 For batch 3
+GAN loss 2.3705  Discriminator loss 2.4235 Total: 4.7940 For batch 4
+GAN loss 2.3968  Discriminator loss 2.4024 Total: 4.7993 For batch 5
+GAN loss 2.3561  Discriminator loss 2.3825 Total: 4.7386 For batch 6
+GAN loss 2.3630  Discriminator loss 2.3710 Total: 4.7340 For batch 7
+GAN loss 2.3247  Discriminator loss 2.3522 Total: 4.6769 For batch 8
+GAN loss 2.3277  Discriminator loss 2.3381 Total: 4.6658 For batch 9
+GAN loss 2.3274  Discriminator loss 2.3077 Total: 4.6351 For batch 10
+GAN loss 2.2786  Discriminator loss 2.2992 Total: 4.5778 For batch 11
+GAN loss 2.2925  Discriminator loss 2.2983 Total: 4.5909 For batch 12
+GAN loss 2.2378  Discriminator loss 2.2795 Total: 4.5173 For batch 13
+GAN loss 2.2452  Discriminator loss 2.2577 Total: 4.5029 For batch 14
+GAN loss 2.2125  Discriminator loss 2.2442 Total: 4.4567 For batch 15
+GAN loss 2.1698  Discriminator loss 2.2197 Total: 4.3895 For batch 16
+GAN loss 2.1732  Discriminator loss 2.1908 Total: 4.3640 For batch 17
+GAN loss 2.1506  Discriminator loss 2.1805 Total: 4.3312 For batch 18
+DISCRIMINATOR_Imagem REAL= [ 0.5339421]
+DISCRIMINATOR_Imagem FAKE= [ 0.53546989]
+GAN_Imagem FAKE= [ 0.53546989]
+Saving weights...
+Saving images...
+Elapsed time in epoch =  0:05:41.515989
+----------------------------------
+Epoch is 1 of 50
+Number of batches 19
+GAN loss 2.1443  Discriminator loss 2.1553 Total: 4.2996 For batch 0
+GAN loss 2.1290  Discriminator loss 2.1334 Total: 4.2624 For batch 1
+GAN loss 2.1058  Discriminator loss 2.1155 Total: 4.2213 For batch 2
+GAN loss 2.1497  Discriminator loss 2.0998 Total: 4.2495 For batch 3
+GAN loss 2.0122  Discriminator loss 2.0845 Total: 4.0967 For batch 4
+GAN loss 2.3079  Discriminator loss 2.0791 Total: 4.3870 For batch 5
+GAN loss 1.7908  Discriminator loss 2.0806 Total: 3.8714 For batch 6
+GAN loss 2.2550  Discriminator loss 2.0999 Total: 4.3549 For batch 7
+GAN loss 2.0006  Discriminator loss 2.0443 Total: 4.0449 For batch 8
+GAN loss 1.9783  Discriminator loss 1.9956 Total: 3.9738 For batch 9
+GAN loss 2.0037  Discriminator loss 1.9733 Total: 3.9770 For batch 10
+GAN loss 1.9699  Discriminator loss 1.9511 Total: 3.9210 For batch 11
+GAN loss 2.0739  Discriminator loss 1.9518 Total: 4.0257 For batch 12
+GAN loss 1.9263  Discriminator loss 1.9399 Total: 3.8663 For batch 13
+----------------------------------
+Epoch is 0 of 50
+Number of batches 19
+GAN loss 8.7039  Discriminator loss 2.6298 Total: 11.3337 For batch 0
+GAN loss 2.9398  Discriminator loss 5.1386 Total: 8.0784 For batch 1
+GAN loss 2.3048  Discriminator loss 2.5398 Total: 4.8446 For batch 2
+GAN loss 2.4393  Discriminator loss 2.4498 Total: 4.8892 For batch 3
+GAN loss 2.3705  Discriminator loss 2.4235 Total: 4.7940 For batch 4
+----------------------------------
+Epoch is 0 of 50
+Number of batches 19
+GAN loss 8.7039  Discriminator loss 2.6298 Total: 11.3337 For batch 0
+GAN loss 2.9398  Discriminator loss 5.1386 Total: 8.0784 For batch 1
+GAN loss 2.3048  Discriminator loss 2.5398 Total: 4.8446 For batch 2
+GAN loss 2.4393  Discriminator loss 2.4498 Total: 4.8892 For batch 3
+GAN loss 2.3705  Discriminator loss 2.4235 Total: 4.7940 For batch 4
+GAN loss 2.3968  Discriminator loss 2.4024 Total: 4.7993 For batch 5
+GAN loss 2.3561  Discriminator loss 2.3825 Total: 4.7386 For batch 6
+GAN loss 2.3630  Discriminator loss 2.3710 Total: 4.7340 For batch 7
+GAN loss 2.3247  Discriminator loss 2.3522 Total: 4.6769 For batch 8
+GAN loss 2.3277  Discriminator loss 2.3381 Total: 4.6658 For batch 9
+GAN loss 2.3274  Discriminator loss 2.3077 Total: 4.6351 For batch 10
+GAN loss 2.2786  Discriminator loss 2.2992 Total: 4.5778 For batch 11
+GAN loss 2.2925  Discriminator loss 2.2983 Total: 4.5909 For batch 12
+GAN loss 2.2378  Discriminator loss 2.2795 Total: 4.5173 For batch 13
+GAN loss 2.2452  Discriminator loss 2.2577 Total: 4.5029 For batch 14
+GAN loss 2.2125  Discriminator loss 2.2442 Total: 4.4567 For batch 15
+GAN loss 2.1698  Discriminator loss 2.2197 Total: 4.3895 For batch 16
+GAN loss 2.1732  Discriminator loss 2.1908 Total: 4.3640 For batch 17
+GAN loss 2.1506  Discriminator loss 2.1805 Total: 4.3312 For batch 18
+DISCRIMINATOR_Imagem REAL= [ 0.5339421]
+DISCRIMINATOR_Imagem FAKE= [ 0.53546989]
+GAN_Imagem FAKE= [ 0.53546989]
+Saving weights...
+Saving images...
+Elapsed time in epoch =  0:06:17.767701
+----------------------------------
+Epoch is 1 of 50
+Number of batches 19
+GAN loss 2.1443  Discriminator loss 2.1553 Total: 4.2996 For batch 0
+GAN loss 2.1290  Discriminator loss 2.1334 Total: 4.2624 For batch 1
+GAN loss 2.1058  Discriminator loss 2.1155 Total: 4.2213 For batch 2
+GAN loss 2.1497  Discriminator loss 2.0998 Total: 4.2495 For batch 3
+GAN loss 2.0122  Discriminator loss 2.0845 Total: 4.0967 For batch 4
+GAN loss 2.3079  Discriminator loss 2.0791 Total: 4.3870 For batch 5
+GAN loss 1.7908  Discriminator loss 2.0806 Total: 3.8714 For batch 6
+GAN loss 2.2550  Discriminator loss 2.0999 Total: 4.3549 For batch 7
+GAN loss 2.0006  Discriminator loss 2.0443 Total: 4.0449 For batch 8
+GAN loss 1.9783  Discriminator loss 1.9956 Total: 3.9738 For batch 9
+GAN loss 2.0037  Discriminator loss 1.9733 Total: 3.9770 For batch 10
+GAN loss 1.9699  Discriminator loss 1.9511 Total: 3.9210 For batch 11
+GAN loss 2.0739  Discriminator loss 1.9518 Total: 4.0257 For batch 12
+GAN loss 1.9263  Discriminator loss 1.9399 Total: 3.8663 For batch 13
+GAN loss 2.0292  Discriminator loss 1.9286 Total: 3.9578 For batch 14
+GAN loss 1.9294  Discriminator loss 1.9082 Total: 3.8377 For batch 15
+GAN loss 1.9068  Discriminator loss 1.8762 Total: 3.7831 For batch 16
+GAN loss 1.9029  Discriminator loss 1.8530 Total: 3.7559 For batch 17
+GAN loss 1.8960  Discriminator loss 1.8415 Total: 3.7375 For batch 18
+DISCRIMINATOR_Imagem REAL= [ 0.47934291]
+DISCRIMINATOR_Imagem FAKE= [ 0.51057917]
+GAN_Imagem FAKE= [ 0.51057917]
+Saving weights...
+Saving images...
+Elapsed time in epoch =  0:06:52.808837
+----------------------------------
+Epoch is 2 of 50
+Number of batches 19
+GAN loss 1.9454  Discriminator loss 1.8143 Total: 3.7597 For batch 0
+GAN loss 1.9178  Discriminator loss 1.7993 Total: 3.7171 For batch 1
+GAN loss 1.9763  Discriminator loss 1.7806 Total: 3.7569 For batch 2
+GAN loss 1.7989  Discriminator loss 1.7522 Total: 3.5511 For batch 3
+GAN loss 1.7418  Discriminator loss 1.8136 Total: 3.5555 For batch 4
+GAN loss 3.1292  Discriminator loss 1.8945 Total: 5.0237 For batch 5
+GAN loss 1.6173  Discriminator loss 2.1768 Total: 3.7941 For batch 6
+GAN loss 1.7619  Discriminator loss 1.8178 Total: 3.5797 For batch 7
+GAN loss 1.8082  Discriminator loss 1.7625 Total: 3.5707 For batch 8
+GAN loss 1.8449  Discriminator loss 1.7417 Total: 3.5866 For batch 9
+GAN loss 1.8582  Discriminator loss 1.7193 Total: 3.5775 For batch 10
+GAN loss 1.8753  Discriminator loss 1.6942 Total: 3.5695 For batch 11
+GAN loss 1.7965  Discriminator loss 1.6859 Total: 3.4824 For batch 12
+----------------------------------
+Epoch is 0 of 50
+Number of batches 19
+GAN loss 8.7039  Discriminator loss 2.6298 Total: 11.3337 For batch 0
+GAN loss 2.9398  Discriminator loss 5.1386 Total: 8.0784 For batch 1
+GAN loss 2.3048  Discriminator loss 2.5398 Total: 4.8446 For batch 2
+GAN loss 2.4393  Discriminator loss 2.4498 Total: 4.8892 For batch 3
+GAN loss 2.3705  Discriminator loss 2.4235 Total: 4.7940 For batch 4
+GAN loss 2.3968  Discriminator loss 2.4024 Total: 4.7993 For batch 5
+GAN loss 2.3561  Discriminator loss 2.3825 Total: 4.7386 For batch 6
+GAN loss 2.3630  Discriminator loss 2.3710 Total: 4.7340 For batch 7
+GAN loss 2.3247  Discriminator loss 2.3522 Total: 4.6769 For batch 8
+GAN loss 2.3277  Discriminator loss 2.3381 Total: 4.6658 For batch 9
+GAN loss 2.3274  Discriminator loss 2.3077 Total: 4.6351 For batch 10
+GAN loss 2.2786  Discriminator loss 2.2992 Total: 4.5778 For batch 11
+GAN loss 2.2925  Discriminator loss 2.2983 Total: 4.5909 For batch 12
+GAN loss 2.2378  Discriminator loss 2.2795 Total: 4.5173 For batch 13
+GAN loss 2.2452  Discriminator loss 2.2577 Total: 4.5029 For batch 14
+GAN loss 2.2125  Discriminator loss 2.2442 Total: 4.4567 For batch 15
+GAN loss 2.1698  Discriminator loss 2.2197 Total: 4.3895 For batch 16
+GAN loss 2.1732  Discriminator loss 2.1908 Total: 4.3640 For batch 17
+GAN loss 2.1506  Discriminator loss 2.1805 Total: 4.3312 For batch 18
+DISCRIMINATOR_Imagem REAL= [ 0.5339421]
+DISCRIMINATOR_Imagem FAKE= [ 0.53546989]
+GAN_Imagem FAKE= [ 0.53546989]
+Saving weights...
+Saving images...
+Elapsed time in epoch =  0:08:34.849835
+----------------------------------
+Epoch is 1 of 50
+Number of batches 19
+GAN loss 2.1443  Discriminator loss 2.1553 Total: 4.2996 For batch 0
+GAN loss 2.1290  Discriminator loss 2.1334 Total: 4.2624 For batch 1
+GAN loss 2.1058  Discriminator loss 2.1155 Total: 4.2213 For batch 2
+GAN loss 2.1497  Discriminator loss 2.0998 Total: 4.2495 For batch 3
+GAN loss 2.0122  Discriminator loss 2.0845 Total: 4.0967 For batch 4
+GAN loss 2.3079  Discriminator loss 2.0791 Total: 4.3870 For batch 5
+GAN loss 1.7908  Discriminator loss 2.0806 Total: 3.8714 For batch 6
+GAN loss 2.2550  Discriminator loss 2.0999 Total: 4.3549 For batch 7
+GAN loss 2.0006  Discriminator loss 2.0443 Total: 4.0449 For batch 8
+GAN loss 1.9783  Discriminator loss 1.9956 Total: 3.9738 For batch 9
+GAN loss 2.0037  Discriminator loss 1.9733 Total: 3.9770 For batch 10
+GAN loss 1.9699  Discriminator loss 1.9511 Total: 3.9210 For batch 11
+GAN loss 2.0739  Discriminator loss 1.9518 Total: 4.0257 For batch 12
+GAN loss 1.9263  Discriminator loss 1.9399 Total: 3.8663 For batch 13
+GAN loss 2.0292  Discriminator loss 1.9286 Total: 3.9578 For batch 14
+GAN loss 1.9294  Discriminator loss 1.9082 Total: 3.8377 For batch 15
+GAN loss 1.9068  Discriminator loss 1.8762 Total: 3.7831 For batch 16
+GAN loss 1.9029  Discriminator loss 1.8530 Total: 3.7559 For batch 17
+GAN loss 1.8960  Discriminator loss 1.8415 Total: 3.7375 For batch 18
+DISCRIMINATOR_Imagem REAL= [ 0.47934291]
+DISCRIMINATOR_Imagem FAKE= [ 0.51057917]
+GAN_Imagem FAKE= [ 0.51057917]
+Saving weights...
+Saving images...
+Elapsed time in epoch =  0:07:42.504633
+----------------------------------
+Epoch is 2 of 50
+Number of batches 19
+GAN loss 1.9454  Discriminator loss 1.8143 Total: 3.7597 For batch 0
+GAN loss 1.9178  Discriminator loss 1.7993 Total: 3.7171 For batch 1
+GAN loss 1.9763  Discriminator loss 1.7806 Total: 3.7569 For batch 2
+GAN loss 1.7989  Discriminator loss 1.7522 Total: 3.5511 For batch 3
+GAN loss 1.7418  Discriminator loss 1.8136 Total: 3.5555 For batch 4
+GAN loss 3.1292  Discriminator loss 1.8945 Total: 5.0237 For batch 5
+GAN loss 1.6173  Discriminator loss 2.1768 Total: 3.7941 For batch 6
+GAN loss 1.7619  Discriminator loss 1.8178 Total: 3.5797 For batch 7
+GAN loss 1.8082  Discriminator loss 1.7625 Total: 3.5707 For batch 8
+GAN loss 1.8449  Discriminator loss 1.7417 Total: 3.5866 For batch 9
+GAN loss 1.8582  Discriminator loss 1.7193 Total: 3.5775 For batch 10
+GAN loss 1.8753  Discriminator loss 1.6942 Total: 3.5695 For batch 11
+GAN loss 1.7965  Discriminator loss 1.6859 Total: 3.4824 For batch 12
+GAN loss 1.8179  Discriminator loss 1.6682 Total: 3.4861 For batch 13
+GAN loss 1.7412  Discriminator loss 1.6648 Total: 3.4060 For batch 14
+GAN loss 1.6893  Discriminator loss 1.6739 Total: 3.3632 For batch 15
+GAN loss 1.6429  Discriminator loss 1.6813 Total: 3.3242 For batch 16
+GAN loss 1.6236  Discriminator loss 1.6648 Total: 3.2884 For batch 17
+GAN loss 1.5871  Discriminator loss 1.6558 Total: 3.2429 For batch 18
+DISCRIMINATOR_Imagem REAL= [ 0.50537455]
+DISCRIMINATOR_Imagem FAKE= [ 0.53060859]
+GAN_Imagem FAKE= [ 0.53060859]
+Saving weights...
+Saving images...
+Elapsed time in epoch =  0:08:10.766448
+----------------------------------
+Epoch is 3 of 50
+Number of batches 19
+GAN loss 1.5782  Discriminator loss 1.6326 Total: 3.2108 For batch 0
+GAN loss 1.5572  Discriminator loss 1.6200 Total: 3.1772 For batch 1
+GAN loss 1.5575  Discriminator loss 1.6038 Total: 3.1613 For batch 2
+GAN loss 1.5497  Discriminator loss 1.5794 Total: 3.1291 For batch 3
+GAN loss 1.5984  Discriminator loss 1.5581 Total: 3.1565 For batch 4
+GAN loss 1.5980  Discriminator loss 1.5350 Total: 3.1330 For batch 5
+GAN loss 1.8014  Discriminator loss 1.5099 Total: 3.3113 For batch 6
+GAN loss 1.2917  Discriminator loss 1.5159 Total: 2.8076 For batch 7
+GAN loss 1.8207  Discriminator loss 1.7405 Total: 3.5612 For batch 8
+GAN loss 1.3595  Discriminator loss 1.5184 Total: 2.8779 For batch 9
+GAN loss 2.0658  Discriminator loss 1.7896 Total: 3.8554 For batch 10
+GAN loss 1.6461  Discriminator loss 1.6577 Total: 3.3038 For batch 11
+GAN loss 1.5940  Discriminator loss 1.5454 Total: 3.1394 For batch 12
+GAN loss 1.5611  Discriminator loss 1.5319 Total: 3.0930 For batch 13
+GAN loss 1.5326  Discriminator loss 1.5226 Total: 3.0551 For batch 14
+GAN loss 1.5121  Discriminator loss 1.5124 Total: 3.0245 For batch 15
+GAN loss 1.5025  Discriminator loss 1.5001 Total: 3.0026 For batch 16
+GAN loss 1.4857  Discriminator loss 1.4940 Total: 2.9798 For batch 17
+GAN loss 1.4820  Discriminator loss 1.4850 Total: 2.9670 For batch 18
+DISCRIMINATOR_Imagem REAL= [ 0.49914828]
+DISCRIMINATOR_Imagem FAKE= [ 0.49869823]
+GAN_Imagem FAKE= [ 0.49869823]
+Saving weights...
+Saving images...
+Elapsed time in epoch =  0:08:30.467896
+----------------------------------
+Epoch is 4 of 50
+Number of batches 19
+GAN loss 1.4666  Discriminator loss 1.4762 Total: 2.9427 For batch 0
+GAN loss 1.4688  Discriminator loss 1.4690 Total: 2.9378 For batch 1
+GAN loss 1.4606  Discriminator loss 1.4605 Total: 2.9211 For batch 2
+GAN loss 1.4638  Discriminator loss 1.4515 Total: 2.9153 For batch 3
+GAN loss 1.4577  Discriminator loss 1.4464 Total: 2.9041 For batch 4
+GAN loss 1.4507  Discriminator loss 1.4402 Total: 2.8909 For batch 5
+GAN loss 1.4568  Discriminator loss 1.4305 Total: 2.8872 For batch 6
+GAN loss 1.4649  Discriminator loss 1.4301 Total: 2.8951 For batch 7
+GAN loss 1.4356  Discriminator loss 1.4218 Total: 2.8574 For batch 8
+GAN loss 1.4486  Discriminator loss 1.4167 Total: 2.8653 For batch 9
+GAN loss 1.4260  Discriminator loss 1.4164 Total: 2.8424 For batch 10
+GAN loss 1.4176  Discriminator loss 1.4077 Total: 2.8254 For batch 11
+GAN loss 1.4112  Discriminator loss 1.3946 Total: 2.8058 For batch 12
+GAN loss 1.4275  Discriminator loss 1.3854 Total: 2.8130 For batch 13
+GAN loss 1.3989  Discriminator loss 1.3724 Total: 2.7714 For batch 14
+GAN loss 1.5186  Discriminator loss 1.3575 Total: 2.8761 For batch 15
+GAN loss 1.2083  Discriminator loss 1.3427 Total: 2.5509 For batch 16
+GAN loss 1.9847  Discriminator loss 1.3776 Total: 3.3623 For batch 17
+GAN loss 1.4250  Discriminator loss 1.4498 Total: 2.8749 For batch 18
+DISCRIMINATOR_Imagem REAL= [ 0.45230687]
+DISCRIMINATOR_Imagem FAKE= [ 0.46087512]
+GAN_Imagem FAKE= [ 0.46087512]
+Saving weights...
+Saving images...
+Elapsed time in epoch =  0:08:16.283632
+----------------------------------
+Epoch is 5 of 50
+Number of batches 19
+GAN loss 1.3665  Discriminator loss 1.3262 Total: 2.6926 For batch 0
+GAN loss 1.3763  Discriminator loss 1.3305 Total: 2.7068 For batch 1
+GAN loss 1.3820  Discriminator loss 1.3222 Total: 2.7042 For batch 2
+GAN loss 1.4073  Discriminator loss 1.3172 Total: 2.7245 For batch 3
+GAN loss 1.3485  Discriminator loss 1.2998 Total: 2.6482 For batch 4
+GAN loss 1.4757  Discriminator loss 1.3022 Total: 2.7779 For batch 5
+GAN loss 1.2479  Discriminator loss 1.2831 Total: 2.5310 For batch 6
+GAN loss 1.6199  Discriminator loss 1.2927 Total: 2.9126 For batch 7
+GAN loss 1.2104  Discriminator loss 1.2966 Total: 2.5069 For batch 8
+GAN loss 1.5736  Discriminator loss 1.2870 Total: 2.8605 For batch 9
+GAN loss 1.2759  Discriminator loss 1.2878 Total: 2.5637 For batch 10
+GAN loss 1.5184  Discriminator loss 1.2559 Total: 2.7743 For batch 11
+GAN loss 1.2608  Discriminator loss 1.2484 Total: 2.5092 For batch 12
+GAN loss 1.7461  Discriminator loss 1.2630 Total: 3.0092 For batch 13
+GAN loss 1.4693  Discriminator loss 1.2930 Total: 2.7623 For batch 14
+GAN loss 1.4010  Discriminator loss 1.2396 Total: 2.6405 For batch 15
+GAN loss 1.4392  Discriminator loss 1.2143 Total: 2.6535 For batch 16
+GAN loss 1.4804  Discriminator loss 1.1774 Total: 2.6577 For batch 17
+GAN loss 1.6757  Discriminator loss 1.1636 Total: 2.8393 For batch 18
+DISCRIMINATOR_Imagem REAL= [ 0.26951098]
+DISCRIMINATOR_Imagem FAKE= [ 0.33097851]
+GAN_Imagem FAKE= [ 0.33097851]
+Saving weights...
+Saving images...
+Elapsed time in epoch =  0:07:57.677069
+----------------------------------
+Epoch is 6 of 50
+Number of batches 19
+GAN loss 1.2017  Discriminator loss 1.1401 Total: 2.3418 For batch 0
+GAN loss 1.4630  Discriminator loss 1.5917 Total: 3.0547 For batch 1
+GAN loss 1.1250  Discriminator loss 1.2366 Total: 2.3616 For batch 2
+GAN loss 2.3891  Discriminator loss 1.2815 Total: 3.6706 For batch 3
+GAN loss 1.1928  Discriminator loss 1.4891 Total: 2.6819 For batch 4
+GAN loss 1.2413  Discriminator loss 1.2685 Total: 2.5098 For batch 5
+GAN loss 1.2538  Discriminator loss 1.2568 Total: 2.5107 For batch 6
+GAN loss 1.2715  Discriminator loss 1.2527 Total: 2.5241 For batch 7
+GAN loss 1.2828  Discriminator loss 1.2362 Total: 2.5191 For batch 8
+GAN loss 1.2974  Discriminator loss 1.2224 Total: 2.5197 For batch 9
+GAN loss 1.3043  Discriminator loss 1.2093 Total: 2.5135 For batch 10
+GAN loss 1.3182  Discriminator loss 1.1924 Total: 2.5105 For batch 11
+GAN loss 1.3575  Discriminator loss 1.1967 Total: 2.5542 For batch 12
+GAN loss 1.3871  Discriminator loss 1.1998 Total: 2.5868 For batch 13
+GAN loss 1.3775  Discriminator loss 1.2154 Total: 2.5929 For batch 14
+GAN loss 1.3477  Discriminator loss 1.2228 Total: 2.5705 For batch 15
+GAN loss 1.2905  Discriminator loss 1.2108 Total: 2.5013 For batch 16
+GAN loss 1.2348  Discriminator loss 1.1908 Total: 2.4256 For batch 17
+GAN loss 1.2283  Discriminator loss 1.1826 Total: 2.4109 For batch 18
+DISCRIMINATOR_Imagem REAL= [ 0.55419838]
+DISCRIMINATOR_Imagem FAKE= [ 0.57222605]
+GAN_Imagem FAKE= [ 0.57222605]
+Saving weights...
+Saving images...
+Elapsed time in epoch =  0:08:10.505215
+----------------------------------
+Epoch is 7 of 50
+Number of batches 19
+GAN loss 1.2801  Discriminator loss 1.1619 Total: 2.4420 For batch 0
+GAN loss 1.3443  Discriminator loss 1.1618 Total: 2.5061 For batch 1
+GAN loss 1.2508  Discriminator loss 1.1571 Total: 2.4079 For batch 2
+GAN loss 1.6556  Discriminator loss 1.1741 Total: 2.8297 For batch 3
+GAN loss 0.9692  Discriminator loss 1.2138 Total: 2.1830 For batch 4
+GAN loss 1.8348  Discriminator loss 1.2820 Total: 3.1167 For batch 5
+GAN loss 1.2735  Discriminator loss 1.2385 Total: 2.5120 For batch 6
+GAN loss 1.3156  Discriminator loss 1.2184 Total: 2.5339 For batch 7
+GAN loss 1.2913  Discriminator loss 1.1925 Total: 2.4838 For batch 8
+GAN loss 1.2840  Discriminator loss 1.1809 Total: 2.4648 For batch 9
+GAN loss 1.2701  Discriminator loss 1.1685 Total: 2.4386 For batch 10
+GAN loss 1.2421  Discriminator loss 1.1457 Total: 2.3879 For batch 11
+GAN loss 1.2340  Discriminator loss 1.1325 Total: 2.3666 For batch 12
+GAN loss 1.2786  Discriminator loss 1.1196 Total: 2.3982 For batch 13
+GAN loss 1.2948  Discriminator loss 1.1202 Total: 2.4151 For batch 14
+GAN loss 1.3115  Discriminator loss 1.1289 Total: 2.4403 For batch 15
+GAN loss 1.2949  Discriminator loss 1.1464 Total: 2.4413 For batch 16
+GAN loss 1.3043  Discriminator loss 1.1503 Total: 2.4546 For batch 17
+GAN loss 1.2560  Discriminator loss 1.1526 Total: 2.4086 For batch 18
+DISCRIMINATOR_Imagem REAL= [ 0.42863095]
+DISCRIMINATOR_Imagem FAKE= [ 0.46182236]
+GAN_Imagem FAKE= [ 0.46182236]
+Saving weights...
+Saving images...
+Elapsed time in epoch =  0:08:00.510387
+----------------------------------
+Epoch is 8 of 50
+Number of batches 19
+GAN loss 1.2429  Discriminator loss 1.1381 Total: 2.3810 For batch 0
+GAN loss 1.2047  Discriminator loss 1.1260 Total: 2.3308 For batch 1
+GAN loss 1.1498  Discriminator loss 1.1054 Total: 2.2552 For batch 2
+GAN loss 1.1905  Discriminator loss 1.0760 Total: 2.2666 For batch 3
+GAN loss 1.3466  Discriminator loss 1.0751 Total: 2.4218 For batch 4
+GAN loss 1.0415  Discriminator loss 1.0692 Total: 2.1107 For batch 5
+GAN loss 1.3418  Discriminator loss 1.1791 Total: 2.5209 For batch 6
+GAN loss 1.3218  Discriminator loss 1.1225 Total: 2.4443 For batch 7
+GAN loss 1.4032  Discriminator loss 1.1394 Total: 2.5425 For batch 8
+GAN loss 1.2974  Discriminator loss 1.1293 Total: 2.4267 For batch 9
+GAN loss 1.2903  Discriminator loss 1.1236 Total: 2.4139 For batch 10
+GAN loss 1.2648  Discriminator loss 1.1103 Total: 2.3750 For batch 11
+GAN loss 1.2605  Discriminator loss 1.0878 Total: 2.3483 For batch 12
+GAN loss 1.2464  Discriminator loss 1.0828 Total: 2.3292 For batch 13
+GAN loss 1.2375  Discriminator loss 1.0565 Total: 2.2940 For batch 14
+GAN loss 1.2036  Discriminator loss 1.0466 Total: 2.2503 For batch 15
+GAN loss 1.1718  Discriminator loss 1.0430 Total: 2.2148 For batch 16
+GAN loss 1.1630  Discriminator loss 1.0844 Total: 2.2475 For batch 17
+GAN loss 1.1526  Discriminator loss 1.1340 Total: 2.2866 For batch 18
+DISCRIMINATOR_Imagem REAL= [ 0.34933919]
+DISCRIMINATOR_Imagem FAKE= [ 0.43224588]
+GAN_Imagem FAKE= [ 0.43224588]
+Saving weights...
+Saving images...
+Elapsed time in epoch =  0:08:02.972510
+----------------------------------
+Epoch is 9 of 50
+Number of batches 19
+GAN loss 1.0658  Discriminator loss 1.0947 Total: 2.1605 For batch 0
+GAN loss 1.2221  Discriminator loss 1.0274 Total: 2.2494 For batch 1
+GAN loss 0.9613  Discriminator loss 0.9879 Total: 1.9492 For batch 2
+GAN loss 1.3015  Discriminator loss 1.3417 Total: 2.6431 For batch 3
+GAN loss 1.1335  Discriminator loss 1.1262 Total: 2.2597 For batch 4
+GAN loss 1.1122  Discriminator loss 1.0986 Total: 2.2109 For batch 5
+GAN loss 1.1112  Discriminator loss 1.0927 Total: 2.2039 For batch 6
+GAN loss 1.1331  Discriminator loss 1.0942 Total: 2.2273 For batch 7
+GAN loss 1.1435  Discriminator loss 1.0867 Total: 2.2301 For batch 8
+GAN loss 1.1618  Discriminator loss 1.0769 Total: 2.2387 For batch 9
+GAN loss 1.1737  Discriminator loss 1.0701 Total: 2.2438 For batch 10
+GAN loss 1.2117  Discriminator loss 1.0652 Total: 2.2769 For batch 11
+GAN loss 1.1845  Discriminator loss 1.0582 Total: 2.2427 For batch 12
+GAN loss 1.2417  Discriminator loss 1.0502 Total: 2.2919 For batch 13
+GAN loss 1.1817  Discriminator loss 1.0427 Total: 2.2244 For batch 14
+GAN loss 1.3417  Discriminator loss 1.0354 Total: 2.3770 For batch 15
+GAN loss 0.9924  Discriminator loss 1.0415 Total: 2.0339 For batch 16
+GAN loss 1.3813  Discriminator loss 1.0613 Total: 2.4425 For batch 17
+GAN loss 1.0379  Discriminator loss 1.0505 Total: 2.0884 For batch 18
+DISCRIMINATOR_Imagem REAL= [ 0.54348409]
+DISCRIMINATOR_Imagem FAKE= [ 0.52840281]
+GAN_Imagem FAKE= [ 0.52840281]
+Saving weights...
+Saving images...
+Elapsed time in epoch =  0:07:58.327338
+----------------------------------
+Epoch is 10 of 50
+Number of batches 19
+GAN loss 1.0985  Discriminator loss 1.0597 Total: 2.1582 For batch 0
+GAN loss 1.0925  Discriminator loss 1.0584 Total: 2.1509 For batch 1
+GAN loss 1.0844  Discriminator loss 1.0558 Total: 2.1402 For batch 2
+GAN loss 1.0701  Discriminator loss 1.0567 Total: 2.1268 For batch 3
+GAN loss 1.0871  Discriminator loss 1.0491 Total: 2.1362 For batch 4
+GAN loss 1.0878  Discriminator loss 1.0446 Total: 2.1324 For batch 5
+GAN loss 1.0727  Discriminator loss 1.0399 Total: 2.1126 For batch 6
+GAN loss 1.0757  Discriminator loss 1.0335
