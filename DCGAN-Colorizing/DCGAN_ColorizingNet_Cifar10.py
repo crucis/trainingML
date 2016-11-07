@@ -42,7 +42,7 @@ EPOCH = 50
 nImages = pow(2,15)
 
 # Model Options
-folder = "Test11"
+folder = "Test13"
 outDir = 'results/'+folder
 
 
@@ -231,6 +231,7 @@ def generator_containing_discriminator(generator,discriminator):
 
 #### Training
 discriminator = discriminator_model()
+discriminator.load_weights("results/Test12/discriminator_weights")
 generator = generator_model()
 # LOADING GENERATOR FROM TEST8
 generator.load_weights("results/Test8/generator_weights")
