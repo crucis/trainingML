@@ -204,13 +204,13 @@ def plotHistogram(originalImage,fakeImage, nameClass,directory = outDir,folder=f
 ########################
 #PROGRAM
 ########################
+sys.stdout = Logger()
 for i in range(len(cifar10_Classes)):
 	chosen_Class = cifar10_Classes[i]
 	print('Training with dataset based on class - ',chosen_Class)
 	# Create folder for tests
-	mkdir_p(outDir+str(chosen_Class))
+	mkdir_p(outDir+'_'+str(chosen_Class))
 	# Logger
-	sys.stdout = Logger()
 	#### load cifar10 dataset
 	(Y,labels),(Y_test, labels_test) = cifar10.load_data()
 
@@ -301,10 +301,10 @@ for i in range(len(cifar10_Classes)):
 
 	#### Training
 	discriminator = discriminator_model()
-	discriminator.load_weights("results/Test12/discriminator_weights")
+	#discriminator.load_weights("results/Test12/discriminator_weights")
 	generator = generator_model()
 	# LOADING GENERATOR FROM TEST8
-	#generator.load_weights("results/Test8/generator_weights")
+	generator.load_weights("results/Test8/generator_weights")
 	discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
 	# Optimizer
 	adam=Adam(lr=0.0002, beta_1=0.5, beta_2=0.999, epsilon=1e-08)
@@ -328,7 +328,7 @@ for i in range(len(cifar10_Classes)):
 		for index in range(int(F.shape[0]/BATCH_SIZE)):
 			image_batch = F[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
 			BW_image_batch = G[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
-			gAlone_loss = generator.train_on_batch(BW_image_batch,image_batch)
+			#gAlone_loss = generator.train_on_batch(BW_image_batch,image_batch)
 			#print("Generating images...")
 			generated_images = generator.predict(BW_image_batch)
 
@@ -343,7 +343,7 @@ for i in range(len(cifar10_Classes)):
 
 			#print("Training discriminator...")
 	        # Does not train discriminator if it is close to overfitting
-			if d_acc > 0.55:
+			if d_acc > 0.95:
 				discriminator.trainable = False
 			else:
 				discriminator.trainable = True
@@ -354,7 +354,7 @@ for i in range(len(cifar10_Classes)):
 			for j in range(1):
 				#print("Training generator...")
 				g_loss = discriminator_on_generator.train_on_batch(BW_image_batch,[1]*BW_image_batch.shape[0])
-				print("GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss,"Discriminator accuracy %.4f"%d_acc,"Generator loss %.4f"%gAlone_loss, "Total: %.4f"%(g_loss+d_loss),"For batch",index)
+				print("GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss,"Discriminator accuracy %.4f"%d_acc, "Total: %.4f"%(g_loss+d_loss),"For batch",index)
 	            #print("Generator loss %.4f"%gAlone_loss,"GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss+gAlone_loss),"For batch",index)
 		# Test if discriminator is working
 		d_predict_real = discriminator.predict(image_batch)
