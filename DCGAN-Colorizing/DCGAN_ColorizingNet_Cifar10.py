@@ -38,8 +38,8 @@ numpy.random.seed(SEED)
 
 # Training Options
 BATCH_SIZE = 256
-EPOCH = 1
-nImages = BATCH_SIZE#pow(2,15)
+EPOCH = 50
+nImages = pow(2,15)
 
 #### CIFAR10 classifications
 cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'];
