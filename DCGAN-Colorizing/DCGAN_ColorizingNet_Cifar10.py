@@ -38,8 +38,8 @@ numpy.random.seed(SEED)
 
 # Training Options
 BATCH_SIZE = 256
-EPOCH = 50
-nImages = pow(2,15)
+EPOCH = 1
+nImages = BATCH_SIZE#pow(2,15)
 
 #### CIFAR10 classifications
 cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'];
@@ -47,9 +47,9 @@ cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','hor
 
 # Model Options
 folder = "Test15"
-outDir = 'results/'+folder
+outDire = 'results/'+folder
 
-
+d_predict_fake = 0
 
 ########################
 #FUNCTIONS
@@ -102,19 +102,20 @@ def plotGraph (filename, vecTrain, vecTest, nameVec):
 	plt.clf()
 
 class Logger(object):
-    def __init__(self):
-        self.terminal = sys.stdout
-        self.log = open(outDir+"/logfile.log", "a")
+	def __init__(self):
+		self.terminal = sys.stdout
+		self.log = open(outDir+"/logfile.log", "a")
 
-    def write(self, message):
-        self.terminal.write(message)
-        self.log.write(message)
+	def write(self, message):
+		self.terminal.write(message)
+		self.log.write(message)
 
-    def flush(self):
+
+	def flush(self):
         #this flush method is needed for python 3 compatibility.
         #this handles the flush command by doing nothing.
         #you might want to specify some extra behavior here.
-        pass
+		pass
 
 def save3images(inp,out,original,folder):
 	for i in range(math.floor(original.shape[0]*0.02)):
@@ -139,7 +140,7 @@ def save3images(inp,out,original,folder):
 
 		plt.savefig(outDir+'/samples/epoch'+str(folder)+'/sample_%s.png'%i)
 		plt.clf()
-def plotHistogram(originalImage,fakeImage, nameClass,directory = outDir,folder=folder):
+def plotHistogram(originalImage,fakeImage, nameClass,directory,folder=folder):
 	# Faz 3 histogramas, um para azul outro verde e outro vermelho
 	name = folder+'using'+nameClass
 	originalImage *= 255
@@ -158,58 +159,47 @@ def plotHistogram(originalImage,fakeImage, nameClass,directory = outDir,folder=f
 			originalGreen2D = numpy.vstack([originalGreen2D,originalImage[i,1,:,:]])
 			originalBlue2D = numpy.vstack([originalBlue2D,originalImage[i,2,:,:]])
 
-	#originalRed = originalImage[:,0,:,:].reshape(originalImage.shape[0],originalImage.shape[2],originalImage.shape[3])
-	#originalRed = numpy.array(originalRed)
-	#originalRed2D = numpy.transpose(originalRed,(0,2,1).reshape(originalImage.shape[0]*originalImage.shape[3],originalImage.shape[2]))
-	#originalGreen = originalImage[:,1,:,:].reshape(originalImage.shape[0],originalImage.shape[2],originalImage.shape[3])
-	#originalGreen = numpy.array(originalGreen)
-	#originalGreen2D = numpy.transpose(originalGreen,(0,2,1).reshape(originalImage.shape[0]*originalImage.shape[3],originalImage.shape[2]))
-	#originalBlue = originalImage[:,2,:,:].reshape(originalImage.shape[0],originalImage.shape[2],originalImage.shape[3])
-	#originalBlue2D = numpy.transpose(originalBlue,(0,2,1).reshape(originalImage.shape[0]*originalImage.shape[3],originalImage.shape[2]))
-
 	fO, (ax1,ax2,ax3) = plt.subplots(3, sharex=True,sharey=True)
-	ax1.hist(originalRed2D.ravel(), color='red', bins = numBins,alpha=0.8, range=(0,256))
+	ax1.hist(originalRed2D.ravel(), color='red', bins=numBins,alpha=0.8, align='mid')
 	ax1.set_title('Original images Histogram '+name)
-	ax2.hist(originalGreen2D.ravel(),color='green', bins = numBins,alpha=0.8, range=(0,256))
-	ax3.hist(originalBlue2D.ravel(),color='blue', bins = numBins,alpha=0.8, range=(0,256))
-	plt.savefig(directory+'/OriginalHist.png')
+	ax2.hist(originalGreen2D.ravel(),color='green', bins=numBins,alpha=0.8, align='mid')
+	ax3.hist(originalBlue2D.ravel(),color='blue', bins=numBins,alpha=0.8,  align='mid')
+	plt.xlim(0,256)
+	plt.savefig(directory+'/histOriginal.png')
 	plt.clf()
 
 
-	for i in range(fakeImage.shape[0]):
-		if i == 0:
-			generatedRed2D = numpy.array(fakeImage[i,0,:,:])
-			generatedGreen2D = numpy.array(fakeImage[i,1,:,:])
-			generatedBlue2D = numpy.array(fakeImage[i,2,:,:])
+	for j in range(fakeImage.shape[0]):
+		if j == 0:
+			generatedRed2D = numpy.array(fakeImage[j,0,:,:])
+			generatedGreen2D = numpy.array(fakeImage[j,1,:,:])
+			generatedBlue2D = numpy.array(fakeImage[j,2,:,:])
 		else:
-			generatedRed2D = numpy.vstack([generatedRed2D,fakeImage[i,0,:,:]])
-			generatedGreen2D = numpy.vstack([generatedGreen2D,fakeImage[i,1,:,:]])
-			generatedBlue2D = numpy.vstack([generatedBlue2D,fakeImage[i,2,:,:]])
-	#generatedRed = fakeImage[:,0,:,:].reshape(fakeImage.shape[0],fakeImage.shape[2],fakeImage.shape[3])
-	#generatedRed2D = numpy.transpose(generatedRed,(0,2,1).reshape(fakeImage.shape[0]*fakeImage.shape[3],fakeImage.shape[2]))
-	#generatedGreen = fakeImage[:,1,:,:].reshape(fakeImage.shape[0],fakeImage.shape[2],fakeImage.shape[3])
-	#generatedGreen2D = numpy.transpose(generatedGreen,(0,2,1).reshape(fakeImage.shape[0]*fakeImage.shape[3],fakeImage.shape[2]))
-	#generatedBlue = fakeImage[:,2,:,:].reshape(fakeImage.shape[0],fakeImage.shape[2],fakeImage.shape[3])
-	#generatedBlue2D = numpy.transpose(generatedBlue,(0,2,1).reshape(fakeImage.shape[0]*fakeImage.shape[3],fakeImage.shape[2]))
+			generatedRed2D = numpy.vstack([generatedRed2D,fakeImage[j,0,:,:]])
+			generatedGreen2D = numpy.vstack([generatedGreen2D,fakeImage[j,1,:,:]])
+			generatedBlue2D = numpy.vstack([generatedBlue2D,fakeImage[j,2,:,:]])
+
 
 	fO, (ax1,ax2,ax3) = plt.subplots(3, sharex=True,sharey=True)
-	ax1.hist(generatedRed2D.ravel(),color='red', bins = numBins,alpha=0.8, range=(0,256))
+	ax1.hist(generatedRed2D.ravel(),color='red', bins=numBins,alpha=0.8, align='mid')
 	ax1.set_title('Generated images Histogram '+name)
-	ax2.hist(generatedGreen2D.ravel(),color='green', bins = numBins,alpha=0.8, range=(0,256))
-	ax3.hist(generatedBlue2D.ravel(),color='blue', bins = numBins,alpha=0.8, range=(0,256))
-	plt.savefig(directory+'/GeneratedHist.png')
+	ax2.hist(generatedGreen2D.ravel(),color='green',bins=numBins, alpha=0.8, align='mid')
+	ax3.hist(generatedBlue2D.ravel(),color='blue',bins=numBins, alpha=0.8, align='mid')
+	plt.xlim(0,256)
+	plt.savefig(directory+'/histGenerated.png')
 	plt.clf()
 
 
 ########################
 #PROGRAM
 ########################
-sys.stdout = Logger()
 for i in range(len(cifar10_Classes)):
 	chosen_Class = cifar10_Classes[i]
-	print('Training with dataset based on class - ',chosen_Class)
+	outDir = outDire+'_'+str(chosen_Class)
 	# Create folder for tests
-	mkdir_p(outDir+'_'+str(chosen_Class))
+	mkdir_p(outDir)
+	sys.stdout = Logger()
+
 	# Logger
 	#### load cifar10 dataset
 	(Y,labels),(Y_test, labels_test) = cifar10.load_data()
@@ -248,6 +238,8 @@ for i in range(len(cifar10_Classes)):
 
 	#### Models
 	print("----------------------------------")
+	print('Training with dataset based on class - ',chosen_Class)
+
 	# GENERATOR
 	def generator_model():
 		model = Sequential()
@@ -304,7 +296,7 @@ for i in range(len(cifar10_Classes)):
 	#discriminator.load_weights("results/Test12/discriminator_weights")
 	generator = generator_model()
 	# LOADING GENERATOR FROM TEST8
-	generator.load_weights("results/Test8/generator_weights")
+	#generator.load_weights("results/Test8/generator_weights")
 	discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
 	# Optimizer
 	adam=Adam(lr=0.0002, beta_1=0.5, beta_2=0.999, epsilon=1e-08)
@@ -343,7 +335,7 @@ for i in range(len(cifar10_Classes)):
 
 			#print("Training discriminator...")
 	        # Does not train discriminator if it is close to overfitting
-			if d_acc > 0.95:
+			if (d_acc > 0.95) :
 				discriminator.trainable = False
 			else:
 				discriminator.trainable = True
@@ -360,7 +352,8 @@ for i in range(len(cifar10_Classes)):
 		d_predict_real = discriminator.predict(image_batch)
 		print("DISCRIMINATOR_Imagem REAL=",d_predict_real[index])
 		g_predict_fake = generator.predict(BW_image_batch)
-		print("DISCRIMINATOR_Imagem FAKE=",discriminator.predict(g_predict_fake)[index])
+		d_predict_fake = discriminator.predict(g_predict_fake)[index]
+		print("DISCRIMINATOR_Imagem FAKE=",d_predict_fake)
 		print("GAN_Imagem FAKE=",discriminator_on_generator.predict(BW_image_batch)[index])
 
 		print("Saving weights...")
@@ -369,19 +362,29 @@ for i in range(len(cifar10_Classes)):
 		print("Saving sample images...")
 		save3images(BW_image_batch,generated_images,image_batch,epoch)
 		print("Storing to histogram values")
+		print(index)
 		if index == 0:
 			stored_g_predict = numpy.array(g_predict_fake)
 		else:
-			stored_g_predict = numpy.vstack(g_predict_fake)
+			stored_g_predict = numpy.vstack((stored_g_predict,g_predict_fake))
+		#try:
+	#		stored_g_predict = numpy.vstack(stored_g_predict,g_predict_fake)
+#		except NameError:
+#			stored_g_predict = numpy.array(g_predict_fake)
+
+		#print('g_predict_fake=',g_predict_fake.shape)
+
 		print("Elapsed time in epoch = ",str(timedelta(seconds=(time.time()-start_time))))
 		print("----------------------------------")
 
 
 
 	# Print important parameters to logfile.log and save histogram
+	#print('fakeImage=',stored_g_predict.shape)
+	#print('originalImage=',F.shape)
 	print('End of training')
 	print('Saving histograms')
-	plotHistogram(originalImage=F,fakeImage=stored_g_predict,nameClass = chosen_Class)
+	plotHistogram(originalImage=F,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
 	print("----------------------------------")
 
 	print('Total samples = ', G.shape[0], ' Batch size =', BATCH_SIZE, ' Epochs = ', EPOCH)
@@ -395,6 +398,6 @@ for i in range(len(cifar10_Classes)):
 	print("----------------------------------")
 	print("---GAN---")
 	print(discriminator_on_generator.summary())
-	print("----------------------------------")
+	#print("----------------------------------")
 
 	# eof

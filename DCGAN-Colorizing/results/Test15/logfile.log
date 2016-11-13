@@ -470,3 +470,29 @@ GAN loss 2.2963  Discriminator loss 2.5511 Discriminator accuracy 0.5000 Total: 
 GAN loss 2.4422  Discriminator loss 2.4486 Discriminator accuracy 0.5215 Total: 4.8908 For batch 3
 GAN loss 2.3669  Discriminator loss 2.4206 Discriminator accuracy 0.5469 Total: 4.7874 For batch 4
 GAN loss 2.4005  Discriminator loss 2.3969 Discriminator accuracy 0.5430 Total: 4.7974 For batch 5
+Training with dataset based on class -  airplane
+----------------------------------
+Epoch is 1 of 50
+Number of batches 19
+GAN loss 8.6688  Discriminator loss 2.6428 Discriminator accuracy 0.5078 Total: 11.3116 For batch 0
+GAN loss 2.9360  Discriminator loss 5.2790 Discriminator accuracy 0.5000 Total: 8.2150 For batch 1
+GAN loss 2.2963  Discriminator loss 2.5511 Discriminator accuracy 0.5000 Total: 4.8474 For batch 2
+GAN loss 2.4422  Discriminator loss 2.4486 Discriminator accuracy 0.5215 Total: 4.8908 For batch 3
+GAN loss 2.3669  Discriminator loss 2.4206 Discriminator accuracy 0.5469 Total: 4.7874 For batch 4
+GAN loss 2.4005  Discriminator loss 2.3969 Discriminator accuracy 0.5430 Total: 4.7974 For batch 5
+GAN loss 2.3573  Discriminator loss 2.3860 Discriminator accuracy 0.5098 Total: 4.7432 For batch 6
+GAN loss 2.3557  Discriminator loss 2.3668 Discriminator accuracy 0.5312 Total: 4.7225 For batch 7
+GAN loss 2.3158  Discriminator loss 2.3497 Discriminator accuracy 0.5312 Total: 4.6655 For batch 8
+GAN loss 2.3645  Discriminator loss 2.3352 Discriminator accuracy 0.5430 Total: 4.6997 For batch 9
+GAN loss 2.2800  Discriminator loss 2.3033 Discriminator accuracy 0.5703 Total: 4.5833 For batch 10
+GAN loss 2.3415  Discriminator loss 2.3029 Discriminator accuracy 0.5234 Total: 4.6443 For batch 11
+Training with dataset based on class -  airplane
+----------------------------------
+Epoch is 1 of 50
+Number of batches 19
+GAN loss 8.6688  Discriminator loss 2.6428 Discriminator accuracy 0.5078 Total: 11.3116 For batch 0
+GAN loss 2.9360  Discriminator loss 5.2790 Discriminator accuracy 0.5000 Total: 8.2150 For batch 1
+GAN loss 2.2963  Discriminator loss 2.5511 Discriminator accuracy 0.5000 Total: 4.8474 For batch 2
+GAN loss 2.4422  Discriminator loss 2.4486 Discriminator accuracy 0.5215 Total: 4.8908 For batch 3
+GAN loss 2.3669  Discriminator loss 2.4206 Discriminator accuracy 0.5469 Total: 4.7874 For batch 4
+GAN loss 2.4005  Discriminator loss 2.3969 Discriminator accuracy 0.5430 Total: 4.7974 For batch 5
