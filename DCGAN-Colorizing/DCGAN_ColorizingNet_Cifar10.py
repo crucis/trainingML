@@ -100,6 +100,7 @@ def plotGraph (filename, vecTrain, vecTest, nameVec):
 	if SHOW_GRAPHS == 1:
 		plt.show()
 	plt.clf()
+	plt.close('all')
 
 class Logger(object):
 	def __init__(self):
@@ -140,6 +141,7 @@ def save3images(inp,out,original,folder):
 
 		plt.savefig(outDir+'/samples/epoch'+str(folder)+'/sample_%s.png'%i)
 		plt.clf()
+		plt.close('all')
 def plotHistogram(originalImage,fakeImage, nameClass,directory,folder=folder):
 	# Faz 3 histogramas, um para azul outro verde e outro vermelho
 	name = folder+'using'+nameClass
@@ -188,12 +190,12 @@ def plotHistogram(originalImage,fakeImage, nameClass,directory,folder=folder):
 	plt.xlim(0,256)
 	plt.savefig(directory+'/histGenerated.png')
 	plt.clf()
-
+	plt.close('all')
 
 ########################
 #PROGRAM
 ########################
-for i in range(len(cifar10_Classes)):
+for i in range(1,len(cifar10_Classes)):
 	chosen_Class = cifar10_Classes[i]
 	outDir = outDire+'_'+str(chosen_Class)
 	# Create folder for tests
@@ -238,7 +240,9 @@ for i in range(len(cifar10_Classes)):
 
 	#### Models
 	print("----------------------------------")
-	print('Training with dataset based on class - ',chosen_Class)
+	print('Training with dataset based on class - ',chosen_Class,'with',F.shape[0],'samples')
+	print("----------------------------------")
+
 
 	# GENERATOR
 	def generator_model():
@@ -293,10 +297,12 @@ for i in range(len(cifar10_Classes)):
 
 	#### Training
 	discriminator = discriminator_model()
-	#discriminator.load_weights("results/Test12/discriminator_weights")
+	if chosen_Class == 'airplane':
+		discriminator.load_weights("results/Test15_airplane/discriminator_weights")
 	generator = generator_model()
 	# LOADING GENERATOR FROM TEST8
-	#generator.load_weights("results/Test8/generator_weights")
+	if chosen_Class == 'airplane':
+		generator.load_weights("results/Test15_airplane/generator_weights")
 	discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
 	# Optimizer
 	adam=Adam(lr=0.0002, beta_1=0.5, beta_2=0.999, epsilon=1e-08)
@@ -310,13 +316,15 @@ for i in range(len(cifar10_Classes)):
 	d_predict_real = 0
 	d_loss = 1
 	d_acc = 0
+	d_predict_fake = 0
+	d_predict_real = 1
 
 	for epoch in range(EPOCH):
-		print("Epoch is", epoch+1,"of",EPOCH)
+		print("Epoch", epoch+1,"of",EPOCH)
 		print("Number of batches",int(F.shape[0]/BATCH_SIZE))
 		start_time = time.time()
 
-
+		m = 0;
 		for index in range(int(F.shape[0]/BATCH_SIZE)):
 			image_batch = F[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
 			BW_image_batch = G[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
@@ -335,7 +343,10 @@ for i in range(len(cifar10_Classes)):
 
 			#print("Training discriminator...")
 	        # Does not train discriminator if it is close to overfitting
-			if (d_acc > 0.95) :
+			if (d_predict_fake > 0.50) or (d_predict_real < 0.5):
+				discriminator.trainable = True
+				[d_loss, d_acc] = discriminator.train_on_batch(M,z)
+			elif (d_acc > 0.95) :
 				discriminator.trainable = False
 			else:
 				discriminator.trainable = True
@@ -346,7 +357,7 @@ for i in range(len(cifar10_Classes)):
 			for j in range(1):
 				#print("Training generator...")
 				g_loss = discriminator_on_generator.train_on_batch(BW_image_batch,[1]*BW_image_batch.shape[0])
-				print("GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss,"Discriminator accuracy %.4f"%d_acc, "Total: %.4f"%(g_loss+d_loss),"For batch",index)
+				print("GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss,"Discriminator accuracy %.4f"%d_acc, "Total loss: %.4f"%(g_loss+d_loss),"for batch",index)
 	            #print("Generator loss %.4f"%gAlone_loss,"GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss+gAlone_loss),"For batch",index)
 		# Test if discriminator is working
 		d_predict_real = discriminator.predict(image_batch)
@@ -360,10 +371,10 @@ for i in range(len(cifar10_Classes)):
 		generator.save_weights(outDir+'/generator_weights',True)
 		discriminator.save_weights(outDir+'/discriminator_weights',True)
 		print("Saving sample images...")
-		save3images(BW_image_batch,generated_images,image_batch,epoch)
+		save3images(BW_image_batch,generated_images,image_batch,epoch+1)
 		print("Storing to histogram values")
-		print(index)
-		if index == 0:
+		#print(index)
+		if m == 0:
 			stored_g_predict = numpy.array(g_predict_fake)
 		else:
 			stored_g_predict = numpy.vstack((stored_g_predict,g_predict_fake))
@@ -376,7 +387,7 @@ for i in range(len(cifar10_Classes)):
 
 		print("Elapsed time in epoch = ",str(timedelta(seconds=(time.time()-start_time))))
 		print("----------------------------------")
-
+		m+=1
 
 
 	# Print important parameters to logfile.log and save histogram
