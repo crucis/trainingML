@@ -1,0 +1,281 @@
+----------------------------------
+Training with dataset based on class -  airplane with 5000 samples
+----------------------------------
+Epoch 1 of 50
+Number of batches 19
+Generator loss 0.2953 for batch 0
+Generator loss 0.2540 for batch 1
+Generator loss 0.2335 for batch 2
+Generator loss 0.1935 for batch 3
+Generator loss 0.1791 for batch 4
+Generator loss 0.1680 for batch 5
+Generator loss 0.2039 for batch 6
+Generator loss 0.1624 for batch 7
+Generator loss 0.1760 for batch 8
+Generator loss 0.1706 for batch 9
+Generator loss 0.1830 for batch 10
+----------------------------------
+Training with dataset based on class -  airplane with 5000 samples
+----------------------------------
+Epoch 1 of 50
+Number of batches 19
+Generator loss 0.2953 for batch 0
+----------------------------------
+Training with dataset based on class -  airplane with 5000 samples and 5000 bw images
+----------------------------------
+Epoch 1 of 50
+Number of batches 19
+----------------------------------
+Training with dataset based on class -  airplane with 5000
+----------------------------------
+Epoch 1 of 50
+Number of batches 19
+Generator loss 0.2953 for batch 0
+Generator loss 0.2540 for batch 1
+Generator loss 0.2335 for batch 2
+Generator loss 0.1935 for batch 3
+Generator loss 0.1791 for batch 4
+Generator loss 0.1680 for batch 5
+Generator loss 0.2039 for batch 6
+Generator loss 0.1624 for batch 7
+Generator loss 0.1760 for batch 8
+Generator loss 0.1706 for batch 9
+Generator loss 0.1830 for batch 10
+Generator loss 0.1592 for batch 11
+Generator loss 0.1618 for batch 12
+Generator loss 0.1543 for batch 13
+Generator loss 0.1410 for batch 14
+Generator loss 0.1416 for batch 15
+Generator loss 0.1417 for batch 16
+Generator loss 0.1465 for batch 17
+Generator loss 0.1461 for batch 18
+Saving weights...
+Saving sample images...
+Storing to histogram values
+Elapsed time in epoch =  0:06:18.438839
+----------------------------------
+Epoch 2 of 50
+Number of batches 19
+Generator loss 0.1149 for batch 0
+Generator loss 0.0876 for batch 1
+Generator loss 0.0705 for batch 2
+Generator loss 0.0824 for batch 3
+Generator loss 0.0930 for batch 4
+Generator loss 0.0654 for batch 5
+Generator loss 0.0531 for batch 6
+Generator loss 0.0398 for batch 7
+Generator loss 0.0356 for batch 8
+Generator loss 0.0327 for batch 9
+Generator loss 0.0341 for batch 10
+Generator loss 0.0567 for batch 11
+Generator loss 0.0778 for batch 12
+Generator loss 0.0374 for batch 13
+Generator loss 0.0307 for batch 14
+Generator loss 0.0295 for batch 15
+Generator loss 0.0276 for batch 16
+Generator loss 0.0289 for batch 17
+Generator loss 0.0287 for batch 18
+Saving weights...
+Saving sample images...
+Storing to histogram values
+Elapsed time in epoch =  0:08:33.908941
+----------------------------------
+Epoch 3 of 50
+Number of batches 19
+Generator loss 0.0301 for batch 0
+Generator loss 0.0332 for batch 1
+Generator loss 0.0306 for batch 2
+Generator loss 0.0290 for batch 3
+Generator loss 0.0272 for batch 4
+Generator loss 0.0270 for batch 5
+Generator loss 0.0235 for batch 6
+Generator loss 0.0242 for batch 7
+Generator loss 0.0275 for batch 8
+Generator loss 0.0318 for batch 9
+Generator loss 0.0288 for batch 10
+Generator loss 0.0266 for batch 11
+Generator loss 0.0233 for batch 12
+Generator loss 0.0227 for batch 13
+Generator loss 0.0204 for batch 14
+Generator loss 0.0200 for batch 15
+Generator loss 0.0194 for batch 16
+Generator loss 0.0203 for batch 17
+Generator loss 0.0191 for batch 18
+Saving weights...
+Saving sample images...
+Storing to histogram values
+Elapsed time in epoch =  0:08:16.987621
+----------------------------------
+Epoch 4 of 50
+Number of batches 19
+Generator loss 0.0185 for batch 0
+Generator loss 0.0201 for batch 1
+Generator loss 0.0197 for batch 2
+Generator loss 0.0220 for batch 3
+Generator loss 0.0271 for batch 4
+Generator loss 0.0294 for batch 5
+Generator loss 0.0249 for batch 6
+Generator loss 0.0194 for batch 7
+Generator loss 0.0178 for batch 8
+Generator loss 0.0179 for batch 9
+Generator loss 0.0176 for batch 10
+Generator loss 0.0184 for batch 11
+Generator loss 0.0179 for batch 12
+Generator loss 0.0183 for batch 13
+Generator loss 0.0175 for batch 14
+Generator loss 0.0189 for batch 15
+Generator loss 0.0192 for batch 16
+Generator loss 0.0219 for batch 17
+Generator loss 0.0221 for batch 18
+Saving weights...
+Saving sample images...
+Storing to histogram values
+Elapsed time in epoch =  0:05:47.781863
+----------------------------------
+Epoch 5 of 50
+Number of batches 19
+Generator loss 0.0191 for batch 0
+Generator loss 0.0181 for batch 1
+Generator loss 0.0154 for batch 2
+Generator loss 0.0146 for batch 3
+Generator loss 0.0156 for batch 4
+Generator loss 0.0157 for batch 5
+Generator loss 0.0129 for batch 6
+Generator loss 0.0129 for batch 7
+Generator loss 0.0146 for batch 8
+Generator loss 0.0174 for batch 9
+Generator loss 0.0184 for batch 10
+Generator loss 0.0200 for batch 11
+Generator loss 0.0178 for batch 12
+Generator loss 0.0166 for batch 13
+Generator loss 0.0136 for batch 14
+Generator loss 0.0126 for batch 15
+Generator loss 0.0117 for batch 16
+Generator loss 0.0121 for batch 17
+Generator loss 0.0116 for batch 18
+Saving weights...
+Saving sample images...
+Storing to histogram values
+Elapsed time in epoch =  0:05:21.787587
+----------------------------------
+Epoch 6 of 50
+Number of batches 19
+Generator loss 0.0110 for batch 0
+Generator loss 0.0121 for batch 1
+Generator loss 0.0113 for batch 2
+Generator loss 0.0131 for batch 3
+Generator loss 0.0171 for batch 4
+Generator loss 0.0181 for batch 5
+Generator loss 0.0137 for batch 6
+Generator loss 0.0106 for batch 7
+Generator loss 0.0100 for batch 8
+Generator loss 0.0110 for batch 9
+Generator loss 0.0107 for batch 10
+Generator loss 0.0121 for batch 11
+Generator loss 0.0128 for batch 12
+Generator loss 0.0153 for batch 13
+Generator loss 0.0154 for batch 14
+Generator loss 0.0156 for batch 15
+Generator loss 0.0149 for batch 16
+Generator loss 0.0141 for batch 17
+Generator loss 0.0121 for batch 18
+Saving weights...
+Saving sample images...
+Storing to histogram values
+Elapsed time in epoch =  0:05:19.925224
+----------------------------------
+Epoch 7 of 50
+Number of batches 19
+Generator loss 0.0110 for batch 0
+Generator loss 0.0124 for batch 1
+Generator loss 0.0114 for batch 2
+Generator loss 0.0130 for batch 3
+Generator loss 0.0174 for batch 4
+Generator loss 0.0182 for batch 5
+Generator loss 0.0146 for batch 6
+Generator loss 0.0110 for batch 7
+Generator loss 0.0101 for batch 8
+Generator loss 0.0109 for batch 9
+Generator loss 0.0103 for batch 10
+Generator loss 0.0113 for batch 11
+Generator loss 0.0109 for batch 12
+Generator loss 0.0111 for batch 13
+Generator loss 0.0103 for batch 14
+Generator loss 0.0124 for batch 15
+Generator loss 0.0136 for batch 16
+Generator loss 0.0170 for batch 17
+Generator loss 0.0176 for batch 18
+Saving weights...
+Saving sample images...
+Storing to histogram values
+Elapsed time in epoch =  0:03:56.313008
+----------------------------------
+Epoch 8 of 50
+Number of batches 19
+Generator loss 0.0146 for batch 0
+Generator loss 0.0141 for batch 1
+Generator loss 0.0121 for batch 2
+Generator loss 0.0112 for batch 3
+Generator loss 0.0124 for batch 4
+Generator loss 0.0128 for batch 5
+Generator loss 0.0099 for batch 6
+Generator loss 0.0096 for batch 7
+Generator loss 0.0112 for batch 8
+Generator loss 0.0139 for batch 9
+Generator loss 0.0133 for batch 10
+Generator loss 0.0129 for batch 11
+Generator loss 0.0122 for batch 12
+Generator loss 0.0119 for batch 13
+Generator loss 0.0102 for batch 14
+Generator loss 0.0099 for batch 15
+Generator loss 0.0095 for batch 16
+Generator loss 0.0100 for batch 17
+Generator loss 0.0094 for batch 18
+Saving weights...
+Saving sample images...
+Storing to histogram values
+Elapsed time in epoch =  0:03:52.124406
+----------------------------------
+Epoch 9 of 50
+Number of batches 19
+Generator loss 0.0085 for batch 0
+Generator loss 0.0093 for batch 1
+Generator loss 0.0083 for batch 2
+Generator loss 0.0091 for batch 3
+Generator loss 0.0122 for batch 4
+Generator loss 0.0139 for batch 5
+Generator loss 0.0122 for batch 6
+Generator loss 0.0107 for batch 7
+Generator loss 0.0100 for batch 8
+Generator loss 0.0108 for batch 9
+Generator loss 0.0109 for batch 10
+Generator loss 0.0127 for batch 11
+Generator loss 0.0121 for batch 12
+Generator loss 0.0125 for batch 13
+Generator loss 0.0105 for batch 14
+Generator loss 0.0109 for batch 15
+Generator loss 0.0109 for batch 16
+Generator loss 0.0120 for batch 17
+Generator loss 0.0117 for batch 18
+Saving weights...
+Saving sample images...
+Storing to histogram values
+Elapsed time in epoch =  0:03:52.328042
+----------------------------------
+Epoch 10 of 50
+Number of batches 19
+Generator loss 0.0106 for batch 0
+Generator loss 0.0114 for batch 1
+Generator loss 0.0108 for batch 2
+Generator loss 0.0112 for batch 3
+Generator loss 0.0131 for batch 4
+Generator loss 0.0137 for batch 5
+Generator loss 0.0109 for batch 6
+Generator loss 0.0109 for batch 7
+Generator loss 0.0132 for batch 8
+Generator loss 0.0163 for batch 9
+Generator loss 0.0145 for batch 10
+Generator loss 0.0133 for batch 11
+Generator loss 0.0120 for batch 12
+Generator loss 0.0118 for batch 13
+Generator loss 0.0100 for batch 14

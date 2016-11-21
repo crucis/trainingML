@@ -46,7 +46,7 @@ cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','hor
 #chosen_Class = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'] # Each chosen class from cifar10_Classes is a loop, if 'all' chosen, than it will run the entire cifar10 >>NOT IMPLEMENTED
 
 # Model Options
-folder = "Test15"
+folder = "PreTrainedWeights1"
 outDire = 'results/'+folder
 
 d_predict_fake = 0
@@ -195,9 +195,9 @@ def plotHistogram(originalImage,fakeImage, nameClass,directory,folder=folder):
 ########################
 #PROGRAM
 ########################
-for i in range(1,len(cifar10_Classes)):
+for i in range(0,len(cifar10_Classes)):
 	chosen_Class = cifar10_Classes[i]
-	outDir = outDire+'_'+str(chosen_Class)
+	outDir = outDire+'/'+str(chosen_Class)
 	# Create folder for tests
 	mkdir_p(outDir)
 	sys.stdout = Logger()
@@ -209,38 +209,40 @@ for i in range(1,len(cifar10_Classes)):
 
 	# Choosing only one classification
 	Y = Y[(labels == cifar10_Classes.index(chosen_Class))[:,0]]
-	Y_test = Y_test[(labels_test == cifar10_Classes.index(chosen_Class))[:,0]]
+	#Y_test = Y_test[(labels_test == cifar10_Classes.index(chosen_Class))[:,0]]
 
 	X = numpy.zeros((Y.shape[0],1,Y.shape[2],Y.shape[3]))
-	X_test = numpy.zeros((Y_test.shape[0],1,Y_test.shape[2],Y_test.shape[3]))
+	#X_test = numpy.zeros((Y_test.shape[0],1,Y.shape[2],Y.shape[3]))
 
 	# Convert RGB to grayscale to create our input
 	converter(X,Y)
-	converter(X_test,Y_test)
+	#converter(X_test,Y_test)
 
 	#### Data Preprocessing
 	# convert inputs and outputs to float32
 	X = X.astype('float32')
 	Y = Y.astype('float32')
-	X_test = X_test.astype('float32')
-	Y_test = Y_test.astype('float32')
+	#X_test = X_test.astype('float32')
+	#Y_test = Y_test.astype('float32')
 	# normalize inputs and outputs from 0-255 to 0.0-1.0
 	X /= 255
 	Y /= 255
-	X_test /= 255
-	Y_test /= 255
+	#X_test /= 255
+	#Y_test /= 255
 
 
 	# limits the number of images to nImages
-	G = X[:nImages]
-	F = Y[:nImages]
-	G_test = X_test[nImages:nImages+math.ceil(nImages/5)]
-	F_test = Y_test[nImages:nImages+math.ceil(nImages/5)]
+	G = X
+	F = Y
+	#G = X[:nImages]
+	#F = Y[:nImages]
+	#G_test = X_test[nImages:nImages+math.ceil(nImages/5)]
+	#F_test = Y_test[nImages:nImages+math.ceil(nImages/5)]
 
 
 	#### Models
 	print("----------------------------------")
-	print('Training with dataset based on class - ',chosen_Class,'with',F.shape[0],'samples')
+	print('Training with dataset based on class - ',chosen_Class,'with',F.shape[0])
 	print("----------------------------------")
 
 
@@ -296,19 +298,21 @@ for i in range(1,len(cifar10_Classes)):
 		return model
 
 	#### Training
-	discriminator = discriminator_model()
-#	discriminator.load_weights("results/Test15_airplane/discriminator_weights")
+	#discriminator = discriminator_model()
+	#if chosen_Class == 'airplane':
+	#	discriminator.load_weights("results/Test15_airplane/discriminator_weights")
 	generator = generator_model()
 	# LOADING GENERATOR FROM TEST8
-#	generator.load_weights("results/Test15_airplane/generator_weights")
-	discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
+	#if chosen_Class == 'airplane':
+	#	generator.load_weights("results/Test15_airplane/generator_weights")
+	#discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
 	# Optimizer
 	adam=Adam(lr=0.0002, beta_1=0.5, beta_2=0.999, epsilon=1e-08)
 	# Compile generator
-	generator.compile(loss='mean_squared_error',optimizer='adam')
-	discriminator_on_generator.compile(loss='binary_crossentropy',optimizer=adam)
-	discriminator.trainable = True
-	discriminator.compile(loss='binary_crossentropy',optimizer=adam, metrics=['accuracy'])
+	generator.compile(loss='mean_squared_error',optimizer='nadam')
+	#discriminator_on_generator.compile(loss='binary_crossentropy',optimizer=adam)
+	#discriminator.trainable = True
+	#discriminator.compile(loss='binary_crossentropy',optimizer='adam', metrics=['accuracy'])
 
 	# Initialize d_loss
 	d_predict_real = 0
@@ -326,53 +330,63 @@ for i in range(1,len(cifar10_Classes)):
 		for index in range(int(F.shape[0]/BATCH_SIZE)):
 			image_batch = F[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
 			BW_image_batch = G[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
-			image_batch_test = F_test[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
-			BW_image_batch_test = G_test[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
-
-			#gAlone_loss = generator.train_on_batch(BW_image_batch,image_batch)
+			gAlone_loss = generator.train_on_batch(BW_image_batch,image_batch)
 			#print("Generating images...")
 			generated_images = generator.predict(BW_image_batch)
 
 			# Creating inputs for train_on_batch
-			M = numpy.concatenate((image_batch,generated_images))
-			z = [1]*image_batch.shape[0]+[0]*generated_images.shape[0]
+			#M = numpy.concatenate((image_batch,generated_images))
+			#z = [1]*image_batch.shape[0]+[0]*generated_images.shape[0]
 			# Shuffling M and z
-			perm = numpy.random.permutation(len(z))
-			M = M[perm]
-			z = numpy.array(z)
-			z = z[perm]
+			#perm = numpy.random.permutation(len(z))
+			#M = M[perm]
+			#z = numpy.array(z)
+			#z = z[perm]
 
 			#print("Training discriminator...")
 	        # Does not train discriminator if it is close to overfitting
-			if (d_predict_fake > 0.50) or (d_predict_real < 0.5):
-				discriminator.trainable = True
-			elif (d_acc > 0.95) :
-				discriminator.trainable = False
-			else:
-				discriminator.trainable = True
-			[d_loss, d_acc] = discriminator.train_on_batch(M,z)
+		#	if (d_predict_fake > 0.50) or (d_predict_real < 0.5):
+		#		discriminator.trainable = True
+		#		[d_loss, d_acc] = discriminator.train_on_batch(M,z)
+		#	elif (d_acc > 0.95) :
+		#		discriminator.trainable = False
+		#	else:
+		#		discriminator.trainable = True
+		#		[d_loss, d_acc] = discriminator.train_on_batch(M,z)
+
 
 
 			for j in range(1):
-				#print("Training generator...")
-				g_loss = discriminator_on_generator.train_on_batch(BW_image_batch,[1]*BW_image_batch.shape[0])
-				print("GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss,"Discriminator accuracy %.4f"%d_acc, "Total loss: %.4f"%(g_loss+d_loss),"for batch",index)
+		#		#print("Training generator...")
+		#		g_loss = discriminator_on_generator.train_on_batch(BW_image_batch,[1]*BW_image_batch.shape[0])
+		##		print("GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss,"Discriminator accuracy %.4f"%d_acc, "Total loss: %.4f"%(g_loss+d_loss),"for batch",index)
 	            #print("Generator loss %.4f"%gAlone_loss,"GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss+gAlone_loss),"For batch",index)
+				print("Generator loss %.4f"%gAlone_loss,"for batch",index)
 		# Test if discriminator is working
-		d_predict_real = discriminator.predict(image_batch_test)
-		print("DISCRIMINATOR_Imagem REAL=",d_predict_real[index])
-		g_predict_fake = generator.predict(BW_image_batch_test)
-		d_predict_fake = discriminator.predict(g_predict_fake)[index]
-		print("DISCRIMINATOR_Imagem FAKE=",d_predict_fake)
-		print("GAN_Imagem FAKE=",discriminator_on_generator.predict(BW_image_batch_test)[index])
+		#d_predict_real = discriminator.predict(image_batch)
+		#print("DISCRIMINATOR_Imagem REAL=",d_predict_real[index])
+		#g_predict_fake = generator.predict(BW_image_batch)
+		#d_predict_fake = discriminator.predict(g_predict_fake)[index]
+		#print("DISCRIMINATOR_Imagem FAKE=",d_predict_fake)
+		#print("GAN_Imagem FAKE=",discriminator_on_generator.predict(BW_image_batch)[index])
 
 		print("Saving weights...")
 		generator.save_weights(outDir+'/generator_weights',True)
-		discriminator.save_weights(outDir+'/discriminator_weights',True)
+	#	discriminator.save_weights(outDir+'/discriminator_weights',True)
 		print("Saving sample images...")
 		save3images(BW_image_batch,generated_images,image_batch,epoch+1)
 		print("Storing to histogram values")
+		#print(index)
+		#if m == 0:
+		#	stored_g_predict = numpy.array(generated_images)
+	#	else:
+	#		stored_g_predict = numpy.vstack((stored_g_predict,g_predict_fake))
+		#try:
+	#		stored_g_predict = numpy.vstack(stored_g_predict,g_predict_fake)
+#		except NameError:
+#			stored_g_predict = numpy.array(g_predict_fake)
 
+		#print('g_predict_fake=',g_predict_fake.shape)
 
 		print("Elapsed time in epoch = ",str(timedelta(seconds=(time.time()-start_time))))
 		print("----------------------------------")
@@ -385,20 +399,21 @@ for i in range(1,len(cifar10_Classes)):
 	print('End of training')
 	print('Saving histograms')
 	stored_g_predict = generator.predict(G)
+
 	plotHistogram(originalImage=F,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
 	print("----------------------------------")
 
 	print('Total samples = ', G.shape[0], ' Batch size =', BATCH_SIZE, ' Epochs = ', EPOCH)
-	print("Generator loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss))
+	#print("Generator loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss))
 	print("----------------------------------")
-	print("---DISCRIMINATOR---")
-	print(discriminator.summary())
-	print("----------------------------------")
+	#print("---DISCRIMINATOR---")
+	#print(discriminator.summary())
+	#print("----------------------------------")
 	print("---GENERATOR---")
 	print(generator.summary())
-	print("----------------------------------")
-	print("---GAN---")
-	print(discriminator_on_generator.summary())
+	#print("----------------------------------")
+	#print("---GAN---")
+	#print(discriminator_on_generator.summary())
 	#print("----------------------------------")
 
 	# eof

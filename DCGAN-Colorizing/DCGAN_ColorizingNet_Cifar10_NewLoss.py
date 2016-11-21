@@ -72,7 +72,7 @@ def converter(a,b):
 
 # defining function to display and/or save graphs
 def plotGraph (filename, vecTrain, vecTest, nameVec):
-	# Plot	
+	# Plot
 	print("--Now plotting ",nameVec,"--")
 	#Plot Loss
 	plt.plot(vecTrain)
@@ -101,13 +101,13 @@ class Logger(object):
 
     def write(self, message):
         self.terminal.write(message)
-        self.log.write(message)  
+        self.log.write(message)
 
     def flush(self):
         #this flush method is needed for python 3 compatibility.
         #this handles the flush command by doing nothing.
         #you might want to specify some extra behavior here.
-        pass    
+        pass
 
 def save3images(inp,out,original,folder):
 	for i in range(math.floor(original.shape[0]*0.02)):
@@ -127,7 +127,7 @@ def save3images(inp,out,original,folder):
 		titlestr = 'Epochs='+str(epoch)+' BATCH_SIZE='+str(BATCH_SIZE)
 		plt.title(titlestr)
 		plt.grid(b=False)
-		
+
 		mkdir_p(outDir+'/samples/epoch'+str(folder))
 
 		plt.savefig(outDir+'/samples/epoch'+str(folder)+'/sample_%s.png'%i)
@@ -186,7 +186,7 @@ def generator_model():
 	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal', activation='relu'))
 	model.add(BatchNormalization())
 	model.add(Convolution2D(64, 3, 3, border_mode='same', init='he_normal', activation='relu'))
-	model.add(BatchNormalization())	
+	model.add(BatchNormalization())
 	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal', activation='relu'))
 	model.add(BatchNormalization())
 	model.add(Convolution2D(16, 3, 3, border_mode='same', init='he_normal', activation='relu'))
@@ -199,16 +199,16 @@ def generator_model():
 def discriminator_model():
 	model = Sequential()
 	model.add(Convolution2D(8,3,3,border_mode='same',init='he_normal',input_shape=(3,32,32),activation='linear'))
-	model.add(LeakyReLU(alpha=.2)) 
+	model.add(LeakyReLU(alpha=.2))
 	model.add(MaxPooling2D(pool_size=(2,2)))
 	model.add(Convolution2D(16,3,3,border_mode='same',init='he_normal',activation='linear'))
-	model.add(LeakyReLU(alpha=.2)) 
+	model.add(LeakyReLU(alpha=.2))
 	model.add(MaxPooling2D(pool_size=(2,2)))
 	model.add(Convolution2D(32,3,3,border_mode='same',init='he_normal',activation='linear'))
-	model.add(LeakyReLU(alpha=.2)) 
+	model.add(LeakyReLU(alpha=.2))
 	model.add(MaxPooling2D(pool_size=(2,2)))
 	model.add(Convolution2D(64,3,3,border_mode='same',init='he_normal',activation='linear'))
-	model.add(LeakyReLU(alpha=.2)) 
+	model.add(LeakyReLU(alpha=.2))
 	model.add(MaxPooling2D(pool_size=(2,2)))
 	model.add(Flatten())
 	model.add(Dense(512,init='he_normal',activation='linear'))
@@ -234,21 +234,33 @@ generator = generator_model()
 discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
 # Optimizer
 adam=Adam(lr=0.0002, beta_1=0.5, beta_2=0.999, epsilon=1e-08)
+# Custom loss functions
+def content_loss(y_true,y_pred):
+    return
+def adversarial_loss(y_true,y_pred):
+
+    return
+def regularization_loss(y_true,y_pred):
+    return
+def weighted_loss_function(y_true, y_pred):
+    w1 = 40
+    w2 = 30
+    w3 = 50
+    return (w1*content_loss(y_true,y_pred)+w2*adversarial_loss(y_true,y_pred)+w3*regularization_loss(y_true,y_pred))/(w1+w2+w3)
 # Compile generator
 generator.compile(loss='mean_squared_error',optimizer='nadam')
-discriminator_on_generator.compile(loss='binary_crossentropy',optimizer=adam)
+discriminator_on_generator.compile(loss=weighted_loss_function,optimizer=adam)
 discriminator.trainable = True
 discriminator.compile(loss='binary_crossentropy',optimizer='nadam')
-
 for epoch in range(EPOCH):
 	print("Epoch is", epoch,"of",EPOCH)
 	print("Number of batches",int(F.shape[0]/BATCH_SIZE))
 	start_time = time.time()
 
-
 	for index in range(int(F.shape[0]/BATCH_SIZE)):
 		image_batch = F[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
 		BW_image_batch = G[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
+        # Training genrator alone
 		gAlone_loss = generator.train_on_batch(BW_image_batch,image_batch)
 		#print("Generating images...")
 		generated_images = generator.predict(BW_image_batch)
