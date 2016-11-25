@@ -195,9 +195,12 @@ def plotHistogram(originalImage,fakeImage, nameClass,directory,folder=folder):
 ########################
 #PROGRAM
 ########################
-for i in range(0,len(cifar10_Classes)):
+#for i in range(0,len(cifar10_Classes)):
+for i in range(1):
 	chosen_Class = cifar10_Classes[i]
-	outDir = outDire+'/'+str(chosen_Class)
+#	outDir = outDire+'/'+str(chosen_Class)
+	outDir = outDire+'/allClasses'
+
 	# Create folder for tests
 	mkdir_p(outDir)
 	sys.stdout = Logger()
@@ -208,7 +211,7 @@ for i in range(0,len(cifar10_Classes)):
 
 
 	# Choosing only one classification
-	Y = Y[(labels == cifar10_Classes.index(chosen_Class))[:,0]]
+	#Y = Y[(labels == cifar10_Classes.index(chosen_Class))[:,0]]
 	#Y_test = Y_test[(labels_test == cifar10_Classes.index(chosen_Class))[:,0]]
 
 	X = numpy.zeros((Y.shape[0],1,Y.shape[2],Y.shape[3]))
@@ -242,8 +245,8 @@ for i in range(0,len(cifar10_Classes)):
 
 	#### Models
 	print("----------------------------------")
-	print('Training with dataset based on class - ',chosen_Class,'with',F.shape[0])
-	print("----------------------------------")
+	#print('Training with dataset based on class - ',chosen_Class,'with',F.shape[0])
+	#print("----------------------------------")
 
 
 	# GENERATOR
