@@ -46,7 +46,7 @@ cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','hor
 #chosen_Class = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'] # Each chosen class from cifar10_Classes is a loop, if 'all' chosen, than it will run the entire cifar10 >>NOT IMPLEMENTED
 
 # Model Options
-folder = "Test15"
+folder = "Test16"
 outDire = 'results/'+folder
 
 d_predict_fake = 0
@@ -195,7 +195,59 @@ def plotHistogram(originalImage,fakeImage, nameClass,directory,folder=folder):
 ########################
 #PROGRAM
 ########################
-for i in range(1,len(cifar10_Classes)):
+#### Models
+# GENERATOR
+def generator_model():
+	model = Sequential()
+	# Layers
+	model.add(Convolution2D(8, 3, 3, border_mode='same', init='he_normal', input_shape=(1, 32, 32), activation='relu'))
+	model.add(Convolution2D(16, 3, 3, border_mode='same', init='he_normal', activation='relu'))
+	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal', activation='relu'))
+	model.add(BatchNormalization())
+	model.add(Convolution2D(64, 3, 3, border_mode='same', init='he_normal', activation='relu'))
+	model.add(BatchNormalization())
+	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal', activation='relu'))
+	model.add(BatchNormalization())
+	model.add(Convolution2D(16, 3, 3, border_mode='same', init='he_normal', activation='relu'))
+	model.add(Convolution2D(8, 3, 3, border_mode='same', init='he_normal', activation='relu'))
+	model.add(Convolution2D(3 , 3, 3, border_mode='same', init='he_normal', activation='relu'))
+	model.add(Lambda(lambda x: K.clip(x, 0.0, 1.0)))
+	return model
+
+# DISCRIMINATOR
+def discriminator_model():
+	model = Sequential()
+	model.add(Convolution2D(8,3,3,border_mode='same',init='he_normal',input_shape=(3,32,32),activation='linear',W_regularizer = l2(0.001)))
+	model.add(LeakyReLU(alpha=.2))
+	model.add(MaxPooling2D(pool_size=(2,2)))
+	model.add(Convolution2D(16,3,3,border_mode='same',init='he_normal',activation='linear',W_regularizer = l2(0.001)))
+	model.add(LeakyReLU(alpha=.2))
+	model.add(MaxPooling2D(pool_size=(2,2)))
+	model.add(Convolution2D(32,3,3,border_mode='same',init='he_normal',activation='linear',W_regularizer = l2(0.001)))
+	model.add(LeakyReLU(alpha=.2))
+	model.add(MaxPooling2D(pool_size=(2,2)))
+	model.add(Convolution2D(64,3,3,border_mode='same',init='he_normal',activation='linear',W_regularizer = l2(0.001)))
+	model.add(LeakyReLU(alpha=.2))
+	model.add(MaxPooling2D(pool_size=(2,2)))
+	model.add(Flatten())
+	model.add(Dense(512,init='he_normal',activation='linear',W_regularizer = l2(0.001)))
+	model.add(LeakyReLU(alpha=.2))
+	model.add(Dropout(0.2))
+	model.add(Dense(256,init='he_normal',activation='linear',W_regularizer = l2(0.001)))
+	model.add(LeakyReLU(alpha=.2))
+	model.add(Dropout(0.2))
+	model.add(Dense(1,init='he_normal',activation='sigmoid'))
+	return model
+
+# Generator with Discriminator
+def generator_containing_discriminator(generator,discriminator):
+	model = Sequential()
+	model.add(generator)
+	discriminator.trainable = False
+	model.add(discriminator)
+	return model
+
+for i in range(7,len(cifar10_Classes)):
 	chosen_Class = cifar10_Classes[i]
 	outDir = outDire+'_'+str(chosen_Class)
 	# Create folder for tests
@@ -234,73 +286,23 @@ for i in range(1,len(cifar10_Classes)):
 	# limits the number of images to nImages
 	G = X[:nImages]
 	F = Y[:nImages]
-	G_test = X_test[nImages:nImages+math.ceil(nImages/5)]
-	F_test = Y_test[nImages:nImages+math.ceil(nImages/5)]
+	G_test = X_test[:nImages]
+	F_test = Y_test[:nImages]
 
 
-	#### Models
 	print("----------------------------------")
 	print('Training with dataset based on class - ',chosen_Class,'with',F.shape[0],'samples')
 	print("----------------------------------")
 
 
-	# GENERATOR
-	def generator_model():
-		model = Sequential()
-		# Layers
-		model.add(Convolution2D(8, 3, 3, border_mode='same', init='he_normal', input_shape=(1, 32, 32), activation='relu'))
-		model.add(Convolution2D(16, 3, 3, border_mode='same', init='he_normal', activation='relu'))
-		model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal', activation='relu'))
-		model.add(BatchNormalization())
-		model.add(Convolution2D(64, 3, 3, border_mode='same', init='he_normal', activation='relu'))
-		model.add(BatchNormalization())
-		model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal', activation='relu'))
-		model.add(BatchNormalization())
-		model.add(Convolution2D(16, 3, 3, border_mode='same', init='he_normal', activation='relu'))
-		model.add(Convolution2D(8, 3, 3, border_mode='same', init='he_normal', activation='relu'))
-		model.add(Convolution2D(3 , 3, 3, border_mode='same', init='he_normal', activation='relu'))
-		model.add(Lambda(lambda x: K.clip(x, 0.0, 1.0)))
-		return model
 
-	# DISCRIMINATOR
-	def discriminator_model():
-		model = Sequential()
-		model.add(Convolution2D(8,3,3,border_mode='same',init='he_normal',input_shape=(3,32,32),activation='linear',W_regularizer = l2(0.001)))
-		model.add(LeakyReLU(alpha=.2))
-		model.add(MaxPooling2D(pool_size=(2,2)))
-		model.add(Convolution2D(16,3,3,border_mode='same',init='he_normal',activation='linear',W_regularizer = l2(0.001)))
-		model.add(LeakyReLU(alpha=.2))
-		model.add(MaxPooling2D(pool_size=(2,2)))
-		model.add(Convolution2D(32,3,3,border_mode='same',init='he_normal',activation='linear',W_regularizer = l2(0.001)))
-		model.add(LeakyReLU(alpha=.2))
-		model.add(MaxPooling2D(pool_size=(2,2)))
-		model.add(Convolution2D(64,3,3,border_mode='same',init='he_normal',activation='linear',W_regularizer = l2(0.001)))
-		model.add(LeakyReLU(alpha=.2))
-		model.add(MaxPooling2D(pool_size=(2,2)))
-		model.add(Flatten())
-		model.add(Dense(512,init='he_normal',activation='linear',W_regularizer = l2(0.001)))
-		model.add(LeakyReLU(alpha=.2))
-		model.add(Dropout(0.2))
-		model.add(Dense(256,init='he_normal',activation='linear',W_regularizer = l2(0.001)))
-		model.add(LeakyReLU(alpha=.2))
-		model.add(Dropout(0.2))
-		model.add(Dense(1,init='he_normal',activation='sigmoid'))
-		return model
-
-	# Generator with Discriminator
-	def generator_containing_discriminator(generator,discriminator):
-		model = Sequential()
-		model.add(generator)
-		discriminator.trainable = False
-		model.add(discriminator)
-		return model
 
 	#### Training
 	discriminator = discriminator_model()
-#	discriminator.load_weights("results/Test15_airplane/discriminator_weights")
+#	discriminator.load_weights("results/PreTrainedWeights1/"+chosen_Class+"/discriminator_weights")
 	generator = generator_model()
 	# LOADING GENERATOR FROM TEST8
-#	generator.load_weights("results/Test15_airplane/generator_weights")
+#	generator.load_weights("results/PreTrainedWeights1/"+chosen_Class+"/generator_weights")
 	discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
 	# Optimizer
 	adam=Adam(lr=0.0002, beta_1=0.5, beta_2=0.999, epsilon=1e-08)
@@ -316,18 +318,19 @@ for i in range(1,len(cifar10_Classes)):
 	d_acc = 0
 	d_predict_fake = 0
 	d_predict_real = 1
+	 #counter for how many times discriminator not trained
 
 	for epoch in range(EPOCH):
 		print("Epoch", epoch+1,"of",EPOCH)
 		print("Number of batches",int(F.shape[0]/BATCH_SIZE))
 		start_time = time.time()
-
+		l=0
 		m = 0;
 		for index in range(int(F.shape[0]/BATCH_SIZE)):
 			image_batch = F[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
 			BW_image_batch = G[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
-			image_batch_test = F_test[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
-			BW_image_batch_test = G_test[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
+			#image_batch_test = F_test[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
+			#BW_image_batch_test = G_test[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
 
 			#gAlone_loss = generator.train_on_batch(BW_image_batch,image_batch)
 			#print("Generating images...")
@@ -344,10 +347,11 @@ for i in range(1,len(cifar10_Classes)):
 
 			#print("Training discriminator...")
 	        # Does not train discriminator if it is close to overfitting
-			if (d_predict_fake > 0.50) or (d_predict_real < 0.5):
+			if (numpy.mean(d_predict_fake) > 0.50) or (numpy.mean(d_predict_real) < 0.5):
 				discriminator.trainable = True
 			elif (d_acc > 0.95) :
 				discriminator.trainable = False
+				l+=1
 			else:
 				discriminator.trainable = True
 			[d_loss, d_acc] = discriminator.train_on_batch(M,z)
@@ -355,16 +359,19 @@ for i in range(1,len(cifar10_Classes)):
 
 			for j in range(1):
 				#print("Training generator...")
-				g_loss = discriminator_on_generator.train_on_batch(BW_image_batch,[1]*BW_image_batch.shape[0])
-				print("GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss,"Discriminator accuracy %.4f"%d_acc, "Total loss: %.4f"%(g_loss+d_loss),"for batch",index)
+				[g_loss,g_acc] = discriminator_on_generator.train_on_batch(BW_image_batch,[1]*BW_image_batch.shape[0])
+				print("GAN loss %.4f "%g_loss, "GAN acc %.4f"%g_acc, "Discriminator loss %.4f"%d_loss,"Discriminator accuracy %.4f"%d_acc, "Total loss: %.4f"%(g_loss+d_loss),"for batch",index)
+				#print("GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss,"Discriminator accuracy %.4f"%d_acc, "Total loss: %.4f"%(g_loss+d_loss),"for batch",index)
 	            #print("Generator loss %.4f"%gAlone_loss,"GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss+gAlone_loss),"For batch",index)
 		# Test if discriminator is working
-		d_predict_real = discriminator.predict(image_batch_test)
-		print("DISCRIMINATOR_Imagem REAL=",d_predict_real[index])
-		g_predict_fake = generator.predict(BW_image_batch_test)
-		d_predict_fake = discriminator.predict(g_predict_fake)[index]
-		print("DISCRIMINATOR_Imagem FAKE=",d_predict_fake)
-		print("GAN_Imagem FAKE=",discriminator_on_generator.predict(BW_image_batch_test)[index])
+		d_predict_real = discriminator.predict(F_test)
+		#print(len(d_predict_real))
+		print("DISCRIMINATOR_Imagem REAL=",numpy.mean(d_predict_real))
+		g_predict_fake = generator.predict(G_test)
+		d_predict_fake = discriminator.predict(g_predict_fake)
+		print("DISCRIMINATOR_Imagem FAKE=",numpy.mean(d_predict_fake))
+		print("GAN_Imagem FAKE=",numpy.mean(discriminator_on_generator.predict(G_test)))
+		print("Discriminator trained",index-l+1,"times of",index,"batchs")
 
 		print("Saving weights...")
 		generator.save_weights(outDir+'/generator_weights',True)
