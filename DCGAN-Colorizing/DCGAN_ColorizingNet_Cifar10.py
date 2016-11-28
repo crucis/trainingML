@@ -46,7 +46,7 @@ cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','hor
 #chosen_Class = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'] # Each chosen class from cifar10_Classes is a loop, if 'all' chosen, than it will run the entire cifar10 >>NOT IMPLEMENTED
 
 # Model Options
-folder = "Test16"
+folder = "Test18"
 outDire = 'results/'+folder
 
 d_predict_fake = 0
@@ -249,7 +249,7 @@ def generator_containing_discriminator(generator,discriminator):
 
 for i in range(7,len(cifar10_Classes)):
 	chosen_Class = cifar10_Classes[i]
-	outDir = outDire+'_'+str(chosen_Class)
+	outDir = outDire+'/'+str(chosen_Class)
 	# Create folder for tests
 	mkdir_p(outDir)
 	sys.stdout = Logger()
@@ -302,13 +302,15 @@ for i in range(7,len(cifar10_Classes)):
 #	discriminator.load_weights("results/PreTrainedWeights1/"+chosen_Class+"/discriminator_weights")
 	generator = generator_model()
 	# LOADING GENERATOR FROM TEST8
-#	generator.load_weights("results/PreTrainedWeights1/"+chosen_Class+"/generator_weights")
+	#generator.load_weights("results/PreTrainedWeights1/"+chosen_Class+"/generator_weights")
+	generator.load_weights("results/Test17/"+chosen_Class+"/generator_weights")
+
 	discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
 	# Optimizer
 	adam=Adam(lr=0.0002, beta_1=0.5, beta_2=0.999, epsilon=1e-08)
 	# Compile generator
 	generator.compile(loss='mean_squared_error',optimizer='adam')
-	discriminator_on_generator.compile(loss='binary_crossentropy',optimizer=adam)
+	discriminator_on_generator.compile(loss='binary_crossentropy',optimizer=adam, metrics=['accuracy'])
 	discriminator.trainable = True
 	discriminator.compile(loss='binary_crossentropy',optimizer=adam, metrics=['accuracy'])
 
@@ -370,8 +372,8 @@ for i in range(7,len(cifar10_Classes)):
 		g_predict_fake = generator.predict(G_test)
 		d_predict_fake = discriminator.predict(g_predict_fake)
 		print("DISCRIMINATOR_Imagem FAKE=",numpy.mean(d_predict_fake))
-		print("GAN_Imagem FAKE=",numpy.mean(discriminator_on_generator.predict(G_test)))
-		print("Discriminator trained",index-l+1,"times of",index,"batchs")
+	#	print("GAN_Imagem FAKE=",numpy.mean(discriminator_on_generator.predict(G_test)))
+		print("Discriminator trained",index-l+1,"times of",index+1,"batchs")
 
 		print("Saving weights...")
 		generator.save_weights(outDir+'/generator_weights',True)
