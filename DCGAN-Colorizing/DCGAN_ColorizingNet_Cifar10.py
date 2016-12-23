@@ -10,6 +10,8 @@ from keras.regularizers import l2
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, UpSampling2D, Deconvolution2D
 from keras import backend as K
 from random import uniform
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy
 import math
@@ -46,7 +48,7 @@ cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','hor
 #chosen_Class = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'] # Each chosen class from cifar10_Classes is a loop, if 'all' chosen, than it will run the entire cifar10 >>NOT IMPLEMENTED
 
 # Model Options
-folder = "Test18"
+folder = "Test20"
 outDire = 'results/'+folder
 
 d_predict_fake = 0
@@ -119,7 +121,7 @@ class Logger(object):
 		pass
 
 def save3images(inp,out,original,folder):
-	for i in range(math.floor(original.shape[0]*0.02)):
+	for i in range(int(math.floor(original.shape[0]*0.02))):
 		_,((ax1,ax2),(ax3,_)) = plt.subplots(2,2,sharey='row',sharex='col')
 
 		n = math.floor(uniform(0,original.shape[0]))
@@ -200,41 +202,70 @@ def plotHistogram(originalImage,fakeImage, nameClass,directory,folder=folder):
 def generator_model():
 	model = Sequential()
 	# Layers
-	model.add(Convolution2D(8, 3, 3, border_mode='same', init='he_normal', input_shape=(1, 32, 32), activation='relu'))
-	model.add(Convolution2D(16, 3, 3, border_mode='same', init='he_normal', activation='relu'))
-	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal', activation='relu'))
-	model.add(BatchNormalization())
-	model.add(Convolution2D(64, 3, 3, border_mode='same', init='he_normal', activation='relu'))
-	model.add(BatchNormalization())
-	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal', activation='relu'))
-	model.add(BatchNormalization())
-	model.add(Convolution2D(16, 3, 3, border_mode='same', init='he_normal', activation='relu'))
-	model.add(Convolution2D(8, 3, 3, border_mode='same', init='he_normal', activation='relu'))
-	model.add(Convolution2D(3 , 3, 3, border_mode='same', init='he_normal', activation='relu'))
+	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal', input_shape=(1, 32, 32)))
+        model.add(LeakyReLU(0.2))
+
+	model.add(Convolution2D(64, 3, 3, border_mode='same', init='he_normal'))
+        model.add(BatchNormalization(mode=2,axis=1))
+        model.add(LeakyReLU(0.2))
+
+	model.add(Convolution2D(128, 3, 3, border_mode='same', init='he_normal'))
+        model.add(BatchNormalization(mode=2,axis=1))
+        model.add(LeakyReLU(0.2))
+	#model.add(BatchNormalization())
+
+	model.add(Convolution2D(256, 3, 3, border_mode='same', init='he_normal'))
+        model.add(BatchNormalization(mode=2,axis=1))
+        model.add(LeakyReLU(0.2))
+	#model.add(BatchNormalization())
+
+	model.add(Convolution2D(128, 3, 3, border_mode='same', init='he_normal'))
+        model.add(BatchNormalization(mode=2,axis=1))
+        model.add(LeakyReLU(0.2))
+	#model.add(BatchNormalization())
+
+	model.add(Convolution2D(64, 3, 3, border_mode='same', init='he_normal'))
+        model.add(BatchNormalization(mode=2,axis=1))
+        model.add(LeakyReLU(0.2))
+
+	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal'))
+        model.add(BatchNormalization(mode=2,axis=1))
+        model.add(LeakyReLU(0.2))
+
+	model.add(Convolution2D(3, 3, 3, border_mode='same', init='he_normal'))
 	model.add(Lambda(lambda x: K.clip(x, 0.0, 1.0)))
 	return model
 
 # DISCRIMINATOR
 def discriminator_model():
 	model = Sequential()
-	model.add(Convolution2D(8,3,3,border_mode='same',init='he_normal',input_shape=(3,32,32),activation='linear',W_regularizer = l2(0.001)))
+	model.add(Convolution2D(32,3,3,border_mode='same',init='he_normal',input_shape=(3,32,32),subsample=(2,2))) #16x16
 	model.add(LeakyReLU(alpha=.2))
-	model.add(MaxPooling2D(pool_size=(2,2)))
-	model.add(Convolution2D(16,3,3,border_mode='same',init='he_normal',activation='linear',W_regularizer = l2(0.001)))
+	#model.add(MaxPooling2D(pool_size=(2,2)))
+        model.add(Dropout(0.2))
+
+	model.add(Convolution2D(64,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #8x8
 	model.add(LeakyReLU(alpha=.2))
-	model.add(MaxPooling2D(pool_size=(2,2)))
-	model.add(Convolution2D(32,3,3,border_mode='same',init='he_normal',activation='linear',W_regularizer = l2(0.001)))
+	#model.add(MaxPooling2D(pool_size=(2,2)))
+        model.add(Dropout(0.2))
+
+	model.add(Convolution2D(128,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #4x4
 	model.add(LeakyReLU(alpha=.2))
-	model.add(MaxPooling2D(pool_size=(2,2)))
-	model.add(Convolution2D(64,3,3,border_mode='same',init='he_normal',activation='linear',W_regularizer = l2(0.001)))
+	#model.add(MaxPooling2D(pool_size=(2,2)))
+        model.add(Dropout(0.2))
+
+	model.add(Convolution2D(256,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #2x2
 	model.add(LeakyReLU(alpha=.2))
-	model.add(MaxPooling2D(pool_size=(2,2)))
+	#model.add(MaxPooling2D(pool_size=(2,2)))
+        model.add(Dropout(0.2))
+
 	model.add(Flatten())
-	model.add(Dense(512,init='he_normal',activation='linear',W_regularizer = l2(0.001)))
+	model.add(Dense(128,init='he_normal'))
 	model.add(LeakyReLU(alpha=.2))
 	model.add(Dropout(0.2))
-	model.add(Dense(256,init='he_normal',activation='linear',W_regularizer = l2(0.001)))
-	model.add(LeakyReLU(alpha=.2))
+
+	#model.add(Dense(256,init='he_normal',activation='linear',W_regularizer = l2(0.001)))
+	#model.add(LeakyReLU(alpha=.2))
 	model.add(Dropout(0.2))
 	model.add(Dense(1,init='he_normal',activation='sigmoid'))
 	return model
@@ -303,7 +334,7 @@ for i in range(7,len(cifar10_Classes)):
 	generator = generator_model()
 	# LOADING GENERATOR FROM TEST8
 	#generator.load_weights("results/PreTrainedWeights1/"+chosen_Class+"/generator_weights")
-	generator.load_weights("results/Test17/"+chosen_Class+"/generator_weights")
+	#generator.load_weights("results/Test17/"+chosen_Class+"/generator_weights")
 
 	discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
 	# Optimizer
@@ -311,8 +342,10 @@ for i in range(7,len(cifar10_Classes)):
 	# Compile generator
 	generator.compile(loss='mean_squared_error',optimizer='adam')
 	discriminator_on_generator.compile(loss='binary_crossentropy',optimizer=adam, metrics=['accuracy'])
+        discriminator_on_generator.summary()
 	discriminator.trainable = True
 	discriminator.compile(loss='binary_crossentropy',optimizer=adam, metrics=['accuracy'])
+        discriminator.summary()
 
 	# Initialize d_loss
 	d_predict_real = 0
