@@ -79,10 +79,22 @@ def converter(a,b):
 		a[i,0,:,:] = rgb2gray(b[i,:,:,:].transpose(1,2,0))
 
 def rgb2yuv(rgb):
-	return numpy.dot(rgb[...,:3],[[0.299,0.587,0.114],[-0.14713,-0.28886,0.436],[0.615,-0.51499,-0.10001]])
+	print("rgb.shape",rgb.shape)
+	y = 0.299*rgb[...,0]+0.587*rgb[...,1]+0.114*rgb[...,2]
+	u = -0.14713*rgb[...,0]-0.28886*rgb[...,1]+0.436*rgb[...,2]
+	v = 0.615*rgb[...,0]-0.51499*rgb[...,1]-0.10001*rgb[...,2]
+	yuv = numpy.zeros(rgb.shape)
+	yuv[:,:,0]=y
+	yuv[:,:,1]=u
+	yuv[:,:,2]=v
+	return yuv 
+#	return numpy.dot(rgb[:,:,0],[[0.299,0.587,0.114],[-0.14713,-0.28886,0.436],[0.615,-0.51499,-0.10001]])
 def converterYUV(a,b):
 	for i in range(0, b.shape[0]):
-		a[i,:,:,:] = rgb2yuv(b[i,:,:,:].transpose(1,2,0))
+		h = b[i,:,:,:].transpose(1,2,0)
+		print("transposed")
+		a[i,:,:,:] = rgb2yuv(h)
+		print("vixi")
 
 
 # defining function to display and/or save graphs
@@ -303,10 +315,12 @@ for i in range(7,len(cifar10_Classes)):
 	Y_rgb = Y_rgb[(labels == cifar10_Classes.index(chosen_Class))[:,0]]
 	Y_rgb_test = Y_rgb_test[(labels_test == cifar10_Classes.index(chosen_Class))[:,0]]
 
-	Y_yuv = numpy.zeros((Y_rgb.shape[0],1,Y_rgb.shape[2],Y_rgb.shape[3]))
-	Y_yuv_test = numpy.zeros((Y_rgb_test.shape[0],1,Y_rgb_test.shape[2],Y_rgb_test.shape[3]))
+	Y_yuv = numpy.zeros((Y_rgb.shape[0],Y_rgb.shape[1],Y_rgb.shape[2],Y_rgb.shape[3]))
+	Y_yuv_test = numpy.zeros((Y_rgb_test.shape[0],Y_rgb.shape[1],Y_rgb_test.shape[2],Y_rgb_test.shape[3]))
 
 	# Convert RGB to YUV to create our input
+	print("Y_rgb.shape=",Y_rgb.shape)
+	print("Y_yuv.shape=",Y_yuv.shape)
 	converterYUV(Y_yuv,Y_rgb)
 	converterYUV(Y_yuv_test,Y_rgb_test)
 

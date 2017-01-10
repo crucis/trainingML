@@ -187,4 +187,19 @@ Storing to histogram values
 ('GAN loss 0.6976 ', 'GAN acc 0.5547', 'Discriminator loss 0.6860', 'Discriminator accuracy 0.5508', 'Total loss: 1.3836', 'for batch', 13)
 ('GAN loss 0.7109 ', 'GAN acc 0.5117', 'Discriminator loss 0.6923', 'Discriminator accuracy 0.5273', 'Total loss: 1.4031', 'for batch', 14)
 ('GAN loss 0.7191 ', 'GAN acc 0.4961', 'Discriminator loss 0.6866', 'Discriminator accuracy 0.5352', 'Total loss: 1.4057', 'for batch', 15)
-('GAN loss 0.7008 ', 'GAN acc 0.5352', 'Discriminator loss 0.6908', 'Discriminator accuracy 0.5293', 'Total loss: 1.3916', 'for batch', 16)
+('GAN loss 0.7008 ', 'GAN acc 0.5352', 'Discriminator loss 0.6908', 'Discriminator accuracy 0.5293', 'Total loss: 1.3916', 'for batch', 16)('Y_rgb.shape=', (5000, 3, 32, 32))
+('Y_yuv.shape=', (5000, 3, 32, 32))
+('Y_rgb.shape=', (5000, 3, 32, 32))
+('Y_yuv.shape=', (5000, 3, 32, 32))
+('a.shape=', (5000, 3, 32, 32))
+('b.shape=', (5000, 3, 32, 32))
+('Y_rgb.shape=', (5000, 3, 32, 32))
+('Y_yuv.shape=', (5000, 3, 32, 32))
+transposed
+('Y_rgb.shape=', (5000, 3, 32, 32))
+('Y_yuv.shape=', (5000, 3, 32, 32))
+transposed
+('Y_rgb.shape=', (5000, 3, 32, 32))
+('Y_yuv.shape=', (5000, 3, 32, 32))
+transposed
+('rgb.shape', (32, 32, 3))
