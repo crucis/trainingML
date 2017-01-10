@@ -203,34 +203,34 @@ def generator_model():
 	model = Sequential()
 	# Layers
 	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal', input_shape=(1, 32, 32)))
-        model.add(LeakyReLU(0.2))
+	model.add(LeakyReLU(0.2))
 
 	model.add(Convolution2D(64, 3, 3, border_mode='same', init='he_normal'))
-        model.add(BatchNormalization(mode=2,axis=1))
-        model.add(LeakyReLU(0.2))
+	model.add(BatchNormalization(mode=2,axis=1))
+	model.add(LeakyReLU(0.2))
 
 	model.add(Convolution2D(128, 3, 3, border_mode='same', init='he_normal'))
-        model.add(BatchNormalization(mode=2,axis=1))
-        model.add(LeakyReLU(0.2))
+	model.add(BatchNormalization(mode=2,axis=1))
+	model.add(LeakyReLU(0.2))
 	#model.add(BatchNormalization())
 
 	model.add(Convolution2D(256, 3, 3, border_mode='same', init='he_normal'))
-        model.add(BatchNormalization(mode=2,axis=1))
-        model.add(LeakyReLU(0.2))
+	model.add(BatchNormalization(mode=2,axis=1))
+	model.add(LeakyReLU(0.2))
 	#model.add(BatchNormalization())
 
 	model.add(Convolution2D(128, 3, 3, border_mode='same', init='he_normal'))
-        model.add(BatchNormalization(mode=2,axis=1))
-        model.add(LeakyReLU(0.2))
+	model.add(BatchNormalization(mode=2,axis=1))
+	model.add(LeakyReLU(0.2))
 	#model.add(BatchNormalization())
 
 	model.add(Convolution2D(64, 3, 3, border_mode='same', init='he_normal'))
-        model.add(BatchNormalization(mode=2,axis=1))
-        model.add(LeakyReLU(0.2))
+	model.add(BatchNormalization(mode=2,axis=1))
+	model.add(LeakyReLU(0.2))
 
 	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal'))
-        model.add(BatchNormalization(mode=2,axis=1))
-        model.add(LeakyReLU(0.2))
+	model.add(BatchNormalization(mode=2,axis=1))
+	model.add(LeakyReLU(0.2))
 
 	model.add(Convolution2D(3, 3, 3, border_mode='same', init='he_normal'))
 	model.add(Lambda(lambda x: K.clip(x, 0.0, 1.0)))
@@ -242,22 +242,22 @@ def discriminator_model():
 	model.add(Convolution2D(32,3,3,border_mode='same',init='he_normal',input_shape=(3,32,32),subsample=(2,2))) #16x16
 	model.add(LeakyReLU(alpha=.2))
 	#model.add(MaxPooling2D(pool_size=(2,2)))
-        model.add(Dropout(0.2))
+	model.add(Dropout(0.2))
 
 	model.add(Convolution2D(64,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #8x8
 	model.add(LeakyReLU(alpha=.2))
 	#model.add(MaxPooling2D(pool_size=(2,2)))
-        model.add(Dropout(0.2))
+	model.add(Dropout(0.2))
 
 	model.add(Convolution2D(128,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #4x4
 	model.add(LeakyReLU(alpha=.2))
 	#model.add(MaxPooling2D(pool_size=(2,2)))
-        model.add(Dropout(0.2))
+	model.add(Dropout(0.2))
 
 	model.add(Convolution2D(256,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #2x2
 	model.add(LeakyReLU(alpha=.2))
 	#model.add(MaxPooling2D(pool_size=(2,2)))
-        model.add(Dropout(0.2))
+	model.add(Dropout(0.2))
 
 	model.add(Flatten())
 	model.add(Dense(128,init='he_normal'))
@@ -342,10 +342,10 @@ for i in range(7,len(cifar10_Classes)):
 	# Compile generator
 	generator.compile(loss='mean_squared_error',optimizer='adam')
 	discriminator_on_generator.compile(loss='binary_crossentropy',optimizer=adam, metrics=['accuracy'])
-        discriminator_on_generator.summary()
+	discriminator_on_generator.summary()
 	discriminator.trainable = True
 	discriminator.compile(loss='binary_crossentropy',optimizer=adam, metrics=['accuracy'])
-        discriminator.summary()
+	discriminator.summary()
 
 	# Initialize d_loss
 	d_predict_real = 0
