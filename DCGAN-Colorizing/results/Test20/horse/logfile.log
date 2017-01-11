@@ -295,4 +295,41 @@ Storing to histogram values
 ----------------------------------
 ('Epoch', 2, 'of', 50)
 ('Number of batches', 19)
-('GAN loss 1.1809 ', 'GAN acc 0.1719', 'Discriminator loss 0.7130', 'Discriminator accuracy 0.5410', 'Total los
+('GAN loss 1.1809 ', 'GAN acc 0.1719', 'Discriminator loss 0.7130', 'Discriminator accuracy 0.5410', 'Total loss: 1.8939', 'for batch', 0)
+('GAN loss 1.1380 ', 'GAN acc 0.2070', 'Discriminator loss 0.7090', 'Discriminator accuracy 0.5332', 'Total loss: 1.8470', 'for batch', 1)
+('GAN loss 1.0232 ', 'GAN acc 0.2344', 'Discriminator loss 0.6649', 'Discriminator accuracy 0.5957', 'Total loss: 1.6881', 'for batch', 2)
+('GAN loss 0.9288 ', 'GAN acc 0.3438', 'Discriminator loss 0.7027', 'Discriminator accuracy 0.5430', 'Total loss: 1.6314', 'for batch', 3)
+('GAN loss 1.0980 ', 'GAN acc 0.2344', 'Discriminator loss 0.6803', 'Discriminator accuracy 0.5898', 'Total loss: 1.7782', 'for batch', 4)
+('GAN loss 0.9897 ', 'GAN acc 0.2773', 'Discriminator loss 0.6765', 'Discriminator accuracy 0.5762', 'Total loss: 1.6662', 'for batch', 5)
+('GAN loss 1.0208 ', 'GAN acc 0.2578', 'Discriminator loss 0.6810', 'Discriminator accuracy 0.5625', 'Total loss: 1.7018', 'for batch', 6)
+('GAN loss 0.9670 ', 'GAN acc 0.2656', 'Discriminator loss 0.6880', 'Discriminator accuracy 0.5664', 'Total loss: 1.6551', 'for batch', 7)
+('GAN loss 0.9400 ', 'GAN acc 0.2773', 'Discriminator loss 0.6870', 'Discriminator accuracy 0.5605', 'Total loss: 1.6270', 'for batch', 8)
+('GAN loss 0.9316 ', 'GAN acc 0.2695', 'Discriminator loss 0.6752', 'Discriminator accuracy 0.5742', 'Total loss: 1.6067', 'for batch', 9)
+('GAN loss 0.9883 ', 'GAN acc 0.2070', 'Discriminator loss 0.6908', 'Discriminator accuracy 0.5430', 'Total loss: 1.6790', 'for batch', 10)
+('GAN loss 0.9487 ', 'GAN acc 0.2734', 'Discriminator loss 0.6796', 'Discriminator accuracy 0.5527', 'Total loss: 1.6282', 'for batch', 11)
+('GAN loss 0.8956 ', 'GAN acc 0.3203', 'Discriminator loss 0.6789', 'Discriminator accuracy 0.5625', 'Total loss: 1.5745', 'for batch', 12)
+('GAN loss 0.9006 ', 'GAN acc 0.2891', 'Discriminator loss 0.6933', 'Discriminator accuracy 0.5488', 'Total loss: 1.5940', 'for batch', 13)
+('GAN loss 0.9131 ', 'GAN acc 0.2578', 'Discriminator loss 0.6774', 'Discriminator accuracy 0.5781', 'Total loss: 1.5904', 'for batch', 14)
+('GAN loss 0.9036 ', 'GAN acc 0.2578', 'Discriminator loss 0.6675', 'Discriminator accuracy 0.5664', 'Total loss: 1.5712', 'for batch', 15)
+('GAN loss 0.8852 ', 'GAN acc 0.2852', 'Discriminator loss 0.6621', 'Discriminator accuracy 0.5527', 'Total loss: 1.5473', 'for batch', 16)
+('GAN loss 0.8059 ', 'GAN acc 0.4141', 'Discriminator loss 0.6875', 'Discriminator accuracy 0.5488', 'Total loss: 1.4935', 'for batch', 17)
+('GAN loss 0.8515 ', 'GAN acc 0.3359', 'Discriminator loss 0.6752', 'Discriminator accuracy 0.5684', 'Total loss: 1.5267', 'for batch', 18)
+('DISCRIMINATOR_Imagem REAL=', 0.61747974)
+('DISCRIMINATOR_Imagem FAKE=', 0.59602028)
+('Discriminator trained', 19, 'times of', 19, 'batchs')
+Saving weights...
+Saving sample images...
+Storing to histogram values
+('Elapsed time in epoch = ', '0:06:32.605093')
+----------------------------------
+('Epoch', 3, 'of', 50)
+('Number of batches', 19)
+('GAN loss 0.8130 ', 'GAN acc 0.3594', 'Discriminator loss 0.6910', 'Discriminator accuracy 0.5195', 'Total loss: 1.5040', 'for batch', 0)
+('GAN loss 0.8430 ', 'GAN acc 0.3242', 'Discriminator loss 0.6857', 'Discriminator accuracy 0.5391', 'Total loss: 1.5287', 'for batch', 1)
+('GAN loss 0.8100 ', 'GAN acc 0.3789', 'Discriminator loss 0.6798', 'Discriminator accuracy 0.5664', 'Total loss: 1.4898', 'for batch', 2)
+('GAN loss 0.7923 ', 'GAN acc 0.3789', 'Discriminator loss 0.6902', 'Discriminator accuracy 0.5430', 'Total loss: 1.4825', 'for batch', 3)
+('GAN loss 0.7970 ', 'GAN acc 0.3711', 'Discriminator loss 0.6795', 'Discriminator accuracy 0.5508', 'Total loss: 1.4766', 'for batch', 4)
+('GAN loss 0.7820 ', 'GAN acc 0.3984', 'Discriminator loss 0.6901', 'Discriminator accuracy 0.5195', 'Total loss: 1.4720', 'for batch', 5)
+('GAN loss 0.8024 ', 'GAN acc 0.4141', 'Discriminator loss 0.6924', 'Discriminator accuracy 0.5312', 'Total loss: 1.4948', 'for batch', 6)
+('GAN loss 0.7477 ', 'GAN acc 0.4609', 'Discriminator loss 0.6808', 'Discriminator accuracy 0.5840', 'Total loss: 1.4285', 'for batch', 7)
+('GAN loss 0.7587 ', 'GAN acc 0.4453', 'Discriminator loss 0.6900', 'Discriminator accuracy 0.5547', '

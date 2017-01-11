@@ -79,20 +79,16 @@ def converter(a,b):
 		a[i,0,:,:] = rgb2gray(b[i,:,:,:].transpose(1,2,0))
 
 def rgb2yuv(rgb):
-	print("rgb.shape=",rgb.shape)
 	yuv = numpy.zeros(rgb.shape)
 	yuv[:,:,0] = 0.299*rgb[...,0]+0.587*rgb[...,1]+0.114*rgb[...,2]
 	yuv[:,:,1] = -0.14713*rgb[...,0]-0.28886*rgb[...,1]+0.436*rgb[...,2]
 	yuv[:,:,2] = 0.615*rgb[...,0]-0.51499*rgb[...,1]-0.10001*rgb[...,2]
-	print("yuv.shape=",yuv.shape) 
-	return yuv
+	return yuv.transpose(2,0,1)
 #	return numpy.dot(rgb[:,:,0],[[0.299,0.587,0.114],[-0.14713,-0.28886,0.436],[0.615,-0.51499,-0.10001]])
 def converterYUV(a,b):
 	for i in range(0, b.shape[0]):
 		h = b[i].transpose(1,2,0)
-		print("transposed")
 		a[i] = rgb2yuv(h)
-		print("vixi")
 
 
 # defining function to display and/or save graphs
