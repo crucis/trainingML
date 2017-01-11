@@ -75,7 +75,7 @@ def mkdir_p(mypath):
 def rgb2gray(rgb):
 	return numpy.dot(rgb[...,:3], [0.299, 0.587, 0.114])
 def converter(a,b):
-	for i in range(0,b.shape[0]):
+	for i in range(0,b.shape[0]-1):
 		a[i,0,:,:] = rgb2gray(b[i,:,:,:].transpose(1,2,0))
 
 def rgb2yuv(rgb):
@@ -245,6 +245,14 @@ def generator_model():
         model.add(BatchNormalization(mode=2,axis=1))
         model.add(LeakyReLU(0.2))
 	#model.add(BatchNormalization())
+	
+#	model.add(Convolution2D(512,3,3,border_mode='same',init='he_normal'))
+#	model.add(BatchNormalization(mode=2,axis=1))
+#	model.add(LeakyReLU(0.2))
+
+	model.add(Convolution2D(256,3,3,border_mode='same',init='he_normal'))
+	model.add(BatchNormalization(mode=2,axis=1))
+	model.add(LeakyReLU(0.2))
 
 	model.add(Convolution2D(128, 3, 3, border_mode='same', init='he_normal'))
         model.add(BatchNormalization(mode=2,axis=1))
@@ -306,7 +314,7 @@ def generator_containing_discriminator(generator,discriminator):
 	model.add(discriminator)
 	return model
 
-for i in range(7,len(cifar10_Classes)):
+for i in range(9,len(cifar10_Classes)):
 	chosen_Class = cifar10_Classes[i]
 	outDir = outDire+'/'+str(chosen_Class)
 	# Create folder for tests
@@ -452,7 +460,7 @@ for i in range(7,len(cifar10_Classes)):
 		discriminator.save_weights(outDir+'/discriminator_weights',True)
 		print("Saving sample images...")
 		save3images(BW_image_batch,generated_images,image_batch,epoch+1)
-		print("Storing to histogram values")
+#		print("Storing to histogram values")
 
 
 		print("Elapsed time in epoch = ",str(timedelta(seconds=(time.time()-start_time))))
@@ -466,7 +474,7 @@ for i in range(7,len(cifar10_Classes)):
 	print('End of training')
 	print('Saving histograms')
 	stored_g_predict = generator.predict(G)
-	plotHistogram(originalImage=F,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
+#	plotHistogram(originalImage=F,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
 	print("----------------------------------")
 
 	print('Total samples = ', G.shape[0], ' Batch size =', BATCH_SIZE, ' Epochs = ', EPOCH)
