@@ -318,11 +318,11 @@ for i in range(7,len(cifar10_Classes)):
 
 	# Separate grayscale channel from U and V channels
 	Y_gray = numpy.zeros((Y_yuv.shape[0],1,Y_yuv.shape[2],Y_yuv.shape[3]))
-	Y_gray = Y_yuv[:,0,:,:]
+	Y_gray[:,0,:,:] = Y_yuv[:,0,:,:]
 	Y_uv = numpy.zeros((Y_yuv.shape[0],2,Y_yuv.shape[2],Y_yuv.shape[3]))
 	Y_uv = Y_yuv[:,1:,:,:]
 	Y_gray_test = numpy.zeros((Y_yuv_test.shape[0],1,Y_yuv_test.shape[2],Y_yuv_test.shape[3]))
-	Y_gray_test = Y_yuv_test[:,0,:,:]
+	Y_gray_test[:,0,:,:] = Y_yuv_test[:,0,:,:]
 	Y_uv_test = numpy.zeros((Y_yuv_test.shape[0],2,Y_yuv_test.shape[2],Y_yuv_test.shape[3]))
 	Y_uv_test = Y_yuv_test[:,1:,:,:]
 
@@ -394,7 +394,6 @@ for i in range(7,len(cifar10_Classes)):
 
 			#gAlone_loss = generator.train_on_batch(BW_image_batch,image_batch)
 			#print("Generating images...")
-			print("BW_image_batch=",BW_image_batch.shape)
 			generated_images = generator.predict(BW_image_batch)
 
 			# Creating inputs for train_on_batch
