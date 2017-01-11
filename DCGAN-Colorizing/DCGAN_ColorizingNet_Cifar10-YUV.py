@@ -44,7 +44,7 @@ EPOCH = 50
 nImages = pow(2,15)
 
 #### CIFAR10 classifications
-cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'];
+cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck','all'];
 #chosen_Class = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'] # Each chosen class from cifar10_Classes is a loop, if 'all' chosen, than it will run the entire cifar10 >>NOT IMPLEMENTED
 
 # Model Options
@@ -92,10 +92,10 @@ def converterYUV(a,b):
 
 def yuv2rgb(yuv):
 	rgb = numpy.zeros(yuv.shape)
-	rgb[:,:,0] = yuv[...,0]+1.13983*yuv[...,2]
+	rgb[:,:,0] = yuv[...,0]+0*yuv[...,1]+1.13983*yuv[...,2]
 	rgb[:,:,1] = yuv[...,0]-0.39465*yuv[...,1]-0.58060*yuv[...,2]
-	rgb[:,:,2] = yuv[...,0]+2.03211*yuv[...,1]
-	return yuv.transpose(2,0,1)
+	rgb[:,:,2] = yuv[...,0]+2.03211*yuv[...,1]+0*yuv[...,2]
+	return rgb.transpose(2,0,1)
 def converterRGB(a,b):
 	for i in range(0,b.shape[0]):
 		a[i] = yuv2rgb(b[i].transpose(1,2,0))
@@ -170,6 +170,7 @@ def save3images(inp,out,original,folder):
 		plt.savefig(outDir+'/samples/epoch'+str(folder)+'/sample_%s.png'%i)
 		plt.clf()
 		plt.close('all')
+
 def plotHistogram(originalImage,fakeImage, nameClass,directory,folder=folder):
 	# Faz 3 histogramas, um para azul outro verde e outro vermelho
 	name = folder+'using'+nameClass
@@ -318,11 +319,12 @@ for i in range(7,len(cifar10_Classes)):
 
 
 	# Choosing only one classification
-	Y_rgb = Y_rgb[(labels == cifar10_Classes.index(chosen_Class))[:,0]]
-	Y_rgb_test = Y_rgb_test[(labels_test == cifar10_Classes.index(chosen_Class))[:,0]]
+	if str(chosen_Class) != 'all':
+		Y_rgb = Y_rgb[(labels == cifar10_Classes.index(chosen_Class))[:,0]]
+		Y_rgb_test = Y_rgb_test[(labels_test == cifar10_Classes.index(chosen_Class))[:,0]]
 
-	Y_yuv = numpy.zeros((Y_rgb.shape[0],Y_rgb.shape[1],Y_rgb.shape[2],Y_rgb.shape[3]))
-	Y_yuv_test = numpy.zeros((Y_rgb_test.shape[0],Y_rgb.shape[1],Y_rgb_test.shape[2],Y_rgb_test.shape[3]))
+		Y_yuv = numpy.zeros((Y_rgb.shape[0],Y_rgb.shape[1],Y_rgb.shape[2],Y_rgb.shape[3]))
+		Y_yuv_test = numpy.zeros((Y_rgb_test.shape[0],Y_rgb.shape[1],Y_rgb_test.shape[2],Y_rgb_test.shape[3]))
 
 	# Convert RGB to YUV to create our input
 	converterYUV(Y_yuv,Y_rgb)
@@ -421,7 +423,7 @@ for i in range(7,len(cifar10_Classes)):
 	        # Does not train discriminator if it is close to overfitting
 			if (numpy.mean(d_predict_fake) > 0.50) or (numpy.mean(d_predict_real) < 0.5):
 				discriminator.trainable = True
-			elif (d_acc > 0.95) :
+			elif (d_acc > 0.65) :
 				discriminator.trainable = False
 				l+=1
 			else:
