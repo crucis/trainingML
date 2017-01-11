@@ -90,6 +90,16 @@ def converterYUV(a,b):
 		h = b[i].transpose(1,2,0)
 		a[i] = rgb2yuv(h)
 
+def yuv2rgb(yuv):
+	rgb = numpy.zeros(yuv.shape)
+	rgb[:,:,0] = yuv[...,0]+1.13983*yuv[...,2]
+	rgb[:,:,1] = yuv[...,0]-0.39465*yuv[...,1]-0.58060*yuv[...,2]
+	rgb[:,:,2] = yuv[...,0]+2.03211*yuv[...,1]
+	return yuv.transpose(2,0,1)
+def converterRGB(a,b):
+	for i in range(0,b.shape[0]):
+		a[i] = yuv2rgb(b[i].transpose(1,2,0))
+
 
 # defining function to display and/or save graphs
 def plotGraph (filename, vecTrain, vecTest, nameVec):
@@ -134,7 +144,9 @@ class Logger(object):
 
 def save3images(inp,out,original,folder):
 	out = numpy.concatenate((inp, out), axis=1)
-	original = numpy.concatenate((inp,out),axis=1)
+	converterRGB(out,out)
+	original = numpy.concatenate((inp,original),axis=1)
+	converterRGB(original,original)
 	for i in range(int(math.floor(original.shape[0]*0.02))):
 		_,((ax1,ax2),(ax3,_)) = plt.subplots(2,2,sharey='row',sharex='col')
 
