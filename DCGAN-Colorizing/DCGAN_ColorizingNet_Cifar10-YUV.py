@@ -313,8 +313,6 @@ for i in range(7,len(cifar10_Classes)):
 	Y_yuv_test = numpy.zeros((Y_rgb_test.shape[0],Y_rgb.shape[1],Y_rgb_test.shape[2],Y_rgb_test.shape[3]))
 
 	# Convert RGB to YUV to create our input
-	print("Y_rgb.shape=",Y_rgb.shape)
-	print("Y_yuv.shape=",Y_yuv.shape)
 	converterYUV(Y_yuv,Y_rgb)
 	converterYUV(Y_yuv_test,Y_rgb_test)
 
@@ -392,6 +390,7 @@ for i in range(7,len(cifar10_Classes)):
 
 			#gAlone_loss = generator.train_on_batch(BW_image_batch,image_batch)
 			#print("Generating images...")
+			print("BW_image_batch=",BW_image_batch.shape)
 			generated_images = generator.predict(BW_image_batch)
 
 			# Creating inputs for train_on_batch
