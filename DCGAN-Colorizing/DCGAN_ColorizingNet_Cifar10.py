@@ -44,11 +44,11 @@ EPOCH = 50
 nImages = pow(2,15)
 
 #### CIFAR10 classifications
-cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'];
+cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck','all'];
 #chosen_Class = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'] # Each chosen class from cifar10_Classes is a loop, if 'all' chosen, than it will run the entire cifar10 >>NOT IMPLEMENTED
 
 # Model Options
-folder = "Test20"
+folder = "Test22"
 outDire = 'results/'+folder
 
 d_predict_fake = 0
@@ -218,6 +218,10 @@ def generator_model():
 	model.add(BatchNormalization(mode=2,axis=1))
 	model.add(LeakyReLU(0.2))
 	#model.add(BatchNormalization())
+	
+	model.add(Convolution2D(256, 3, 3, border_mode='same', init='he_normal'))
+	model.add(BatchNormalization(mode=2,axis=1))
+	model.add(LeakyReLU(0.2))
 
 	model.add(Convolution2D(128, 3, 3, border_mode='same', init='he_normal'))
 	model.add(BatchNormalization(mode=2,axis=1))
@@ -278,7 +282,7 @@ def generator_containing_discriminator(generator,discriminator):
 	model.add(discriminator)
 	return model
 
-for i in range(7,len(cifar10_Classes)):
+for i in range(10,len(cifar10_Classes)):
 	chosen_Class = cifar10_Classes[i]
 	outDir = outDire+'/'+str(chosen_Class)
 	# Create folder for tests
@@ -291,8 +295,9 @@ for i in range(7,len(cifar10_Classes)):
 
 
 	# Choosing only one classification
-	Y = Y[(labels == cifar10_Classes.index(chosen_Class))[:,0]]
-	Y_test = Y_test[(labels_test == cifar10_Classes.index(chosen_Class))[:,0]]
+	if str(chosen_Class) != 'all':
+		Y = Y[(labels == cifar10_Classes.index(chosen_Class))[:,0]]
+		Y_test = Y_test[(labels_test == cifar10_Classes.index(chosen_Class))[:,0]]
 
 	X = numpy.zeros((Y.shape[0],1,Y.shape[2],Y.shape[3]))
 	X_test = numpy.zeros((Y_test.shape[0],1,Y_test.shape[2],Y_test.shape[3]))
