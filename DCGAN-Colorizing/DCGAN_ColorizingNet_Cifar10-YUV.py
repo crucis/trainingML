@@ -296,7 +296,7 @@ def discriminator_model():
 
 	model.add(Flatten())
 	#model.add(Dense(128,init='he_normal'))
-	model.add(Dense(1024,init='he_normal'))
+	model.add(Dense(256,init='he_normal'))
 	model.add(LeakyReLU(alpha=.2))
 	model.add(Dropout(0.2))
 
@@ -355,10 +355,10 @@ for i in range(0,len(cifar10_Classes)):
 	Y_gray_test = Y_gray_test.astype('float32')
 	Y_uv_test = Y_uv_test.astype('float32')
 	# normalize inputs and outputs from 0-255 to 0.0-1.0
-	Y_gray /= 255
-	Y_uv /= 255
-	Y_gray_test /= 255
-	Y_uv_test /= 255
+#	Y_gray /= 255
+#	Y_uv /= 255
+#	Y_gray_test /= 255
+#	Y_uv_test /= 255
 
 
 	# limits the number of images to nImages
@@ -380,8 +380,8 @@ for i in range(0,len(cifar10_Classes)):
 #	discriminator.load_weights("results/PreTrainedWeights1/"+chosen_Class+"/discriminator_weights")
 	generator = generator_model()
 	# LOADING GENERATOR FROM TEST8
-	#generator.load_weights("results/PreTrainedWeights1/"+chosen_Class+"/generator_weights")
-	generator.load_weights("results/Test23/"+chosen_Class+"/generator_weights")
+	#generator.load_weights("results/PreTrainedWeightsYUV/"+chosen_Class+"/generator_weights")
+#	generator.load_weights("results/Test23/"+chosen_Class+"/generator_weights")
 
 	discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
 	# Optimizer

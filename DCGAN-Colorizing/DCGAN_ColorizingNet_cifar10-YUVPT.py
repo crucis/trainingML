@@ -48,7 +48,7 @@ cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','hor
 #chosen_Class = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'] # Each chosen class from cifar10_Classes is a loop, if 'all' chosen, than it will run the entire cifar10 >>NOT IMPLEMENTED
 
 # Model Options
-folder = "Test23"
+folder = "PreTrainedWeightsYUV"
 outDire = 'results/'+folder
 
 d_predict_fake = 0
@@ -355,10 +355,10 @@ for i in range(0, len(cifar10_Classes)):
 	Y_gray_test = Y_gray_test.astype('float32')
 	Y_uv_test = Y_uv_test.astype('float32')
 	# normalize inputs and outputs from 0-255 to 0.0-1.0
-	Y_gray /= 255
-	Y_uv /= 255
-	Y_gray_test /= 255
-	Y_uv_test /= 255
+#	Y_gray /= 255
+#	Y_uv /= 255
+#	Y_gray_test /= 255
+#	Y_uv_test /= 255
 
 
 	# limits the number of images to nImages
