@@ -79,7 +79,9 @@ def converter(a,b):
 		a[i,0,:,:] = rgb2gray(b[i,:,:,:].transpose(1,2,0))
 
 def rgb2yuv(rgb):
+	rgb = rgb.astype('float32')
 	yuv = numpy.zeros(rgb.shape)
+	yuv = yuv.astype('float32')
 	# Analog transformation
 #	yuv[:,:,0] = 0.299*rgb[...,0]+0.587*rgb[...,1]+0.114*rgb[...,2]
 #	yuv[:,:,1] = -0.14713*rgb[...,0]-0.28886*rgb[...,1]+0.436*rgb[...,2]
@@ -102,10 +104,11 @@ def converterYUV(a,b):
 		h = b[i].transpose(1,2,0)
 		a[i] = rgb2yuv(h)
 
-
 def yuv2rgb(yuv):
+	yuv = yuv.astype('float32')
 	rgb = numpy.zeros(yuv.shape)
-	yuv=yuv*255
+	rgb = rgb.astype('float32')
+#	yuv*=255
 #	print("yuv.shape=",yuv.shape)
 #	print("yuv.max=",numpy.amax(yuv),"yuv.min=",numpy.amin(yuv))
 	# Analog transformation
@@ -123,7 +126,6 @@ def converterRGB(a,b):
 #	print("b.shape=",b.shape)
 	for i in range(0,b.shape[0]):
 		a[i] = yuv2rgb(b[i].transpose(1,2,0))
-
 
 # defining function to display and/or save graphs
 def plotGraph (filename, vecTrain, vecTest, nameVec):
@@ -168,10 +170,11 @@ class Logger(object):
 
 def save3images(inp,out,original,folder):
 	out = numpy.concatenate((inp, out), axis=1)
-	converterRGB(out,out)
+	converterRGB(out,out*255)
 	original = numpy.concatenate((inp,original),axis=1)
-	converterRGB(original,original)
-	for i in range(int(math.floor(original.shape[0]*0.02))):
+	converterRGB(original,original*255)
+
+	for i in range(int(numpy.around(original.shape[0]*0.02))):
 		_,((ax1,ax2),(ax3,_)) = plt.subplots(2,2,sharey='row',sharex='col')
 
 		n = math.floor(uniform(0,original.shape[0]))
@@ -179,10 +182,10 @@ def save3images(inp,out,original,folder):
 		ax1.imshow(inp[n,0,:,:],cmap='gray')
 		ax1.set_title('Input_%s'%i)
 
-		ax2.imshow(out[n].transpose(1,2,0))
+		ax2.imshow(numpy.uint8(out[n].transpose(1,2,0)))
 		ax2.set_title('Output_%s'%i)
 
-		ax3.imshow(original[n].transpose(1,2,0))
+		ax3.imshow(numpy.uint8(original[n].transpose(1,2,0)))
 		ax3.set_title('Original_%s'%i)
 
 		titlestr = 'Epochs='+str(epoch)+' BATCH_SIZE='+str(BATCH_SIZE)
@@ -194,6 +197,7 @@ def save3images(inp,out,original,folder):
 		plt.savefig(outDir+'/samples/epoch'+str(folder)+'/sample_%s.png'%i)
 		plt.clf()
 		plt.close('all')
+
 
 def plotHistogram(originalImage,fakeImage, nameClass,directory,folder=folder):
 	# Faz 3 histogramas, um para azul outro verde e outro vermelho

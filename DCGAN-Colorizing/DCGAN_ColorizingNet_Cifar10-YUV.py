@@ -173,10 +173,8 @@ class Logger(object):
 def save3images(inp,out,original,folder):
 	out = numpy.concatenate((inp, out), axis=1)
 	converterRGB(out,out*255)
-	print("out.shape=",out.shape,"out.max",numpy.amax(out),"out.min=",numpy.amin(original))
 	original = numpy.concatenate((inp,original),axis=1)
 	converterRGB(original,original*255)
-	print("original.shape=",original.shape,"original.max",numpy.amax(original),"original.min=",numpy.amin(original))
 
 	for i in range(int(numpy.around(original.shape[0]*0.02))):
 		_,((ax1,ax2),(ax3,_)) = plt.subplots(2,2,sharey='row',sharex='col')
