@@ -345,7 +345,7 @@ def generator_containing_discriminator(generator,discriminator):
 	model.add(discriminator)
 	return model
 
-for i in range(0,len(cifar10_Classes)):
+for i in range(7,len(cifar10_Classes)):
 	chosen_Class = cifar10_Classes[i]
 	outDir = outDire+'/'+str(chosen_Class)
 	# Create folder for tests

@@ -2224,3 +2224,207 @@ Saving sample images...
 ('GAN loss 0.6842 ', 'GAN acc 0.5820', 'Discriminator loss 0.6933', 'Discriminator accuracy 0.4961', 'Total loss: 1.3775', 'for batch', 14)
 ('GAN loss 0.6879 ', 'GAN acc 0.5508', 'Discriminator loss 0.6942', 'Discriminator accuracy 0.5020', 'Total loss: 1.3822', 'for batch', 15)
 ('GAN loss 0.6908 ', 'GAN acc 0.5156', 'Discriminator loss 0.6943', 'Discriminator accuracy 0.5332', 'Total loss: 1.3850', 'for batch', 16)
+----------------------------------
+('Training with dataset based on class - ', 'horse', 'with', 5000, 'samples')
+----------------------------------
+____________________________________________________________________________________________________
+Layer (type)                     Output Shape          Param #     Connected to                     
+====================================================================================================
+sequential_2 (Sequential)        (None, 2, 32, 32)     1367650                                      
+____________________________________________________________________________________________________
+sequential_1 (Sequential)        (None, 1)             0           lambda_1[0][0]                   
+====================================================================================================
+Total params: 1596531
+____________________________________________________________________________________________________
+____________________________________________________________________________________________________
+Layer (type)                     Output Shape          Param #     Connected to                     
+====================================================================================================
+convolution2d_1 (Convolution2D)  (None, 16, 16, 16)    304         convolution2d_input_1[0][0]      
+____________________________________________________________________________________________________
+leakyrelu_1 (LeakyReLU)          (None, 16, 16, 16)    0           convolution2d_1[0][0]            
+____________________________________________________________________________________________________
+dropout_1 (Dropout)              (None, 16, 16, 16)    0           leakyrelu_1[0][0]                
+____________________________________________________________________________________________________
+convolution2d_2 (Convolution2D)  (None, 32, 8, 8)      4640        dropout_1[0][0]                  
+____________________________________________________________________________________________________
+leakyrelu_2 (LeakyReLU)          (None, 32, 8, 8)      0           convolution2d_2[0][0]            
+____________________________________________________________________________________________________
+dropout_2 (Dropout)              (None, 32, 8, 8)      0           leakyrelu_2[0][0]                
+____________________________________________________________________________________________________
+convolution2d_3 (Convolution2D)  (None, 64, 4, 4)      18496       dropout_2[0][0]                  
+____________________________________________________________________________________________________
+leakyrelu_3 (LeakyReLU)          (None, 64, 4, 4)      0           convolution2d_3[0][0]            
+____________________________________________________________________________________________________
+dropout_3 (Dropout)              (None, 64, 4, 4)      0           leakyrelu_3[0][0]                
+____________________________________________________________________________________________________
+convolution2d_4 (Convolution2D)  (None, 128, 2, 2)     73856       dropout_3[0][0]                  
+____________________________________________________________________________________________________
+leakyrelu_4 (LeakyReLU)          (None, 128, 2, 2)     0           convolution2d_4[0][0]            
+____________________________________________________________________________________________________
+dropout_4 (Dropout)              (None, 128, 2, 2)     0           leakyrelu_4[0][0]                
+____________________________________________________________________________________________________
+flatten_1 (Flatten)              (None, 512)           0           dropout_4[0][0]                  
+____________________________________________________________________________________________________
+dense_1 (Dense)                  (None, 256)           131328      flatten_1[0][0]                  
+____________________________________________________________________________________________________
+leakyrelu_5 (LeakyReLU)          (None, 256)           0           dense_1[0][0]                    
+____________________________________________________________________________________________________
+dropout_5 (Dropout)              (None, 256)           0           leakyrelu_5[0][0]                
+____________________________________________________________________________________________________
+dense_2 (Dense)                  (None, 1)             257         dropout_5[0][0]                  
+====================================================================================================
+Total params: 228881
+____________________________________________________________________________________________________
+('Epoch', 1, 'of', 50)
+('Number of batches', 19)
+('GAN loss 0.7779 ', 'GAN acc 0.4727', 'Discriminator loss 0.7783', 'Discriminator accuracy 0.4629', 'Total loss: 1.5562', 'for batch', 0)
+('GAN loss 0.7698 ', 'GAN acc 0.4609', 'Discriminator loss 0.7450', 'Discriminator accuracy 0.5156', 'Total loss: 1.5148', 'for batch', 1)
+('GAN loss 0.7603 ', 'GAN acc 0.4961', 'Discriminator loss 0.7526', 'Discriminator accuracy 0.4980', 'Total loss: 1.5128', 'for batch', 2)
+('GAN loss 0.7902 ', 'GAN acc 0.4453', 'Discriminator loss 0.7150', 'Discriminator accuracy 0.5469', 'Total loss: 1.5052', 'for batch', 3)
+('GAN loss 0.8145 ', 'GAN acc 0.3555', 'Discriminator loss 0.6778', 'Discriminator accuracy 0.5918', 'Total loss: 1.4923', 'for batch', 4)
+('GAN loss 0.7659 ', 'GAN acc 0.4648', 'Discriminator loss 0.6801', 'Discriminator accuracy 0.5938', 'Total loss: 1.4460', 'for batch', 5)
+('GAN loss 0.8201 ', 'GAN acc 0.4180', 'Discriminator loss 0.6352', 'Discriminator accuracy 0.6465', 'Total loss: 1.4553', 'for batch', 6)
+('GAN loss 0.8764 ', 'GAN acc 0.3477', 'Discriminator loss 0.6479', 'Discriminator accuracy 0.6465', 'Total loss: 1.5243', 'for batch', 7)
+('GAN loss 0.8945 ', 'GAN acc 0.3203', 'Discriminator loss 0.6682', 'Discriminator accuracy 0.6172', 'Total loss: 1.5628', 'for batch', 8)
+('GAN loss 0.9187 ', 'GAN acc 0.2969', 'Discriminator loss 0.6349', 'Discriminator accuracy 0.6348', 'Total loss: 1.5537', 'for batch', 9)
+('GAN loss 0.9592 ', 'GAN acc 0.2773', 'Discriminator loss 0.6172', 'Discriminator accuracy 0.6855', 'Total loss: 1.5763', 'for batch', 10)
+('GAN loss 1.0230 ', 'GAN acc 0.2148', 'Discriminator loss 0.6128', 'Discriminator accuracy 0.6797', 'Total loss: 1.6358', 'for batch', 11)
+('GAN loss 1.0536 ', 'GAN acc 0.2227', 'Discriminator loss 0.5781', 'Discriminator accuracy 0.7402', 'Total loss: 1.6317', 'for batch', 12)
+('GAN loss 1.0933 ', 'GAN acc 0.1875', 'Discriminator loss 0.5732', 'Discriminator accuracy 0.7227', 'Total loss: 1.6665', 'for batch', 13)
+('GAN loss 1.0472 ', 'GAN acc 0.2617', 'Discriminator loss 0.5557', 'Discriminator accuracy 0.7344', 'Total loss: 1.6029', 'for batch', 14)
+('GAN loss 1.1705 ', 'GAN acc 0.1758', 'Discriminator loss 0.5772', 'Discriminator accuracy 0.7500', 'Total loss: 1.7478', 'for batch', 15)
+('GAN loss 1.2799 ', 'GAN acc 0.1562', 'Discriminator loss 0.5621', 'Discriminator accuracy 0.7285', 'Total loss: 1.8420', 'for batch', 16)
+('GAN loss 1.3298 ', 'GAN acc 0.1484', 'Discriminator loss 0.5394', 'Discriminator accuracy 0.7383', 'Total loss: 1.8692', 'for batch', 17)
+('GAN loss 1.3486 ', 'GAN acc 0.1133', 'Discriminator loss 0.5422', 'Discriminator accuracy 0.7109', 'Total loss: 1.8908', 'for batch', 18)
+('DISCRIMINATOR_Imagem REAL=', 0.84211475)
+('DISCRIMINATOR_Imagem FAKE=', 0.67323291)
+('Discriminator trained', 11, 'times of', 19, 'batchs')
+Saving weights...
+Saving sample images...
+('out.shape=', (256, 3, 32, 32), 'out.max', 255.0, 'out.min=', 0.2)
+('original.shape=', (256, 3, 32, 32), 'original.max', 255.0, 'original.min=', 0.0)
+('Elapsed time in epoch = ', '0:00:45.191329')
+----------------------------------
+('Epoch', 2, 'of', 50)
+('Number of batches', 19)
+('GAN loss 1.3733 ', 'GAN acc 0.1562', 'Discriminator loss 0.5542', 'Discriminator accuracy 0.7344', 'Total loss: 1.9275', 'for batch', 0)
+('GAN loss 1.3920 ', 'GAN acc 0.1484', 'Discriminator loss 0.5909', 'Discriminator accuracy 0.6895', 'Total loss: 1.9829', 'for batch', 1)
+('GAN loss 1.3804 ', 'GAN acc 0.1719', 'Discriminator loss 0.5744', 'Discriminator accuracy 0.6953', 'Total loss: 1.9548', 'for batch', 2)
+('GAN loss 1.1769 ', 'GAN acc 0.2305', 'Discriminator loss 0.5804', 'Discriminator accuracy 0.6777', 'Total loss: 1.7574', 'for batch', 3)
+('GAN loss 1.4584 ', 'GAN acc 0.1289', 'Discriminator loss 0.5881', 'Discriminator accuracy 0.6992', 'Total loss: 2.0465', 'for batch', 4)
+('GAN loss 1.4317 ', 'GAN acc 0.1602', 'Discriminator loss 0.5899', 'Discriminator accuracy 0.6270', 'Total loss: 2.0215', 'for batch', 5)
+('GAN loss 1.4779 ', 'GAN acc 0.1562', 'Discriminator loss 0.5717', 'Discriminator accuracy 0.6895', 'Total loss: 2.0496', 'for batch', 6)
+('GAN loss 1.5399 ', 'GAN acc 0.1016', 'Discriminator loss 0.5773', 'Discriminator accuracy 0.6680', 'Total loss: 2.1172', 'for batch', 7)
+('GAN loss 1.2999 ', 'GAN acc 0.2070', 'Discriminator loss 0.5520', 'Discriminator accuracy 0.6562', 'Total loss: 1.8519', 'for batch', 8)
+('GAN loss 1.4731 ', 'GAN acc 0.1094', 'Discriminator loss 0.5968', 'Discriminator accuracy 0.6660', 'Total loss: 2.0700', 'for batch', 9)
+('GAN loss 1.2880 ', 'GAN acc 0.2148', 'Discriminator loss 0.5844', 'Discriminator accuracy 0.6426', 'Total loss: 1.8724', 'for batch', 10)
+('GAN loss 1.1805 ', 'GAN acc 0.2617', 'Discriminator loss 0.5934', 'Discriminator accuracy 0.6504', 'Total loss: 1.7740', 'for batch', 11)
+('GAN loss 1.4209 ', 'GAN acc 0.1172', 'Discriminator loss 0.6284', 'Discriminator accuracy 0.6406', 'Total loss: 2.0493', 'for batch', 12)
+('GAN loss 1.3429 ', 'GAN acc 0.1289', 'Discriminator loss 0.6080', 'Discriminator accuracy 0.6250', 'Total loss: 1.9510', 'for batch', 13)
+('GAN loss 1.0514 ', 'GAN acc 0.2773', 'Discriminator loss 0.6224', 'Discriminator accuracy 0.5996', 'Total loss: 1.6738', 'for batch', 14)
+('GAN loss 1.1988 ', 'GAN acc 0.1875', 'Discriminator loss 0.6504', 'Discriminator accuracy 0.6172', 'Total loss: 1.8492', 'for batch', 15)
+('GAN loss 1.2752 ', 'GAN acc 0.1094', 'Discriminator loss 0.6206', 'Discriminator accuracy 0.6250', 'Total loss: 1.8958', 'for batch', 16)
+('GAN loss 1.0235 ', 'GAN acc 0.2734', 'Discriminator loss 0.6196', 'Discriminator accuracy 0.6172', 'Total loss: 1.6430', 'for batch', 17)
+('GAN loss 1.1472 ', 'GAN acc 0.2227', 'Discriminator loss 0.6104', 'Discriminator accuracy 0.6543', 'Total loss: 1.7576', 'for batch', 18)
+('DISCRIMINATOR_Imagem REAL=', 0.83326012)
+('DISCRIMINATOR_Imagem FAKE=', 0.81812835)
+('Discriminator trained', 19, 'times of', 19, 'batchs')
+Saving weights...
+Saving sample images...
+('out.shape=', (256, 3, 32, 32), 'out.max', 255.0, 'out.min=', 0.2)
+('original.shape=', (256, 3, 32, 32), 'original.max', 255.0, 'original.min=', 0.0)
+('Elapsed time in epoch = ', '0:00:27.429465')
+----------------------------------
+('Epoch', 3, 'of', 50)
+('Number of batches', 19)
+('GAN loss 1.2178 ', 'GAN acc 0.1250', 'Discriminator loss 0.6462', 'Discriminator accuracy 0.5898', 'Total loss: 1.8640', 'for batch', 0)
+('GAN loss 1.0372 ', 'GAN acc 0.2422', 'Discriminator loss 0.6225', 'Discriminator accuracy 0.6211', 'Total loss: 1.6597', 'for batch', 1)
+('GAN loss 1.0624 ', 'GAN acc 0.2031', 'Discriminator loss 0.6208', 'Discriminator accuracy 0.6250', 'Total loss: 1.6832', 'for batch', 2)
+('GAN loss 1.0192 ', 'GAN acc 0.2227', 'Discriminator loss 0.6116', 'Discriminator accuracy 0.6270', 'Total loss: 1.6307', 'for batch', 3)
+('GAN loss 0.9552 ', 'GAN acc 0.3008', 'Discriminator loss 0.6032', 'Discriminator accuracy 0.6699', 'Total loss: 1.5584', 'for batch', 4)
+('GAN loss 0.9421 ', 'GAN acc 0.3359', 'Discriminator loss 0.5976', 'Discriminator accuracy 0.6875', 'Total loss: 1.5396', 'for batch', 5)
+('GAN loss 1.0090 ', 'GAN acc 0.2656', 'Discriminator loss 0.6343', 'Discriminator accuracy 0.6230', 'Total loss: 1.6433', 'for batch', 6)
+('GAN loss 1.0651 ', 'GAN acc 0.2227', 'Discriminator loss 0.6414', 'Discriminator accuracy 0.6172', 'Total loss: 1.7064', 'for batch', 7)
+('GAN loss 0.9622 ', 'GAN acc 0.2891', 'Discriminator loss 0.6207', 'Discriminator accuracy 0.6445', 'Total loss: 1.5829', 'for batch', 8)
+('GAN loss 0.9335 ', 'GAN acc 0.2812', 'Discriminator loss 0.6499', 'Discriminator accuracy 0.6055', 'Total loss: 1.5835', 'for batch', 9)
+('GAN loss 0.9598 ', 'GAN acc 0.2891', 'Discriminator loss 0.6494', 'Discriminator accuracy 0.6211', 'Total loss: 1.6092', 'for batch', 10)
+('GAN loss 0.8884 ', 'GAN acc 0.4219', 'Discriminator loss 0.6311', 'Discriminator accuracy 0.5898', 'Total loss: 1.5196', 'for batch', 11)
+('GAN loss 1.0279 ', 'GAN acc 0.2773', 'Discriminator loss 0.6175', 'Discriminator accuracy 0.6680', 'Total loss: 1.6454', 'for batch', 12)
+('GAN loss 1.0829 ', 'GAN acc 0.2422', 'Discriminator loss 0.6027', 'Discriminator accuracy 0.6738', 'Total loss: 1.6856', 'for batch', 13)
+('GAN loss 1.0758 ', 'GAN acc 0.2461', 'Discriminator loss 0.6046', 'Discriminator accuracy 0.6777', 'Total loss: 1.6804', 'for batch', 14)
+('GAN loss 1.0256 ', 'GAN acc 0.2383', 'Discriminator loss 0.6419', 'Discriminator accuracy 0.5820', 'Total loss: 1.6676', 'for batch', 15)
+('GAN loss 0.9595 ', 'GAN acc 0.2930', 'Discriminator loss 0.6337', 'Discriminator accuracy 0.6152', 'Total loss: 1.5932', 'for batch', 16)
+('GAN loss 0.9391 ', 'GAN acc 0.3281', 'Discriminator loss 0.6461', 'Discriminator accuracy 0.6074', 'Total loss: 1.5852', 'for batch', 17)
+('GAN loss 0.8556 ', 'GAN acc 0.3242', 'Discriminator loss 0.6539', 'Discriminator accuracy 0.5859', 'Total loss: 1.5096', 'for batch', 18)
+('DISCRIMINATOR_Imagem REAL=', 0.85644704)
+('DISCRIMINATOR_Imagem FAKE=', 0.8211183)
+('Discriminator trained', 19, 'times of', 19, 'batchs')
+Saving weights...
+Saving sample images...
+('out.shape=', (256, 3, 32, 32), 'out.max', 255.0, 'out.min=', 0.2)
+('original.shape=', (256, 3, 32, 32), 'original.max', 255.0, 'original.min=', 0.0)
+('Elapsed time in epoch = ', '0:00:28.067011')
+----------------------------------
+('Epoch', 4, 'of', 50)
+('Number of batches', 19)
+('GAN loss 0.8168 ', 'GAN acc 0.4180', 'Discriminator loss 0.6573', 'Discriminator accuracy 0.5996', 'Total loss: 1.4741', 'for batch', 0)
+('GAN loss 0.8256 ', 'GAN acc 0.4062', 'Discriminator loss 0.6402', 'Discriminator accuracy 0.6328', 'Total loss: 1.4658', 'for batch', 1)
+('GAN loss 0.8290 ', 'GAN acc 0.4258', 'Discriminator loss 0.6460', 'Discriminator accuracy 0.6074', 'Total loss: 1.4750', 'for batch', 2)
+('GAN loss 0.7927 ', 'GAN acc 0.4805', 'Discriminator loss 0.6603', 'Discriminator accuracy 0.5801', 'Total loss: 1.4530', 'for batch', 3)
+('GAN loss 0.8228 ', 'GAN acc 0.3789', 'Discriminator loss 0.6586', 'Discriminator accuracy 0.5996', 'Total loss: 1.4814', 'for batch', 4)
+('GAN loss 0.7593 ', 'GAN acc 0.4883', 'Discriminator loss 0.6578', 'Discriminator accuracy 0.5918', 'Total loss: 1.4171', 'for batch', 5)
+('GAN loss 0.7582 ', 'GAN acc 0.4688', 'Discriminator loss 0.6804', 'Discriminator accuracy 0.5781', 'Total loss: 1.4386', 'for batch', 6)
+('GAN loss 0.7465 ', 'GAN acc 0.4961', 'Discriminator loss 0.6782', 'Discriminator accuracy 0.5586', 'Total loss: 1.4247', 'for batch', 7)
+('GAN loss 0.7796 ', 'GAN acc 0.4492', 'Discriminator loss 0.6458', 'Discriminator accuracy 0.6172', 'Total loss: 1.4254', 'for batch', 8)
+('GAN loss 0.8190 ', 'GAN acc 0.4688', 'Discriminator loss 0.5903', 'Discriminator accuracy 0.6895', 'Total loss: 1.4093', 'for batch', 9)
+('GAN loss 0.8918 ', 'GAN acc 0.4180', 'Discriminator loss 0.5616', 'Discriminator accuracy 0.7363', 'Total loss: 1.4534', 'for batch', 10)
+('GAN loss 1.0085 ', 'GAN acc 0.2812', 'Discriminator loss 0.6000', 'Discriminator accuracy 0.7188', 'Total loss: 1.6085', 'for batch', 11)
+('GAN loss 0.9101 ', 'GAN acc 0.3281', 'Discriminator loss 0.6436', 'Discriminator accuracy 0.6406', 'Total loss: 1.5538', 'for batch', 12)
+('GAN loss 0.8231 ', 'GAN acc 0.4102', 'Discriminator loss 0.6286', 'Discriminator accuracy 0.6367', 'Total loss: 1.4517', 'for batch', 13)
+('GAN loss 0.7409 ', 'GAN acc 0.5117', 'Discriminator loss 0.6550', 'Discriminator accuracy 0.5918', 'Total loss: 1.3959', 'for batch', 14)
+('GAN loss 0.7566 ', 'GAN acc 0.4922', 'Discriminator loss 0.6813', 'Discriminator accuracy 0.5586', 'Total loss: 1.4379', 'for batch', 15)
+('GAN loss 0.7610 ', 'GAN acc 0.4883', 'Discriminator loss 0.6627', 'Discriminator accuracy 0.5723', 'Total loss: 1.4238', 'for batch', 16)
+('GAN loss 0.7199 ', 'GAN acc 0.5273', 'Discriminator loss 0.6754', 'Discriminator accuracy 0.5781', 'Total loss: 1.3953', 'for batch', 17)
+('GAN loss 0.7247 ', 'GAN acc 0.5469', 'Discriminator loss 0.6985', 'Discriminator accuracy 0.5371', 'Total loss: 1.4232', 'for batch', 18)
+('DISCRIMINATOR_Imagem REAL=', 0.86502928)
+('DISCRIMINATOR_Imagem FAKE=', 0.82070464)
+('Discriminator trained', 19, 'times of', 19, 'batchs')
+Saving weights...
+Saving sample images...
+('out.shape=', (256, 3, 32, 32), 'out.max', 255.0, 'out.min=', 0.2)
+('original.shape=', (256, 3, 32, 32), 'original.max', 255.0, 'original.min=', 0.0)
+('Elapsed time in epoch = ', '0:00:27.669555')
+----------------------------------
+('Epoch', 5, 'of', 50)
+('Number of batches', 19)
+('GAN loss 0.7257 ', 'GAN acc 0.5156', 'Discriminator loss 0.6973', 'Discriminator accuracy 0.5547', 'Total loss: 1.4230', 'for batch', 0)
+('GAN loss 0.7032 ', 'GAN acc 0.5625', 'Discriminator loss 0.6729', 'Discriminator accuracy 0.5879', 'Total loss: 1.3760', 'for batch', 1)
+('GAN loss 0.7751 ', 'GAN acc 0.5703', 'Discriminator loss 0.6182', 'Discriminator accuracy 0.6504', 'Total loss: 1.3933', 'for batch', 2)
+('GAN loss 0.8462 ', 'GAN acc 0.4062', 'Discriminator loss 0.5880', 'Discriminator accuracy 0.7051', 'Total loss: 1.4342', 'for batch', 3)
+('GAN loss 0.8923 ', 'GAN acc 0.3828', 'Discriminator loss 0.6261', 'Discriminator accuracy 0.6484', 'Total loss: 1.5184', 'for batch', 4)
+('GAN loss 0.8178 ', 'GAN acc 0.4258', 'Discriminator loss 0.6340', 'Discriminator accuracy 0.6465', 'Total loss: 1.4518', 'for batch', 5)
+('GAN loss 0.7728 ', 'GAN acc 0.4805', 'Discriminator loss 0.6579', 'Discriminator accuracy 0.5879', 'Total loss: 1.4307', 'for batch', 6)
+('GAN loss 0.8021 ', 'GAN acc 0.4414', 'Discriminator loss 0.6635', 'Discriminator accuracy 0.5840', 'Total loss: 1.4656', 'for batch', 7)
+('GAN loss 0.7686 ', 'GAN acc 0.4805', 'Discriminator loss 0.6763', 'Discriminator accuracy 0.5918', 'Total loss: 1.4449', 'for batch', 8)
+('GAN loss 0.7255 ', 'GAN acc 0.5469', 'Discriminator loss 0.6881', 'Discriminator accuracy 0.5625', 'Total loss: 1.4136', 'for batch', 9)
+('GAN loss 0.6944 ', 'GAN acc 0.5586', 'Discriminator loss 0.7013', 'Discriminator accuracy 0.5391', 'Total loss: 1.3957', 'for batch', 10)
+('GAN loss 0.6634 ', 'GAN acc 0.6328', 'Discriminator loss 0.6895', 'Discriminator accuracy 0.5410', 'Total loss: 1.3529', 'for batch', 11)
+('GAN loss 0.7371 ', 'GAN acc 0.5000', 'Discriminator loss 0.6571', 'Discriminator accuracy 0.5801', 'Total loss: 1.3942', 'for batch', 12)
+('GAN loss 0.7530 ', 'GAN acc 0.4492', 'Discriminator loss 0.6972', 'Discriminator accuracy 0.5098', 'Total loss: 1.4502', 'for batch', 13)
+('GAN loss 0.6810 ', 'GAN acc 0.5508', 'Discriminator loss 0.6926', 'Discriminator accuracy 0.5234', 'Total loss: 1.3736', 'for batch', 14)
+('GAN loss 0.6497 ', 'GAN acc 0.6680', 'Discriminator loss 0.7106', 'Discriminator accuracy 0.5059', 'Total loss: 1.3603', 'for batch', 15)
+('GAN loss 0.6751 ', 'GAN acc 0.5703', 'Discriminator loss 0.7121', 'Discriminator accuracy 0.5098', 'Total loss: 1.3872', 'for batch', 16)
+('GAN loss 0.6962 ', 'GAN acc 0.6133', 'Discriminator loss 0.6905', 'Discriminator accuracy 0.5137', 'Total loss: 1.3867', 'for batch', 17)
+('GAN loss 0.6819 ', 'GAN acc 0.6914', 'Discriminator loss 0.6759', 'Discriminator accuracy 0.5645', 'Total loss: 1.3578', 'for batch', 18)
+('DISCRIMINATOR_Imagem REAL=', 0.83670121)
+('DISCRIMINATOR_Imagem FAKE=', 0.81137526)
+('Discriminator trained', 19, 'times of', 19, 'batchs')
+Saving weights...
+Saving sample images...
+('out.shape=', (256, 3, 32, 32), 'out.max', 255.0, 'out.min=', 0.2)
+('original.shape=', (256, 3, 32, 32), 'original.max', 255.0, 'original.min=', 0.0)
+('Elapsed time in epoch = ', '0:00:28.258101')
+----------------------------------
+('Epoch', 6, 'of', 50)
+('Number of batches', 19)
+('GAN loss 0.65
