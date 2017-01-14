@@ -483,8 +483,10 @@ for i in range(0,len(cifar10_Classes)):
 		print("Saving sample images...")
 #		print("generated_images.shape=",generated_images.shape,"image_batch.shape=",image_batch.shape)
 #		256,2,32,32 													256,2,32,32
-		print("generated_images.max=",numpy.amax(generated_images),"generated_images.min",numpy.amin(generated_images))
-		print("image_batch.max=",numpy.amax(image_batch),"image_batch.min",numpy.amin(image_batch))
+		print("generated_images.max=",numpy.amax(generated_images)*255,"generated_images.min",numpy.amin(generated_images)*255)
+#				[0,1]
+		print("image_batch.max=",numpy.amax(image_batch)*255,"image_batch.min",numpy.amin(image_batch)*255)
+#				[0.04,0.92]
 		save3images(BW_image_batch,generated_images*255,image_batch*255,epoch+1)
 #		print("Storing to histogram values")
 
