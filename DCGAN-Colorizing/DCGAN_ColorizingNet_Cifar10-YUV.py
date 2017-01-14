@@ -23,6 +23,7 @@ from datetime import timedelta
 
 
 
+
 ########################
 #CONSTANTS and VARIABLES
 ########################
@@ -79,7 +80,9 @@ def converter(a,b):
 		a[i,0,:,:] = rgb2gray(b[i,:,:,:].transpose(1,2,0))
 
 def rgb2yuv(rgb):
+	rgb = rgb.astype('float32')
 	yuv = numpy.zeros(rgb.shape)
+	yuv = yuv.astype('float32')
 	# Analog transformation
 #	yuv[:,:,0] = 0.299*rgb[...,0]+0.587*rgb[...,1]+0.114*rgb[...,2]
 #	yuv[:,:,1] = -0.14713*rgb[...,0]-0.28886*rgb[...,1]+0.436*rgb[...,2]
@@ -103,7 +106,9 @@ def converterYUV(a,b):
 		a[i] = rgb2yuv(h)
 
 def yuv2rgb(yuv):
+	yuv = yuv.astype('float32')
 	rgb = numpy.zeros(yuv.shape)
+	rgb = rgb.astype('float32')
 #	yuv*=255
 #	print("yuv.shape=",yuv.shape)
 #	print("yuv.max=",numpy.amax(yuv),"yuv.min=",numpy.amin(yuv))
@@ -180,10 +185,11 @@ def save3images(inp,out,original,folder):
 
 		ax1.imshow(inp[n,0,:,:],cmap='gray')
 		ax1.set_title('Input_%s'%i)
-		ax2.imshow(out[n].transpose(1,2,0))
+
+		ax2.imshow(numpy.uint8(out[n].transpose(1,2,0)))
 		ax2.set_title('Output_%s'%i)
 
-		ax3.imshow(original[n].transpose(1,2,0))
+		ax3.imshow(numpy.uint8(original[n].transpose(1,2,0)))
 		ax3.set_title('Original_%s'%i)
 
 		titlestr = 'Epochs='+str(epoch)+' BATCH_SIZE='+str(BATCH_SIZE)
