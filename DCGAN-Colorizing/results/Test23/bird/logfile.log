@@ -1,0 +1,1467 @@
+----------------------------------
+('Training with dataset based on class - ', 'bird', 'with', 5000, 'samples')
+----------------------------------
+____________________________________________________________________________________________________
+Layer (type)                     Output Shape          Param #     Connected to                     
+====================================================================================================
+sequential_8 (Sequential)        (None, 2, 32, 32)     1367650                                      
+____________________________________________________________________________________________________
+sequential_7 (Sequential)        (None, 1)             0           lambda_3[0][0]                   
+====================================================================================================
+Total params: 2806403
+____________________________________________________________________________________________________
+____________________________________________________________________________________________________
+Layer (type)                     Output Shape          Param #     Connected to                     
+====================================================================================================
+convolution2d_27 (Convolution2D) (None, 32, 16, 16)    608         convolution2d_input_5[0][0]      
+____________________________________________________________________________________________________
+leakyrelu_27 (LeakyReLU)         (None, 32, 16, 16)    0           convolution2d_27[0][0]           
+____________________________________________________________________________________________________
+dropout_11 (Dropout)             (None, 32, 16, 16)    0           leakyrelu_27[0][0]               
+____________________________________________________________________________________________________
+convolution2d_28 (Convolution2D) (None, 64, 8, 8)      18496       dropout_11[0][0]                 
+____________________________________________________________________________________________________
+leakyrelu_28 (LeakyReLU)         (None, 64, 8, 8)      0           convolution2d_28[0][0]           
+____________________________________________________________________________________________________
+dropout_12 (Dropout)             (None, 64, 8, 8)      0           leakyrelu_28[0][0]               
+____________________________________________________________________________________________________
+convolution2d_29 (Convolution2D) (None, 128, 4, 4)     73856       dropout_12[0][0]                 
+____________________________________________________________________________________________________
+leakyrelu_29 (LeakyReLU)         (None, 128, 4, 4)     0           convolution2d_29[0][0]           
+____________________________________________________________________________________________________
+dropout_13 (Dropout)             (None, 128, 4, 4)     0           leakyrelu_29[0][0]               
+____________________________________________________________________________________________________
+convolution2d_30 (Convolution2D) (None, 256, 2, 2)     295168      dropout_13[0][0]                 
+____________________________________________________________________________________________________
+leakyrelu_30 (LeakyReLU)         (None, 256, 2, 2)     0           convolution2d_30[0][0]           
+____________________________________________________________________________________________________
+dropout_14 (Dropout)             (None, 256, 2, 2)     0           leakyrelu_30[0][0]               
+____________________________________________________________________________________________________
+flatten_3 (Flatten)              (None, 1024)          0           dropout_14[0][0]                 
+____________________________________________________________________________________________________
+dense_5 (Dense)                  (None, 1024)          1049600     flatten_3[0][0]                  
+____________________________________________________________________________________________________
+leakyrelu_31 (LeakyReLU)         (None, 1024)          0           dense_5[0][0]                    
+____________________________________________________________________________________________________
+dropout_15 (Dropout)             (None, 1024)          0           leakyrelu_31[0][0]               
+____________________________________________________________________________________________________
+dense_6 (Dense)                  (None, 1)             1025        dropout_15[0][0]                 
+====================================================================================================
+Total params: 1438753
+____________________________________________________________________________________________________
+('Epoch', 1, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.2289', 'Generator acc 0.0332', 'for batch', 0)
+('Generator loss 0.2515', 'Generator acc 0.0408', 'for batch', 1)
+('Generator loss 0.1337', 'Generator acc 0.0391', 'for batch', 2)
+('Generator loss 0.0671', 'Generator acc 0.0384', 'for batch', 3)
+('Generator loss 0.0346', 'Generator acc 0.0392', 'for batch', 4)
+('Generator loss 0.0230', 'Generator acc 0.0351', 'for batch', 5)
+('Generator loss 0.0155', 'Generator acc 0.0361', 'for batch', 6)
+('Generator loss 0.0115', 'Generator acc 0.0342', 'for batch', 7)
+('Generator loss 0.0078', 'Generator acc 0.0451', 'for batch', 8)
+('Generator loss 0.0043', 'Generator acc 0.0559', 'for batch', 9)
+('Generator loss 0.0040', 'Generator acc 0.0582', 'for batch', 10)
+('Generator loss 0.0040', 'Generator acc 0.0572', 'for batch', 11)
+('Generator loss 0.0037', 'Generator acc 0.0534', 'for batch', 12)
+('Generator loss 0.0041', 'Generator acc 0.0619', 'for batch', 13)
+('Generator loss 0.0041', 'Generator acc 0.0560', 'for batch', 14)
+('Generator loss 0.0038', 'Generator acc 0.0535', 'for batch', 15)
+('Generator loss 0.0038', 'Generator acc 0.0551', 'for batch', 16)
+('Generator loss 0.0040', 'Generator acc 0.0535', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:38.046540')
+----------------------------------
+('Epoch', 2, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0037', 'Generator acc 0.0517', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0552', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0595', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0604', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0602', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0582', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0597', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0576', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0621', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0610', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0560', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0644', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0590', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0540', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0568', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0537', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0611', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.920381')
+----------------------------------
+('Epoch', 3, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0493', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0522', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0595', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0598', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0604', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0583', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0599', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0577', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0624', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0609', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0609', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0561', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0543', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.597704')
+----------------------------------
+('Epoch', 4, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0492', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0520', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0593', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0598', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0608', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0607', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0586', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0599', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0624', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0610', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0609', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0562', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0543', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0563', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0612', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.990148')
+----------------------------------
+('Epoch', 5, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0491', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0593', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0598', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0608', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0586', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0599', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0623', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0610', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0609', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0562', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0564', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0612', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.038823')
+----------------------------------
+('Epoch', 6, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0491', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0608', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0610', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0585', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0599', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0572', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0623', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0610', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0609', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0563', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0564', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0542', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0612', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.680760')
+----------------------------------
+('Epoch', 7, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0595', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0608', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0585', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0599', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0572', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0624', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0610', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0609', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0564', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0644', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0545', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0565', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0541', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0611', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.114847')
+----------------------------------
+('Epoch', 8, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0610', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0585', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0599', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0572', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0624', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0610', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0609', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0564', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0644', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0565', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0541', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0611', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.061659')
+----------------------------------
+('Epoch', 9, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0585', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0600', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0624', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0610', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0608', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0564', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0644', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0592', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0565', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0541', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.776847')
+----------------------------------
+('Epoch', 10, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0593', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0585', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0600', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0624', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0610', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0608', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0645', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0592', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0565', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0541', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0611', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.021823')
+----------------------------------
+('Epoch', 11, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0593', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0585', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0572', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0624', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0611', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0608', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0645', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0592', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0541', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0611', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.725461')
+----------------------------------
+('Epoch', 12, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0593', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0585', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0572', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0624', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0611', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0608', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0611', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.071962')
+----------------------------------
+('Epoch', 13, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0593', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0608', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0585', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0625', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0608', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.070405')
+----------------------------------
+('Epoch', 14, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0593', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0608', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0585', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0608', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0644', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.653593')
+----------------------------------
+('Epoch', 15, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0489', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0593', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0608', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0586', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0608', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0644', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.064261')
+----------------------------------
+('Epoch', 16, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0489', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0593', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0608', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0586', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0608', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.074073')
+----------------------------------
+('Epoch', 17, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0593', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0608', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0586', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.683473')
+----------------------------------
+('Epoch', 18, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0593', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0607', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0586', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.111673')
+----------------------------------
+('Epoch', 19, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0593', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0607', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0586', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.733768')
+----------------------------------
+('Epoch', 20, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0593', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0607', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0586', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.105371')
+----------------------------------
+('Epoch', 21, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0593', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0607', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0586', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0625', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.042887')
+----------------------------------
+('Epoch', 22, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0593', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0608', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0586', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0625', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.673964')
+----------------------------------
+('Epoch', 23, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0593', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0608', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0586', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0625', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.047978')
+----------------------------------
+('Epoch', 24, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0593', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0600', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0608', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0586', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0625', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.058623')
+----------------------------------
+('Epoch', 25, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0600', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0608', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0586', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0625', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.726978')
+----------------------------------
+('Epoch', 26, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0600', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0608', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0586', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.100743')
+----------------------------------
+('Epoch', 27, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0601', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0608', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0586', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0540', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.669301')
+----------------------------------
+('Epoch', 28, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0600', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0608', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.111807')
+----------------------------------
+('Epoch', 29, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0608', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.109702')
+----------------------------------
+('Epoch', 30, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0608', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.756797')
+----------------------------------
+('Epoch', 31, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0608', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.041243')
+----------------------------------
+('Epoch', 32, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0608', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.029262')
+----------------------------------
+('Epoch', 33, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.645393')
+----------------------------------
+('Epoch', 34, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.137019')
+----------------------------------
+('Epoch', 35, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.655179')
+----------------------------------
+('Epoch', 36, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.096311')
+----------------------------------
+('Epoch', 37, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.051417')
+----------------------------------
+('Epoch', 38, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.678855')
+----------------------------------
+('Epoch', 39, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.056292')
+----------------------------------
+('Epoch', 40, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.098808')
+----------------------------------
+('Epoch', 41, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.642208')
+----------------------------------
+('Epoch', 42, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.175474')
+----------------------------------
+('Epoch', 43, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.692828')
+----------------------------------
+('Epoch', 44, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.081877')
+----------------------------------
+('Epoch', 45, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0607', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.094511')
+----------------------------------
+('Epoch', 46, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0606', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.677686')
+----------------------------------
+('Epoch', 47, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0606', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.088842')
+----------------------------------
+('Epoch', 48, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0606', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.049467')
+----------------------------------
+('Epoch', 49, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0606', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.667964')
+----------------------------------
+('Epoch', 50, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0036', 'Generator acc 0.0490', 'for batch', 0)
+('Generator loss 0.0038', 'Generator acc 0.0521', 'for batch', 1)
+('Generator loss 0.0036', 'Generator acc 0.0594', 'for batch', 2)
+('Generator loss 0.0040', 'Generator acc 0.0599', 'for batch', 3)
+('Generator loss 0.0042', 'Generator acc 0.0609', 'for batch', 4)
+('Generator loss 0.0041', 'Generator acc 0.0609', 'for batch', 5)
+('Generator loss 0.0038', 'Generator acc 0.0587', 'for batch', 6)
+('Generator loss 0.0036', 'Generator acc 0.0601', 'for batch', 7)
+('Generator loss 0.0031', 'Generator acc 0.0573', 'for batch', 8)
+('Generator loss 0.0039', 'Generator acc 0.0626', 'for batch', 9)
+('Generator loss 0.0038', 'Generator acc 0.0612', 'for batch', 10)
+('Generator loss 0.0038', 'Generator acc 0.0606', 'for batch', 11)
+('Generator loss 0.0036', 'Generator acc 0.0565', 'for batch', 12)
+('Generator loss 0.0040', 'Generator acc 0.0643', 'for batch', 13)
+('Generator loss 0.0040', 'Generator acc 0.0591', 'for batch', 14)
+('Generator loss 0.0037', 'Generator acc 0.0544', 'for batch', 15)
+('Generator loss 0.0037', 'Generator acc 0.0566', 'for batch', 16)
+('Generator loss 0.0039', 'Generator acc 0.0539', 'for batch', 17)
+('Generator loss 0.0042', 'Generator acc 0.0610', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:27.047778')
+----------------------------------
+End of training
+Saving histograms
+----------------------------------
+('Total samples = ', 5000, ' Batch size =', 256, ' Epochs = ', 50)
+----------------------------------
+---GENERATOR---
+____________________________________________________________________________________________________
+Layer (type)                     Output Shape          Param #     Connected to                     
+====================================================================================================
+convolution2d_31 (Convolution2D) (None, 32, 32, 32)    320         convolution2d_input_6[0][0]      
+____________________________________________________________________________________________________
+leakyrelu_32 (LeakyReLU)         (None, 32, 32, 32)    0           convolution2d_31[0][0]           
+____________________________________________________________________________________________________
+convolution2d_32 (Convolution2D) (None, 64, 32, 32)    18496       leakyrelu_32[0][0]               
+____________________________________________________________________________________________________
+batchnormalization_15 (BatchNorma(None, 64, 32, 32)    128         convolution2d_32[0][0]           
+____________________________________________________________________________________________________
+leakyrelu_33 (LeakyReLU)         (None, 64, 32, 32)    0           batchnormalization_15[0][0]      
+____________________________________________________________________________________________________
+convolution2d_33 (Convolution2D) (None, 128, 32, 32)   73856       leakyrelu_33[0][0]               
+____________________________________________________________________________________________________
+batchnormalization_16 (BatchNorma(None, 128, 32, 32)   256         convolution2d_33[0][0]           
+____________________________________________________________________________________________________
+leakyrelu_34 (LeakyReLU)         (None, 128, 32, 32)   0           batchnormalization_16[0][0]      
+____________________________________________________________________________________________________
+convolution2d_34 (Convolution2D) (None, 256, 32, 32)   295168      leakyrelu_34[0][0]               
+____________________________________________________________________________________________________
+batchnormalization_17 (BatchNorma(None, 256, 32, 32)   512         convolution2d_34[0][0]           
+____________________________________________________________________________________________________
+leakyrelu_35 (LeakyReLU)         (None, 256, 32, 32)   0           batchnormalization_17[0][0]      
+____________________________________________________________________________________________________
+convolution2d_35 (Convolution2D) (None, 256, 32, 32)   590080      leakyrelu_35[0][0]               
+____________________________________________________________________________________________________
+batchnormalization_18 (BatchNorma(None, 256, 32, 32)   512         convolution2d_35[0][0]           
+____________________________________________________________________________________________________
+leakyrelu_36 (LeakyReLU)         (None, 256, 32, 32)   0           batchnormalization_18[0][0]      
+____________________________________________________________________________________________________
+convolution2d_36 (Convolution2D) (None, 128, 32, 32)   295040      leakyrelu_36[0][0]               
+____________________________________________________________________________________________________
+batchnormalization_19 (BatchNorma(None, 128, 32, 32)   256         convolution2d_36[0][0]           
+____________________________________________________________________________________________________
+leakyrelu_37 (LeakyReLU)         (None, 128, 32, 32)   0           batchnormalization_19[0][0]      
+____________________________________________________________________________________________________
+convolution2d_37 (Convolution2D) (None, 64, 32, 32)    73792       leakyrelu_37[0][0]               
+____________________________________________________________________________________________________
+batchnormalization_20 (BatchNorma(None, 64, 32, 32)    128         convolution2d_37[0][0]           
+____________________________________________________________________________________________________
+leakyrelu_38 (LeakyReLU)         (None, 64, 32, 32)    0           batchnormalization_20[0][0]      
+____________________________________________________________________________________________________
+convolution2d_38 (Convolution2D) (None, 32, 32, 32)    18464       leakyrelu_38[0][0]               
+____________________________________________________________________________________________________
+batchnormalization_21 (BatchNorma(None, 32, 32, 32)    64          convolution2d_38[0][0]           
+____________________________________________________________________________________________________
+leakyrelu_39 (LeakyReLU)         (None, 32, 32, 32)    0           batchnormalization_21[0][0]      
+____________________________________________________________________________________________________
+convolution2d_39 (Convolution2D) (None, 2, 32, 32)     578         leakyrelu_39[0][0]               
+____________________________________________________________________________________________________
+lambda_3 (Lambda)                (None, 2, 32, 32)     0           convolution2d_39[0][0]           
+====================================================================================================
+Total params: 1367650
+____________________________________________________________________________________________________
+None
+----------------------------------
+('Training with dataset based on class - ', 'cat', 'with', 5000, 'samples')
+----------------------------------
+____________________________________________________________________________________________________
+Layer (type)                     Output Shape          Param #     Connected to                     
+====================================================================================================
+sequential_11 (Sequential)       (None, 2, 32, 32)     1367650                                      
+____________________________________________________________________________________________________
+sequential_10 (Sequential)       (None, 1)             0           lambda_4[0][0]                   
+====================================================================================================
+Total params: 2806403
+____________________________________________________________________________________________________
+____________________________________________________________________________________________________
+Layer (type)                     Output Shape          Param #     Connected to                     
+====================================================================================================
+convolution2d_40 (Convolution2D) (None, 32, 16, 16)    608         convolution2d_input_7[0][0]      
+____________________________________________________________________________________________________
+leakyrelu_40 (LeakyReLU)         (None, 32, 16, 16)    0           convolution2d_40[0][0]           
+____________________________________________________________________________________________________
+dropout_16 (Dropout)             (None, 32, 16, 16)    0           leakyrelu_40[0][0]               
+____________________________________________________________________________________________________
+convolution2d_41 (Convolution2D) (None, 64, 8, 8)      18496       dropout_16[0][0]                 
+____________________________________________________________________________________________________
+leakyrelu_41 (LeakyReLU)         (None, 64, 8, 8)      0           convolution2d_41[0][0]           
+____________________________________________________________________________________________________
+dropout_17 (Dropout)             (None, 64, 8, 8)      0           leakyrelu_41[0][0]               
+____________________________________________________________________________________________________
+convolution2d_42 (Convolution2D) (None, 128, 4, 4)     73856       dropout_17[0][0]                 
+____________________________________________________________________________________________________
+leakyrelu_42 (LeakyReLU)         (None, 128, 4, 4)     0           convolution2d_42[0][0]           
+____________________________________________________________________________________________________
+dropout_18 (Dropout)             (None, 128, 4, 4)     0           leakyrelu_42[0][0]               
+____________________________________________________________________________________________________
+convolution2d_43 (Convolution2D) (None, 256, 2, 2)     295168      dropout_18[0][0]                 
+____________________________________________________________________________________________________
+leakyrelu_43 (LeakyReLU)         (None, 256, 2, 2)     0           convolution2d_43[0][0]           
+____________________________________________________________________________________________________
+dropout_19 (Dropout)             (None, 256, 2, 2)     0           leakyrelu_43[0][0]               
+____________________________________________________________________________________________________
+flatten_4 (Flatten)              (None, 1024)          0           dropout_19[0][0]                 
+____________________________________________________________________________________________________
+dense_7 (Dense)                  (None, 1024)          1049600     flatten_4[0][0]                  
+____________________________________________________________________________________________________
+leakyrelu_44 (LeakyReLU)         (None, 1024)          0           dense_7[0][0]                    
+____________________________________________________________________________________________________
+dropout_20 (Dropout)             (None, 1024)          0           leakyrelu_44[0][0]               
+____________________________________________________________________________________________________
+dense_8 (Dense)                  (None, 1)             1025        dropout_20[0][0]                 
+====================================================================================================
+Total params: 1438753
+____________________________________________________________________________________________________
+('Epoch', 1, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.5089', 'Generator acc 0.0441', 'for batch', 0)
+('Generator loss 0.3042', 'Generator acc 0.0549', 'for batch', 1)
+('Generator loss 0.2047', 'Generator acc 0.0510', 'for batch', 2)
+('Generator loss 0.1508', 'Generator acc 0.0494', 'for batch', 3)
+('Generator loss 0.1168', 'Generator acc 0.0422', 'for batch', 4)
+('Generator loss 0.0915', 'Generator acc 0.0430', 'for batch', 5)
+('Generator loss 0.0739', 'Generator acc 0.0453', 'for batch', 6)
+('Generator loss 0.0671', 'Generator acc 0.0502', 'for batch', 7)
+('Generator loss 0.0537', 'Generator acc 0.0541', 'for batch', 8)
+('Generator loss 0.0478', 'Generator acc 0.0424', 'for batch', 9)
+('Generator loss 0.0440', 'Generator acc 0.0393', 'for batch', 10)
+('Generator loss 0.0330', 'Generator acc 0.0502', 'for batch', 11)
+('Generator loss 0.0289', 'Generator acc 0.0584', 'for batch', 12)
+('Generator loss 0.0224', 'Generator acc 0.0455', 'for batch', 13)
+('Generator loss 0.0194', 'Generator acc 0.0482', 'for batch', 14)
+('Generator loss 0.0160', 'Generator acc 0.0568', 'for batch', 15)
+('Generator loss 0.0143', 'Generator acc 0.0540', 'for batch', 16)
+('Generator loss 0.0127', 'Generator acc 0.0469', 'for batch', 17)
+('Generator loss 0.0095', 'Generator acc 0.0494', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:38.337928')
+----------------------------------
+('Epoch', 2, 'of', 50)
+('Number of batches', 19)
+('Generator loss 0.0073', 'Generator acc 0.0523', 'for batch', 0)
+('Generator loss 0.0051', 'Generator acc 0.0523', 'for batch', 1)
+('Generator loss 0.0038', 'Generator acc 0.0490', 'for batch', 2)
+('Generator loss 0.0038', 'Generator acc 0.0522', 'for batch', 3)
+('Generator loss 0.0041', 'Generator acc 0.0548', 'for batch', 4)
+('Generator loss 0.0035', 'Generator acc 0.0535', 'for batch', 5)
+('Generator loss 0.0030', 'Generator acc 0.0601', 'for batch', 6)
+('Generator loss 0.0033', 'Generator acc 0.0599', 'for batch', 7)
+('Generator loss 0.0032', 'Generator acc 0.0660', 'for batch', 8)
+('Generator loss 0.0035', 'Generator acc 0.0643', 'for batch', 9)
+('Generator loss 0.0039', 'Generator acc 0.0628', 'for batch', 10)
+('Generator loss 0.0037', 'Generator acc 0.0600', 'for batch', 11)
+('Generator loss 0.0037', 'Generator acc 0.0630', 'for batch', 12)
+('Generator loss 0.0038', 'Generator acc 0.0681', 'for batch', 13)
+('Generator loss 0.0033', 'Generator acc 0.0671', 'for batch', 14)
+('Generator loss 0.0036', 'Generator acc 0.0633', 'for batch', 15)
+('Generator loss 0.0034', 'Generator acc 0.0707', 'for batch', 16)
+('Generator loss 0.0035', 'Generator acc 0.0658', 'for batch', 17)
+('Generator loss 0.0032', 'Generator acc 0.0655', 'for batch', 18)
+Saving weights...
+Saving sample images...
+('Elapsed time in epoch = ', '0:00:26.598696')
+----------------------------------
+('Epoch', 3, 'of', 50)
+('Number of batches', 19)
+('Generat
