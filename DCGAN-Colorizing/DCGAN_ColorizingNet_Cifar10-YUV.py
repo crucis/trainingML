@@ -110,9 +110,9 @@ def yuv2rgb(yuv):
 #	rgb[:,:,2] = yuv[...,0]+2.03211*yuv[...,1]+0*yuv[...,2]
 
 	# Digital transformation BT871
-	rgb[:,:,0] = yuv[...,0]+1.402*(yuv[...,2]-128)
-	rgb[:,:,1] = yuv[...,0]-0.344136*(yuv[...,1]-128)-0.714136*(yuv[...,2]-128)
-	rgb[:,:,2] = yuv[...,0]+1.772*(yuv[...,1]-128)
+	rgb[:,:,0] = numpy.minimum(numpy.maximum(0,numpy.around(yuv[...,0]+1.402*(yuv[...,2]-128),decimals=0)),255)
+	rgb[:,:,1] = numpy.minimum(numpy.maximum(0,numpy.around(yuv[...,0]-0.344136*(yuv[...,1]-128)-0.714136*(yuv[...,2]-128),decimals=0)),255)
+	rgb[:,:,2] = numpy.minimum(numpy.maximum(0,numpy.around(yuv[...,0]+1.772*(yuv[...,1]-128),decimals=0)),255)
 	print("rgb.max=",numpy.amax(rgb),"rgb.min=",numpy.amin(rgb))
 	return rgb.transpose(2,0,1)
 def converterRGB(a,b):
