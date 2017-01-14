@@ -90,9 +90,9 @@ def rgb2yuv(rgb):
 #	yuv[:,:,2] = 128 + (112.439/256)*rgb[...,0]-(94.154/256)*rgb[...1]-(18.285/256)*rgb[...,2]
 
 	# Digital transformation using data range [0,255] BT 871
-	yuv[:,:,0] = 0 + 0.299*rgb[...,0]+0.587*rgb[...,1]+0.114*rgb[...,2]
-	yuv[:,:,1] = 128 - 0.168736*rgb[...,0]-0.331264*rgb[...,1]+0.5*rgb[...,2]
-	yuv[:,:,2] = 128 + 0.5*rgb[...,0]-0.418688*rgb[...,1]-0.081312*rgb[...,2]
+	yuv[:,:,0] = numpy.minimum(numpy.maximum(0,numpy.around(0 + 0.299*rgb[...,0]+0.587*rgb[...,1]+0.114*rgb[...,2])),255)
+	yuv[:,:,1] = numpy.minimum(numpy.maximum(0,numpy.around(128 - 0.168736*rgb[...,0]-0.331264*rgb[...,1]+0.5*rgb[...,2])),255)
+	yuv[:,:,2] = numpy.minimum(numpy.maximum(0,numpy.around(128 + 0.5*rgb[...,0]-0.418688*rgb[...,1]-0.081312*rgb[...,2])),255)
 
 #	print("yuv.max=",numpy.amax(yuv),"yuv.min=",numpy.amin(yuv))
 	return yuv.transpose(2,0,1)
@@ -102,20 +102,25 @@ def converterYUV(a,b):
 		h = b[i].transpose(1,2,0)
 		a[i] = rgb2yuv(h)
 
+
 def yuv2rgb(yuv):
 	rgb = numpy.zeros(yuv.shape)
+	yuv=yuv*255
+#	print("yuv.shape=",yuv.shape)
+#	print("yuv.max=",numpy.amax(yuv),"yuv.min=",numpy.amin(yuv))
 	# Analog transformation
 #	rgb[:,:,0] = yuv[...,0]+0*yuv[...,1]+1.13983*yuv[...,2]
 #	rgb[:,:,1] = yuv[...,0]-0.39465*yuv[...,1]-0.58060*yuv[...,2]
 #	rgb[:,:,2] = yuv[...,0]+2.03211*yuv[...,1]+0*yuv[...,2]
 
 	# Digital transformation BT871
-	rgb[:,:,0] = yuv[...,0]+1.402*(yuv[...,2]-128)
-	rgb[:,:,1] = yuv[...,0]-0.344136*(yuv[...,1]-128)-0.714136*(yuv[...,2]-128)
-	rgb[:,:,2] = yuv[...,0]+1.772*(yuv[...,1]-128)
-
+	rgb[:,:,0] = numpy.minimum(numpy.maximum(0,numpy.around(yuv[...,0]+1.402*(yuv[...,2]-128))),255)
+	rgb[:,:,1] = numpy.minimum(numpy.maximum(0,numpy.around(yuv[...,0]-0.344136*(yuv[...,1]-128)-0.714136*(yuv[...,2]-128))),255)
+	rgb[:,:,2] = numpy.minimum(numpy.maximum(0,numpy.around(yuv[...,0]+1.772*(yuv[...,1]-128))),255)
+#	print("rgb.max=",numpy.amax(rgb),"rgb.min=",numpy.amin(rgb))
 	return rgb.transpose(2,0,1)
 def converterRGB(a,b):
+#	print("b.shape=",b.shape)
 	for i in range(0,b.shape[0]):
 		a[i] = yuv2rgb(b[i].transpose(1,2,0))
 
