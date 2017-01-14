@@ -180,10 +180,10 @@ def save3images(inp,out,original,folder):
 
 		ax1.imshow(inp[n,0,:,:],cmap='gray')
 		ax1.set_title('Input_%s'%i)
-		ax2.imshow(out[n])#.transpose(1,2,0))
+		ax2.imshow(out[n].transpose(1,2,0))
 		ax2.set_title('Output_%s'%i)
 
-		ax3.imshow(original[n])#.transpose(1,2,0))
+		ax3.imshow(original[n].transpose(1,2,0))
 		ax3.set_title('Original_%s'%i)
 
 		titlestr = 'Epochs='+str(epoch)+' BATCH_SIZE='+str(BATCH_SIZE)
