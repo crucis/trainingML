@@ -104,6 +104,9 @@ def converterYUV(a,b):
 
 def yuv2rgb(yuv):
 	rgb = numpy.zeros(yuv.shape)
+	yuv=yuv*255
+#	print("yuv.shape=",yuv.shape)
+#	print("yuv.max=",numpy.amax(yuv),"yuv.min=",numpy.amin(yuv))
 	# Analog transformation
 #	rgb[:,:,0] = yuv[...,0]+0*yuv[...,1]+1.13983*yuv[...,2]
 #	rgb[:,:,1] = yuv[...,0]-0.39465*yuv[...,1]-0.58060*yuv[...,2]
@@ -116,6 +119,7 @@ def yuv2rgb(yuv):
 #	print("rgb.max=",numpy.amax(rgb),"rgb.min=",numpy.amin(rgb))
 	return rgb.transpose(2,0,1)
 def converterRGB(a,b):
+#	print("b.shape=",b.shape)
 	for i in range(0,b.shape[0]):
 		a[i] = yuv2rgb(b[i].transpose(1,2,0))
 
