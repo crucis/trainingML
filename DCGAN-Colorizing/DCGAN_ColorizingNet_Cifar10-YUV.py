@@ -48,7 +48,7 @@ cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','hor
 #chosen_Class = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'] # Each chosen class from cifar10_Classes is a loop, if 'all' chosen, than it will run the entire cifar10 >>NOT IMPLEMENTED
 
 # Model Options
-folder = "Test21"
+folder = "Test24"
 outDire = 'results/'+folder
 
 d_predict_fake = 0
@@ -314,7 +314,7 @@ def generator_containing_discriminator(generator,discriminator):
 	model.add(discriminator)
 	return model
 
-for i in range(10,len(cifar10_Classes)):
+for i in range(0,len(cifar10_Classes)):
 	chosen_Class = cifar10_Classes[i]
 	outDir = outDire+'/'+str(chosen_Class)
 	# Create folder for tests
@@ -381,7 +381,7 @@ for i in range(10,len(cifar10_Classes)):
 	generator = generator_model()
 	# LOADING GENERATOR FROM TEST8
 	#generator.load_weights("results/PreTrainedWeights1/"+chosen_Class+"/generator_weights")
-	#generator.load_weights("results/Test17/"+chosen_Class+"/generator_weights")
+	generator.load_weights("results/Test23/"+chosen_Class+"/generator_weights")
 
 	discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
 	# Optimizer

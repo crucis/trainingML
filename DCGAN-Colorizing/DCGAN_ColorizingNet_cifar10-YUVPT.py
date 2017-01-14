@@ -314,7 +314,7 @@ def generator_containing_discriminator(generator,discriminator):
 	model.add(discriminator)
 	return model
 
-for i in range(10,len(cifar10_Classes)):
+for i in range(0, len(cifar10_Classes)):
 	chosen_Class = cifar10_Classes[i]
 	outDir = outDire+'/'+str(chosen_Class)
 	# Create folder for tests
@@ -387,7 +387,7 @@ for i in range(10,len(cifar10_Classes)):
 	# Optimizer
 	adam=Adam(lr=0.0002, beta_1=0.5, beta_2=0.999, epsilon=1e-08)
 	# Compile generator
-	generator.compile(loss='mean_squared_error',optimizer='adam')
+	generator.compile(loss='mean_squared_error',optimizer='adam',metrics=['accuracy'])
 	discriminator_on_generator.compile(loss='binary_crossentropy',optimizer=adam, metrics=['accuracy'])
         discriminator_on_generator.summary()
 	discriminator.trainable = True
@@ -420,46 +420,46 @@ for i in range(10,len(cifar10_Classes)):
 			generated_images = generator.predict(BW_image_batch)
 
 			# Creating inputs for train_on_batch
-			M = numpy.concatenate((image_batch,generated_images))
-			z = [1]*image_batch.shape[0]+[0]*generated_images.shape[0]
-			# Shuffling M and z
-			perm = numpy.random.permutation(len(z))
-			M = M[perm]
-			z = numpy.array(z)
-			z = z[perm]
+#			M = numpy.concatenate((image_batch,generated_images))
+#			z = [1]*image_batch.shape[0]+[0]*generated_images.shape[0]
+#			# Shuffling M and z
+#			perm = numpy.random.permutation(len(z))
+#			M = M[perm]
+##			z = numpy.array(z)
+#			z = z[perm]
 
 			#print("Training discriminator...")
-	        # Does not train discriminator if it is close to overfitting
-			if (numpy.mean(d_predict_fake) > 0.50) or (numpy.mean(d_predict_real) < 0.5):
-				discriminator.trainable = True
-			elif (d_acc > 0.65) :
-				discriminator.trainable = False
-				l+=1
-			else:
-				discriminator.trainable = True
+#	        # Does not train discriminator if it is close to overfitting
+#			if (numpy.mean(d_predict_fake) > 0.50) or (numpy.mean(d_predict_real) < 0.5):
+#				discriminator.trainable = True
+#			elif (d_acc > 0.65) :
+#				discriminator.trainable = False
+#				l+=1
+#			else:
+#				discriminator.trainable = True
 		#	[d_loss, d_acc] = discriminator.train_on_batch(M,z)
 
 
 			for j in range(1):
 				#print("Training generator...")
 			#	[g_loss,g_acc] = discriminator_on_generator.train_on_batch(BW_image_batch,[1]*BW_image_batch.shape[0])
-				print("Generator loss %.4f"%gAlone_loss, "Generator acc %.4f"%gAlone_acc)
+				print("Generator loss %.4f"%gAlone_loss, "Generator acc %.4f"%gAlone_acc,"for batch",index)
 			#	print("GAN loss %.4f "%g_loss, "GAN acc %.4f"%g_acc, "Discriminator loss %.4f"%d_loss,"Discriminator accuracy %.4f"%d_acc, "Total loss: %.4f"%(g_loss+d_loss),"for batch",index)
 				#print("GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss,"Discriminator accuracy %.4f"%d_acc, "Total loss: %.4f"%(g_loss+d_loss),"for batch",index)
 	            #print("Generator loss %.4f"%gAlone_loss,"GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss+gAlone_loss),"For batch",index)
 		# Test if discriminator is working
-		d_predict_real = discriminator.predict(F_test)
+#		d_predict_real = discriminator.predict(F_test)
 		#print(len(d_predict_real))
-		print("DISCRIMINATOR_Imagem REAL=",numpy.mean(d_predict_real))
-		g_predict_fake = generator.predict(G_test)
-		d_predict_fake = discriminator.predict(g_predict_fake)
-		print("DISCRIMINATOR_Imagem FAKE=",numpy.mean(d_predict_fake))
+#		print("DISCRIMINATOR_Imagem REAL=",numpy.mean(d_predict_real))
+#		g_predict_fake = generator.predict(G_test)
+#		d_predict_fake = discriminator.predict(g_predict_fake)
+#		print("DISCRIMINATOR_Imagem FAKE=",numpy.mean(d_predict_fake))
 	#	print("GAN_Imagem FAKE=",numpy.mean(discriminator_on_generator.predict(G_test)))
-		print("Discriminator trained",index-l+1,"times of",index+1,"batchs")
+#		print("Discriminator trained",index-l+1,"times of",index+1,"batchs")
 
 		print("Saving weights...")
 		generator.save_weights(outDir+'/generator_weights',True)
-		discriminator.save_weights(outDir+'/discriminator_weights',True)
+#		discriminator.save_weights(outDir+'/discriminator_weights',True)
 		print("Saving sample images...")
 		save3images(BW_image_batch,generated_images,image_batch,epoch+1)
 #		print("Storing to histogram values")
@@ -475,21 +475,21 @@ for i in range(10,len(cifar10_Classes)):
 	#print('originalImage=',F.shape)
 	print('End of training')
 	print('Saving histograms')
-	stored_g_predict = generator.predict(G)
+#	stored_g_predict = generator.predict(G)
 #	plotHistogram(originalImage=F,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
 	print("----------------------------------")
 
 	print('Total samples = ', G.shape[0], ' Batch size =', BATCH_SIZE, ' Epochs = ', EPOCH)
-	print("Generator loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss))
-	print("----------------------------------")
-	print("---DISCRIMINATOR---")
-	print(discriminator.summary())
+#	print("Generator loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss))
+#	print("----------------------------------")
+#	print("---DISCRIMINATOR---")
+#	print(discriminator.summary())
 	print("----------------------------------")
 	print("---GENERATOR---")
 	print(generator.summary())
-	print("----------------------------------")
-	print("---GAN---")
-	print(discriminator_on_generator.summary())
+#	print("----------------------------------")
+#	print("---GAN---")
+#	print(discriminator_on_generator.summary())
 	#print("----------------------------------")
 
 	# eof
