@@ -3,6 +3,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy
 import math
+from scipy import misc as sc
 
 def rgb2gray(rgb):
 	return numpy.dot(rgb[...,:3], [0.299, 0.587, 0.114])
@@ -88,3 +89,5 @@ def save3images(inp,out,original,folder):
 
 
 outDir='testeYUV'
+im = sc.imread('results/Test8/samples/epoch49/sample_0.png')
+save3images(im(:,:,0).transpose(2,0,1),yuv2rgb(rgb2yuv(im.transpose(2,0,1))),im.transpose(2,0,1))
