@@ -173,7 +173,7 @@ def save3images(inp,out,original,folder):
 	converterRGB(original,original*255)
 	print("original.shape=",original.shape,"original.max",numpy.amax(original),"original.min=",numpy.amin(original))
 
-	for i in range(int(math.around(original.shape[0]*0.02))):
+	for i in range(int(numpy.around(original.shape[0]*0.02))):
 		_,((ax1,ax2),(ax3,_)) = plt.subplots(2,2,sharey='row',sharex='col')
 
 		n = math.floor(uniform(0,original.shape[0]))
