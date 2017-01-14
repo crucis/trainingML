@@ -481,6 +481,7 @@ for i in range(0,len(cifar10_Classes)):
 		generator.save_weights(outDir+'/generator_weights',True)
 		discriminator.save_weights(outDir+'/discriminator_weights',True)
 		print("Saving sample images...")
+		print("generated_images.shape="generated_images.shape,"image_batch.shape=",image_batch.shape)
 		save3images(BW_image_batch,generated_images*255,image_batch*255,epoch+1)
 #		print("Storing to histogram values")
 
