@@ -303,29 +303,29 @@ def generator_model():
 # DISCRIMINATOR
 def discriminator_model():
 	model = Sequential()
-	model.add(Convolution2D(16,3,3,border_mode='same',init='he_normal',input_shape=(2,32,32),subsample=(2,2))) #16x16
+	model.add(Convolution2D(32,3,3,border_mode='same',init='he_normal',input_shape=(2,32,32),subsample=(2,2))) #16x16
 	model.add(LeakyReLU(alpha=.2))
 	#model.add(MaxPooling2D(pool_size=(2,2)))
 	model.add(Dropout(0.2))
 
-	model.add(Convolution2D(32,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #8x8
+	model.add(Convolution2D(64,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #8x8
 	model.add(LeakyReLU(alpha=.2))
 	#model.add(MaxPooling2D(pool_size=(2,2)))
 	model.add(Dropout(0.2))
 
-	model.add(Convolution2D(64,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #4x4
+	model.add(Convolution2D(128,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #4x4
 	model.add(LeakyReLU(alpha=.2))
 	#model.add(MaxPooling2D(pool_size=(2,2)))
 	model.add(Dropout(0.2))
 
-	model.add(Convolution2D(128,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #2x2
+	model.add(Convolution2D(256,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #2x2
 	model.add(LeakyReLU(alpha=.2))
 	#model.add(MaxPooling2D(pool_size=(2,2)))
 	model.add(Dropout(0.2))
 
 	model.add(Flatten())
 	#model.add(Dense(128,init='he_normal'))
-	model.add(Dense(256,init='he_normal'))
+	model.add(Dense(128,init='he_normal'))
 	model.add(LeakyReLU(alpha=.2))
 	model.add(Dropout(0.2))
 
