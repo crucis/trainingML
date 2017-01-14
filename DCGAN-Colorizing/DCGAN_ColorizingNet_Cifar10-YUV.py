@@ -166,9 +166,9 @@ class Logger(object):
 		pass
 
 def save3images(inp,out,original,folder):
-	out = numpy.concatenate((inp, out), axis=1)
+	out = numpy.concatenate((out, inp), axis=1)
 	converterRGB(out,out*255)
-	original = numpy.concatenate((inp,original),axis=1)
+	original = numpy.concatenate((original,inp),axis=1)
 	converterRGB(original,original*255)
 	for i in range(int(math.floor(original.shape[0]*0.02))):
 		_,((ax1,ax2),(ax3,_)) = plt.subplots(2,2,sharey='row',sharex='col')
