@@ -94,7 +94,7 @@ def rgb2yuv(rgb):
 	yuv[:,:,1] = 128 - 0.168736*rgb[...,0]-0.331264*rgb[...,1]+0.5*rgb[...,2]
 	yuv[:,:,2] = 128 + 0.5*rgb[...,0]-0.418688*rgb[...,1]-0.081312*rgb[...,2]
 
-	print("yuv.max=",numpy.amax(yuv),"yuv.min=",numpy.amin(yuv))
+#	print("yuv.max=",numpy.amax(yuv),"yuv.min=",numpy.amin(yuv))
 	return yuv.transpose(2,0,1)
 #	return numpy.dot(rgb[:,:,0],[[0.299,0.587,0.114],[-0.14713,-0.28886,0.436],[0.615,-0.51499,-0.10001]])
 def converterYUV(a,b):
@@ -264,7 +264,7 @@ def generator_model():
         model.add(BatchNormalization(mode=2,axis=1))
         model.add(LeakyReLU(0.2))
 	#model.add(BatchNormalization())
-	
+
 #	model.add(Convolution2D(512,3,3,border_mode='same',init='he_normal'))
 #	model.add(BatchNormalization(mode=2,axis=1))
 #	model.add(LeakyReLU(0.2))

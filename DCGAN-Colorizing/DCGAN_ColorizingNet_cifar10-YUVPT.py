@@ -80,9 +80,21 @@ def converter(a,b):
 
 def rgb2yuv(rgb):
 	yuv = numpy.zeros(rgb.shape)
-	yuv[:,:,0] = 0.299*rgb[...,0]+0.587*rgb[...,1]+0.114*rgb[...,2]
-	yuv[:,:,1] = -0.14713*rgb[...,0]-0.28886*rgb[...,1]+0.436*rgb[...,2]
-	yuv[:,:,2] = 0.615*rgb[...,0]-0.51499*rgb[...,1]-0.10001*rgb[...,2]
+	# Analog transformation
+#	yuv[:,:,0] = 0.299*rgb[...,0]+0.587*rgb[...,1]+0.114*rgb[...,2]
+#	yuv[:,:,1] = -0.14713*rgb[...,0]-0.28886*rgb[...,1]+0.436*rgb[...,2]
+#	yuv[:,:,2] = 0.615*rgb[...,0]-0.51499*rgb[...,1]-0.10001*rgb[...,2]
+	# Digital transformation using data range [0,255] BT 601
+#	yuv[:,:,0] = 16 + (65.738/256)*rgb[...,0] + (129.057/256)*rgb[...,1]+(25.064/256)*rgb[...,2]
+#	yuv[:,:,1] = 128 - (37.945/256)*rgb[...,0]-(74.494/256)*rgb[...,1]+(112.439/256)*rgb[...,2]
+#	yuv[:,:,2] = 128 + (112.439/256)*rgb[...,0]-(94.154/256)*rgb[...1]-(18.285/256)*rgb[...,2]
+
+	# Digital transformation using data range [0,255] BT 871
+	yuv[:,:,0] = 0 + 0.299*rgb[...,0]+0.587*rgb[...,1]+0.114*rgb[...,2]
+	yuv[:,:,1] = 128 - 0.168736*rgb[...,0]-0.331264*rgb[...,1]+0.5*rgb[...,2]
+	yuv[:,:,2] = 128 + 0.5*rgb[...,0]-0.418688*rgb[...,1]-0.081312*rgb[...,2]
+
+#	print("yuv.max=",numpy.amax(yuv),"yuv.min=",numpy.amin(yuv))
 	return yuv.transpose(2,0,1)
 #	return numpy.dot(rgb[:,:,0],[[0.299,0.587,0.114],[-0.14713,-0.28886,0.436],[0.615,-0.51499,-0.10001]])
 def converterYUV(a,b):
@@ -92,9 +104,16 @@ def converterYUV(a,b):
 
 def yuv2rgb(yuv):
 	rgb = numpy.zeros(yuv.shape)
-	rgb[:,:,0] = yuv[...,0]+0*yuv[...,1]+1.13983*yuv[...,2]
-	rgb[:,:,1] = yuv[...,0]-0.39465*yuv[...,1]-0.58060*yuv[...,2]
-	rgb[:,:,2] = yuv[...,0]+2.03211*yuv[...,1]+0*yuv[...,2]
+	# Analog transformation
+#	rgb[:,:,0] = yuv[...,0]+0*yuv[...,1]+1.13983*yuv[...,2]
+#	rgb[:,:,1] = yuv[...,0]-0.39465*yuv[...,1]-0.58060*yuv[...,2]
+#	rgb[:,:,2] = yuv[...,0]+2.03211*yuv[...,1]+0*yuv[...,2]
+
+	# Digital transformation BT871
+	rgb[:,:,0] = yuv[...,0]+1.402*(yuv[...,2]-128)
+	rgb[:,:,1] = yuv[...,0]-0.344136*(yuv[...,1]-128)-0.714136*(yuv[...,2]-128)
+	rgb[:,:,2] = yuv[...,0]+1.772*(yuv[...,1]-128)
+
 	return rgb.transpose(2,0,1)
 def converterRGB(a,b):
 	for i in range(0,b.shape[0]):
@@ -245,7 +264,7 @@ def generator_model():
         model.add(BatchNormalization(mode=2,axis=1))
         model.add(LeakyReLU(0.2))
 	#model.add(BatchNormalization())
-	
+
 #	model.add(Convolution2D(512,3,3,border_mode='same',init='he_normal'))
 #	model.add(BatchNormalization(mode=2,axis=1))
 #	model.add(LeakyReLU(0.2))
