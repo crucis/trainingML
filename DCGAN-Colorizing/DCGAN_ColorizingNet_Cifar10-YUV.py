@@ -104,9 +104,9 @@ def converterYUV(a,b):
 
 def yuv2rgb(yuv):
 	rgb = numpy.zeros(yuv.shape)
-	yuv=yuv*255
-	print("yuv.shape=",yuv.shape)
-#	print("yuv.max=",numpy.amax(yuv),"yuv.min=",numpy.amin(yuv))
+#	yuv*=255
+#	print("yuv.shape=",yuv.shape)
+	print("yuv.max=",numpy.amax(yuv),"yuv.min=",numpy.amin(yuv))
 	# Analog transformation
 #	rgb[:,:,0] = yuv[...,0]+0*yuv[...,1]+1.13983*yuv[...,2]
 #	rgb[:,:,1] = yuv[...,0]-0.39465*yuv[...,1]-0.58060*yuv[...,2]
@@ -116,7 +116,7 @@ def yuv2rgb(yuv):
 	rgb[:,:,0] = numpy.minimum(numpy.maximum(0,numpy.around(yuv[...,0]+1.402*(yuv[...,2]-128))),255)
 	rgb[:,:,1] = numpy.minimum(numpy.maximum(0,numpy.around(yuv[...,0]-0.344136*(yuv[...,1]-128)-0.714136*(yuv[...,2]-128))),255)
 	rgb[:,:,2] = numpy.minimum(numpy.maximum(0,numpy.around(yuv[...,0]+1.772*(yuv[...,1]-128))),255)
-#	print("rgb.max=",numpy.amax(rgb),"rgb.min=",numpy.amin(rgb))
+	print("rgb.max=",numpy.amax(rgb),"rgb.min=",numpy.amin(rgb))
 	return rgb.transpose(2,0,1)
 def converterRGB(a,b):
 #	print("b.shape=",b.shape)
@@ -177,7 +177,6 @@ def save3images(inp,out,original,folder):
 
 		ax1.imshow(inp[n,0,:,:],cmap='gray')
 		ax1.set_title('Input_%s'%i)
-		print("out.shape=",out.shape)
 		ax2.imshow(out[n].transpose(1,2,0))
 		ax2.set_title('Output_%s'%i)
 
@@ -482,7 +481,7 @@ for i in range(0,len(cifar10_Classes)):
 		generator.save_weights(outDir+'/generator_weights',True)
 		discriminator.save_weights(outDir+'/discriminator_weights',True)
 		print("Saving sample images...")
-		save3images(BW_image_batch,generated_images,image_batch,epoch+1)
+		save3images(BW_image_batch,generated_images*255,image_batch*255,epoch+1)
 #		print("Storing to histogram values")
 
 
