@@ -464,7 +464,8 @@ for i in range(10,len(cifar10_Classes)):
 			else:
 				discriminator.trainable = True
 			[d_loss, d_acc] = discriminator.train_on_batch(M,z)
-
+			if d_acc < 0.4:
+				[d_loss,d_acc] = discriminator.train_on_batch(M,z)
 
 			for j in range(1):
 				#print("Training generator...")
