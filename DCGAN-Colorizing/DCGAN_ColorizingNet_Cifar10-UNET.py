@@ -415,11 +415,12 @@ for i in range(10,len(cifar10_Classes)):
 	adam=Adam(lr=0.0002, beta_1=0.5, beta_2=0.999, epsilon=1e-08)
 	# Compile generator
 	generator.compile(loss='mean_squared_error',optimizer='adam')
+	generator.summary()
 	discriminator_on_generator.compile(loss='binary_crossentropy',optimizer=adam, metrics=['accuracy'])
-        discriminator_on_generator.summary()
+	discriminator_on_generator.summary()
 	discriminator.trainable = True
 	discriminator.compile(loss='binary_crossentropy',optimizer=adam, metrics=['accuracy'])
-        discriminator.summary()
+	discriminator.summary()
 
 	# Initialize d_loss
 	d_predict_real = 0
