@@ -49,7 +49,7 @@ cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','hor
 #chosen_Class = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'] # Each chosen class from cifar10_Classes is a loop, if 'all' chosen, than it will run the entire cifar10 >>NOT IMPLEMENTED
 
 # Model Options
-folder = "Test25"
+folder = "Test28"
 outDire = 'results/'+folder
 
 d_predict_fake = 0
@@ -306,12 +306,12 @@ def discriminator_model():
 	model.add(Convolution2D(32,3,3,border_mode='same',init='he_normal',input_shape=(2,32,32),subsample=(2,2))) #16x16
 	model.add(LeakyReLU(alpha=.2))
 	#model.add(MaxPooling2D(pool_size=(2,2)))
-	model.add(Dropout(0.2))
+#	model.add(Dropout(0.2))
 
 	model.add(Convolution2D(64,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #8x8
 	model.add(LeakyReLU(alpha=.2))
 	#model.add(MaxPooling2D(pool_size=(2,2)))
-	model.add(Dropout(0.2))
+#	model.add(Dropout(0.2))
 
 	model.add(Convolution2D(128,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #4x4
 	model.add(LeakyReLU(alpha=.2))
@@ -325,7 +325,7 @@ def discriminator_model():
 
 	model.add(Flatten())
 	#model.add(Dense(128,init='he_normal'))
-	model.add(Dense(128,init='he_normal'))
+	model.add(Dense(512,init='he_normal'))
 	model.add(LeakyReLU(alpha=.2))
 	model.add(Dropout(0.2))
 
@@ -466,7 +466,13 @@ for i in range(7,len(cifar10_Classes)):
 			else:
 				discriminator.trainable = True
 			[d_loss, d_acc] = discriminator.train_on_batch(M,z)
-
+			if d_acc < 0.48:
+				o=0;
+				while d_acc < 0.48:
+					[d_loss,d_acc] = discriminator.train_on_batch(M,z)
+					o+=1
+					if o > 30:
+						break
 
 			for j in range(1):
 				#print("Training generator...")
