@@ -1,5 +1,5 @@
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten, Lambda
+from keras.layers import Input, merge, Dense, Dropout, Flatten, Lambda
 from keras.layers.advanced_activations import LeakyReLU
 from keras.optimizers import Adam
 from keras.utils import np_utils
