@@ -323,7 +323,7 @@ def discriminator_model():
 
 	model.add(Flatten())
 	#model.add(Dense(128,init='he_normal'))
-	model.add(Dense(128,init='he_normal'))
+	model.add(Dense(512,init='he_normal'))
 	model.add(LeakyReLU(alpha=.2))
 	model.add(Dropout(0.2))
 
