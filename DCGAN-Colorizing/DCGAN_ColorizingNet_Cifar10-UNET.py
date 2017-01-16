@@ -492,7 +492,7 @@ for i in range(10,len(cifar10_Classes)):
 					if o > 30:
 						break
 			#
-			print('d_predict.shape=',discriminator.predict(image_batch))
+			print('d_predict.shape=',discriminator.predict(image_batch).shape)
 			#
 			for j in range(1):
 				#print("Training generator...")
