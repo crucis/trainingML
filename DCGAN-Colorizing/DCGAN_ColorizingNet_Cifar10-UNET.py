@@ -41,7 +41,7 @@ numpy.random.seed(SEED)
 
 # Training Options
 BATCH_SIZE = 256
-EPOCH = 50
+EPOCH = 200
 nImages = pow(2,15)
 
 #### CIFAR10 classifications
