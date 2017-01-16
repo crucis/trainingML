@@ -259,11 +259,11 @@ generated_images = numpy.zeros((BATCH_SIZE,2,32,32))
 def generator_model():
 	inputs = Input((1,32,32))
 	#32x32
-	conv1 = Convolution2D(32, 3, 3, border_mode='same',init='he_normal', subsample=(2,2))(inputs)
+	conv1 = Convolution2D(128, 3, 3, border_mode='same',init='he_normal', subsample=(2,2))(inputs)
 	conv1 = BatchNormalization(mode=2,axis=1)(conv1)
 	conv1 = LeakyReLU(alpha=.2)(conv1)
 	#16x16
-	conv2 = Convolution2D(64, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv1)
+	conv2 = Convolution2D(128, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv1)
 	conv2 = BatchNormalization(mode=2,axis=1)(conv2)
 	conv2 = LeakyReLU(alpha=.2)(conv2)
 	#8x8
@@ -271,11 +271,11 @@ def generator_model():
 	conv3 = BatchNormalization(mode=2,axis=1)(conv3)
 	conv3 = LeakyReLU(alpha=.2)(conv3)
 	#4x4
-	conv4 = Convolution2D(256, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv3)
+	conv4 = Convolution2D(128, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv3)
 	conv4 = BatchNormalization(mode=2,axis=1)(conv4)
 	conv4 = LeakyReLU(alpha=.2)(conv4)
 	#2x2
-	conv5 = Convolution2D(512, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv4)
+	conv5 = Convolution2D(128, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv4)
 	conv5 = BatchNormalization(mode=2,axis=1)(conv5)
 	conv5 = LeakyReLU(alpha=.2)(conv5)
 	#1x1
