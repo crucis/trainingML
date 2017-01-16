@@ -496,7 +496,7 @@ for i in range(10,len(cifar10_Classes)):
 			#
 			for j in range(1):
 				#print("Training generator...")
-				[g_loss,g_acc] = discriminator_on_generator.train_on_batch(BW_image_batch,[1]*BW_image_batch.shape[0])
+				[g_loss,g_acc] = discriminator_on_generator.train_on_batch(BW_image_batch,numpy.array([1]*BW_image_batch.shape[0]))
 				print("GAN loss %.4f "%g_loss, "GAN acc %.4f"%g_acc, "Discriminator loss %.4f"%d_loss,"Discriminator accuracy %.4f"%d_acc, "Total loss: %.4f"%(g_loss+d_loss),"for batch",index)
 				#print("GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss,"Discriminator accuracy %.4f"%d_acc, "Total loss: %.4f"%(g_loss+d_loss),"for batch",index)
 	            #print("Generator loss %.4f"%gAlone_loss,"GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss+gAlone_loss),"For batch",index)
