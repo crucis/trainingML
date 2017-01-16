@@ -491,7 +491,9 @@ for i in range(10,len(cifar10_Classes)):
 					o+=1
 					if o > 30:
 						break
-
+			#
+			print('d_predict.shape=',discriminator.predict(image_batch))
+			#
 			for j in range(1):
 				#print("Training generator...")
 				[g_loss,g_acc] = discriminator_on_generator.train_on_batch(BW_image_batch,[1]*BW_image_batch.shape[0])
