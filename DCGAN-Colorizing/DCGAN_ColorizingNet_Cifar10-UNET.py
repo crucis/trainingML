@@ -6,6 +6,7 @@ from keras.utils import np_utils
 from keras.datasets import cifar10
 from keras.layers.normalization import BatchNormalization
 from keras.regularizers import l2
+from keras.utils.visualize_util import plot
 #from keras.regularizers import l2, l1
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, UpSampling2D, Deconvolution2D
 from keras import backend as K
@@ -279,7 +280,7 @@ def generator_model():
 	conv5 = BatchNormalization(mode=2,axis=1)(conv5)
 	conv5 = LeakyReLU(alpha=.2)(conv5)
 	#1x1
-	deconv0 = Deconvolution2D(512,3,3,border_mode='same',init='he_normal',subsample=(2,2),output_shape=(None,256,2,2))(conv5)
+	deconv0 = Deconvolution2D(512,3,3,border_mode='same',init='he_normal',subsample=(2,2),output_shape=(None,512,2,2))(conv5)
 	deconv0 = BatchNormalization(mode=2,axis=1)(deconv0)
 	deconv0 = Activation('relu')(deconv0)
 	deconv0 = Dropout(0.2)(deconv0)
@@ -412,6 +413,7 @@ def generator_containing_discriminator(generator,discriminator):
 	model.add(discriminator)
 	return model
 
+
 for i in range(10,len(cifar10_Classes)):
 	chosen_Class = cifar10_Classes[i]
 	outDir = outDire+'/'+str(chosen_Class)
@@ -475,13 +477,18 @@ for i in range(10,len(cifar10_Classes)):
 
 	#### Training
 	discriminator = discriminator_model()
+	plot(discriminator, to_file=outDir+'discriminator_model.png')
+
 #	discriminator.load_weights("results/PreTrainedWeights1/"+chosen_Class+"/discriminator_weights")
 	generator = generator_model()
+	plot(generator, to_file=outDir+'generator_model.png')
+
 	# LOADING GENERATOR FROM TEST8
 	#generator.load_weights("results/PreTrainedWeightsYUV/"+chosen_Class+"/generator_weights")
 #	generator.load_weights("results/Test23/"+chosen_Class+"/generator_weights")
 
 	discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
+	plot(discriminator_on_generator, to_file=outDir+'gan_model.png')
 	# Optimizer
 	adam=Adam(lr=0.0002, beta_1=0.5, beta_2=0.999, epsilon=1e-08)
 	# Compile generator
