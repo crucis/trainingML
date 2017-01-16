@@ -41,7 +41,7 @@ numpy.random.seed(SEED)
 
 # Training Options
 BATCH_SIZE = 256
-EPOCH = 200
+EPOCH = 121
 nImages = pow(2,15)
 
 #### CIFAR10 classifications
@@ -511,6 +511,7 @@ for i in range(10,len(cifar10_Classes)):
 			if d_acc < 0.48:
 				o=0;
 				while d_acc < 0.48:
+					discriminator.trainable = True
 					[d_loss,d_acc] = discriminator.train_on_batch(M,z)
 					o+=1
 					if o > 30:

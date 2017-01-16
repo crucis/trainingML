@@ -470,6 +470,7 @@ for i in range(7,len(cifar10_Classes)):
 			if d_acc < 0.48:
 				o=0;
 				while d_acc < 0.48:
+					discriminator.trainable = True
 					[d_loss,d_acc] = discriminator.train_on_batch(M,z)
 					o+=1
 					if o > 30:
