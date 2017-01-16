@@ -81,14 +81,6 @@ def rgb2yuv(rgb):
 	rgb = rgb.astype('float32')
 	yuv = numpy.zeros(rgb.shape)
 	yuv = yuv.astype('float32')
-	# Analog transformation
-#	yuv[:,:,0] = 0.299*rgb[...,0]+0.587*rgb[...,1]+0.114*rgb[...,2]
-#	yuv[:,:,1] = -0.14713*rgb[...,0]-0.28886*rgb[...,1]+0.436*rgb[...,2]
-#	yuv[:,:,2] = 0.615*rgb[...,0]-0.51499*rgb[...,1]-0.10001*rgb[...,2]
-	# Digital transformation using data range [0,255] BT 601
-#	yuv[:,:,0] = 16 + (65.738/256)*rgb[...,0] + (129.057/256)*rgb[...,1]+(25.064/256)*rgb[...,2]
-#	yuv[:,:,1] = 128 - (37.945/256)*rgb[...,0]-(74.494/256)*rgb[...,1]+(112.439/256)*rgb[...,2]
-#	yuv[:,:,2] = 128 + (112.439/256)*rgb[...,0]-(94.154/256)*rgb[...1]-(18.285/256)*rgb[...,2]
 
 	# Digital transformation using data range [0,255] BT 871
 	yuv[:,:,0] = numpy.minimum(numpy.maximum(0,numpy.around(0 + 0.299*rgb[...,0]+0.587*rgb[...,1]+0.114*rgb[...,2])),255)
@@ -107,13 +99,6 @@ def yuv2rgb(yuv):
 	yuv = yuv.astype('float32')
 	rgb = numpy.zeros(yuv.shape)
 	rgb = rgb.astype('float32')
-#	yuv*=255
-#	print("yuv.shape=",yuv.shape)
-#	print("yuv.max=",numpy.amax(yuv),"yuv.min=",numpy.amin(yuv))
-	# Analog transformation
-#	rgb[:,:,0] = yuv[...,0]+0*yuv[...,1]+1.13983*yuv[...,2]
-#	rgb[:,:,1] = yuv[...,0]-0.39465*yuv[...,1]-0.58060*yuv[...,2]
-#	rgb[:,:,2] = yuv[...,0]+2.03211*yuv[...,1]+0*yuv[...,2]
 
 	# Digital transformation BT871
 	rgb[:,:,0] = numpy.minimum(numpy.maximum(0,numpy.around(yuv[...,0]+1.402*(yuv[...,2]-128))),255)
