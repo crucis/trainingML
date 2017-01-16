@@ -287,7 +287,7 @@ def generator_model():
 
 	#1x1
 
-	deconv0 = Deconvolution2D(512,3,3,border_mode='same',init='he_normal',subsample=(2,2),output_shape=(512,2,2))(conv5)
+	deconv0 = Deconvolution2D(512,3,3,border_mode='same',init='he_normal',subsample=(2,2),output_shape=(None,512,2,2))(conv5)
 	deconv0 = BatchNormalization(mode=2,axis=1)(deconv0)
 	deconv0 = Activation('relu')(deconv0)
 	deconv0 = Dropout(0.2)(deconv0)
