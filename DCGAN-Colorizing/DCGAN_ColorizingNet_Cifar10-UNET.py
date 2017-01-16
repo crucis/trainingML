@@ -253,7 +253,7 @@ def plotHistogram(originalImage,fakeImage, nameClass,directory,folder=folder):
 ########################
 #PROGRAM
 ########################
-generated_images = np.zeros(BATCH_SIZE,2,32,32)
+generated_images = numpy.zeros(BATCH_SIZE,2,32,32)
 #### Models
 # GENERATOR
 def generator_model():
