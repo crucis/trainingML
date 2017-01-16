@@ -287,7 +287,7 @@ def generator_model():
 
 	#1x1
 
-	deconv0 = Deconvolution2D(512,3,3,border_mode='same',init='he_normal',subsample=(2,2),output_shape=(BATCH_SIZE,512,2,2))(conv5)
+	deconv0 = Deconvolution2D(256,3,3,border_mode='same',init='he_normal',subsample=(2,2),output_shape=(BATCH_SIZE,256,2,2))(conv5)
 	deconv0 = BatchNormalization(mode=2,axis=1)(deconv0)
 	deconv0 = Activation('relu')(deconv0)
 	deconv0 = Dropout(0.2)(deconv0)
@@ -295,7 +295,7 @@ def generator_model():
 	m1 = merge([deconv0,conv4],mode='concat',concat_axis=1)
 	# 2x2
 
-	deconv1 = Deconvolution2D(256,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(BATCH_SIZE,256,4,4))(deconv0)
+	deconv1 = Deconvolution2D(128,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(BATCH_SIZE,128,4,4))(deconv0)
 	deconv1 = BatchNormalization(mode=2,axis=1)(deconv1)
 	deconv1 = Activation('relu')(deconv1)
 	deconv1 = Dropout(0.2)(deconv1)
@@ -304,7 +304,7 @@ def generator_model():
 
 	m1 = merge([deconv1,conv3],mode='concat',concat_axis=1)
 
-	deconv2 = Deconvolution2D(128,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(BATCH_SIZE,128,8,8))(m1)
+	deconv2 = Deconvolution2D(64,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(BATCH_SIZE,64,8,8))(m1)
 	deconv2 = BatchNormalization(mode=2,axis=1)(deconv2)
 	deconv2 = Activation('relu')(deconv2)
 
@@ -312,7 +312,7 @@ def generator_model():
 
 	m2 = merge([deconv2,conv2],mode='concat',concat_axis=1)
 
-	deconv3 = Deconvolution2D(64,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(BATCH_SIZE,64,16,16))(m2)
+	deconv3 = Deconvolution2D(32,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(BATCH_SIZE,32,16,16))(m2)
 	deconv3 = BatchNormalization(mode=2,axis=1)(deconv3)
 	deconv3 = Activation('relu')(deconv3)
 
@@ -326,7 +326,7 @@ def generator_model():
 
 	# 32x32
 
-	m4 = merge([deconv4,inputs],mode='concat',concat_axis=1)
+#	m4 = merge([deconv4,inputs],mode='concat',concat_axis=1)
 
 	conv6 = Convolution2D(2, 3, 3, border_mode='same', init='he_normal')(m4)
 	conv6 = Lambda(lambda x: K.clip(x, 0.0, 1.0))(conv6)
