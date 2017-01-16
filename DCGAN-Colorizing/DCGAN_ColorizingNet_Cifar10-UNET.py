@@ -462,6 +462,7 @@ for i in range(10,len(cifar10_Classes)):
 			#gAlone_loss = generator.train_on_batch(BW_image_batch,image_batch)
 			#print("Generating images...")
 			generated_images = generator.predict(BW_image_batch)
+			print('generated_images.shape=',generated_images.shape)
 
 			# Creating inputs for train_on_batch
 			M = numpy.concatenate((image_batch,generated_images))
