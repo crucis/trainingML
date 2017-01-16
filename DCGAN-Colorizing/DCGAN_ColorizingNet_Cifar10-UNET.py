@@ -275,7 +275,7 @@ def generator_model():
 	conv4 = BatchNormalization(mode=2,axis=1)(conv4)
 	conv4 = LeakyReLU(alpha=.2)(conv4)
 	#2x2
-	conv5 = Convolution2D(512, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv4)
+	conv5 = Convolution2D(256, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv4)
 	conv5 = BatchNormalization(mode=2,axis=1)(conv5)
 	conv5 = LeakyReLU(alpha=.2)(conv5)
 	#1x1
