@@ -6,8 +6,6 @@ from keras.utils import np_utils
 from keras.datasets import cifar10
 from keras.layers.normalization import BatchNormalization
 from keras.regularizers import l2
-#from keras.utils.visualize_util import plot
-#from keras.regularizers import l2, l1
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, UpSampling2D, Deconvolution2D
 from keras import backend as K
 from random import uniform
@@ -19,7 +17,6 @@ import math
 import sys
 import time
 from datetime import timedelta
-#import subprocess
 
 
 
