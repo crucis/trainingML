@@ -278,33 +278,33 @@ def generator_model():
 	conv5 = BatchNormalization(mode=2,axis=1)(conv5)
 	conv5 = LeakyReLU(alpha=.2)(conv5)
 	#1x1
-	deconv0 = Deconvolution2D(256,3,3,border_mode='same',init='he_normal',subsample=(2,2),output_shape=(None,256,2,2))(conv5)
+	deconv0 = Deconvolution2D(256,3,3,border_mode='same',init='he_normal',subsample=(2,2),output_shape=(256,256,2,2))(conv5)
 	deconv0 = BatchNormalization(mode=2,axis=1)(deconv0)
 	deconv0 = Activation('relu')(deconv0)
 	deconv0 = Dropout(0.2)(deconv0)
 	# 2x2
 	m1 = merge([deconv0,conv4],mode='concat',concat_axis=1)
 
-	deconv1 = Deconvolution2D(128,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,128,4,4))(deconv0)
+	deconv1 = Deconvolution2D(128,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(256,128,4,4))(deconv0)
 	deconv1 = BatchNormalization(mode=2,axis=1)(deconv1)
 	deconv1 = Activation('relu')(deconv1)
 	deconv1 = Dropout(0.2)(deconv1)
 	# 4x4
 	m1 = merge([deconv1,conv3],mode='concat',concat_axis=1)
 
-	deconv2 = Deconvolution2D(64,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,64,8,8))(m1)
+	deconv2 = Deconvolution2D(64,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(256,64,8,8))(m1)
 	deconv2 = BatchNormalization(mode=2,axis=1)(deconv2)
 	deconv2 = Activation('relu')(deconv2)
 	# 8x8
 	m2 = merge([deconv2,conv2],mode='concat',concat_axis=1)
 
-	deconv3 = Deconvolution2D(32,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,32,16,16))(m2)
+	deconv3 = Deconvolution2D(32,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(256,32,16,16))(m2)
 	deconv3 = BatchNormalization(mode=2,axis=1)(deconv3)
 	deconv3 = Activation('relu')(deconv3)
 	# 16x16
 	m3 = merge([deconv3,conv1],mode='concat',concat_axis=1)
 
-	deconv4 = Deconvolution2D(32,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,32,32,32))(m3)
+	deconv4 = Deconvolution2D(32,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(256,32,32,32))(m3)
 	deconv4 = BatchNormalization(mode=2,axis=1)(deconv4)
 	deconv4 = Activation('relu')(deconv4)
 	# 32x32
