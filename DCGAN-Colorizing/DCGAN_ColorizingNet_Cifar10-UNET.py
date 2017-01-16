@@ -6,7 +6,7 @@ from keras.utils import np_utils
 from keras.datasets import cifar10
 from keras.layers.normalization import BatchNormalization
 from keras.regularizers import l2
-from keras.utils.visualize_util import plot
+#from keras.utils.visualize_util import plot
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, UpSampling2D, Deconvolution2D
 from keras import backend as K
 from random import uniform
@@ -17,6 +17,7 @@ import numpy
 import math
 import sys
 import time
+#import pydot
 from datetime import timedelta
 
 
@@ -440,18 +441,18 @@ for i in range(10,len(cifar10_Classes)):
 
 	#### Training
 	discriminator = discriminator_model()
-	plot(discriminator, to_file=outDir+'discriminator_model.png')
+#	plot(discriminator, to_file=outDir+'discriminator_model.png')
 
-	discriminator.load_weights("results/PreTrainedWeights1/"+chosen_Class+"/discriminator_weights")
+#	discriminator.load_weights("results/PreTrainedWeights1/"+chosen_Class+"/discriminator_weights")
 	generator = generator_model()
-	plot(generator, to_file=outDir+'generator_model.png')
+#	plot(generator, to_file=outDir+'generator_model.png')
 
 	# LOADING GENERATOR FROM TEST8
 	#generator.load_weights("results/PreTrainedWeightsYUV/"+chosen_Class+"/generator_weights")
 #	generator.load_weights("results/Test23/"+chosen_Class+"/generator_weights")
 
 	discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
-	plot(discriminator_on_generator, to_file=outDir+'gan_model.png')
+#	plot(discriminator_on_generator, to_file=outDir+'gan_model.png')
 	# Optimizer
 	adam=Adam(lr=0.0002, beta_1=0.5, beta_2=0.999, epsilon=1e-08)
 	# Compile generator
