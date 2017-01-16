@@ -1,5 +1,5 @@
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten, Lambda
+from keras.models import Sequential, Model
+from keras.layers import Input, merge, Dense, Dropout, Flatten, Lambda
 from keras.layers.advanced_activations import LeakyReLU
 from keras.optimizers import Adam
 from keras.utils import np_utils
@@ -49,7 +49,7 @@ cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','hor
 #chosen_Class = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'] # Each chosen class from cifar10_Classes is a loop, if 'all' chosen, than it will run the entire cifar10 >>NOT IMPLEMENTED
 
 # Model Options
-folder = "Test28"
+folder = "Test27-UNET"
 outDire = 'results/'+folder
 
 d_predict_fake = 0
@@ -256,48 +256,46 @@ def plotHistogram(originalImage,fakeImage, nameClass,directory,folder=folder):
 #### Models
 # GENERATOR
 def generator_model():
-	model = Sequential()
-	# Layers
-	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal', input_shape=(1, 32, 32)))
-	model.add(LeakyReLU(0.2))
+	inputs = Input((1,32,32))
+	conv1 = Convolution2D(32, 3, 3, activation='relu', border_mode='same')(inputs)
+	conv1 = Convolution2D(32, 3, 3, activation='relu', border_mode='same')(conv1)
+	pool1 = MaxPooling2D(pool_size=(2, 2))(conv1)
 
-	model.add(Convolution2D(64, 3, 3, border_mode='same', init='he_normal'))
-	model.add(BatchNormalization(mode=2,axis=1))
-	model.add(LeakyReLU(0.2))
+	conv2 = Convolution2D(64, 3, 3, activation='relu', border_mode='same')(pool1)
+	conv2 = Convolution2D(64, 3, 3, activation='relu', border_mode='same')(conv2)
+	pool2 = MaxPooling2D(pool_size=(2, 2))(conv2)
 
-	model.add(Convolution2D(128, 3, 3, border_mode='same', init='he_normal'))
-	model.add(BatchNormalization(mode=2,axis=1))
-	model.add(LeakyReLU(0.2))
-	#model.add(BatchNormalization())
+	conv3 = Convolution2D(128, 3, 3, activation='relu', border_mode='same')(pool2)
+	conv3 = Convolution2D(128, 3, 3, activation='relu', border_mode='same')(conv3)
+	pool3 = MaxPooling2D(pool_size=(2, 2))(conv3)
 
-	model.add(Convolution2D(256, 3, 3, border_mode='same', init='he_normal'))
-	model.add(BatchNormalization(mode=2,axis=1))
-	model.add(LeakyReLU(0.2))
-	#model.add(BatchNormalization())
+	conv4 = Convolution2D(256, 3, 3, activation='relu', border_mode='same')(pool3)
+	conv4 = Convolution2D(256, 3, 3, activation='relu', border_mode='same')(conv4)
+	pool4 = MaxPooling2D(pool_size=(2, 2))(conv4)
 
-#	model.add(Convolution2D(512,3,3,border_mode='same',init='he_normal'))
-#	model.add(BatchNormalization(mode=2,axis=1))
-#	model.add(LeakyReLU(0.2))
+	conv5 = Convolution2D(512, 3, 3, activation='relu', border_mode='same')(pool4)
+	conv5 = Convolution2D(512, 3, 3, activation='relu', border_mode='same')(conv5)
 
-	model.add(Convolution2D(256,3,3,border_mode='same',init='he_normal'))
-	model.add(BatchNormalization(mode=2,axis=1))
-	model.add(LeakyReLU(0.2))
+	up6 = merge([UpSampling2D(size=(2, 2))(conv5), conv4], mode='concat', concat_axis=1)
+	conv6 = Convolution2D(256, 3, 3, activation='relu', border_mode='same')(up6)
+	conv6 = Convolution2D(256, 3, 3, activation='relu', border_mode='same')(conv6)
 
-	model.add(Convolution2D(128, 3, 3, border_mode='same', init='he_normal'))
-	model.add(BatchNormalization(mode=2,axis=1))
-	model.add(LeakyReLU(0.2))
-	#model.add(BatchNormalization())
+	up7 = merge([UpSampling2D(size=(2, 2))(conv6), conv3], mode='concat', concat_axis=1)
+	conv7 = Convolution2D(128, 3, 3, activation='relu', border_mode='same')(up7)
+	conv7 = Convolution2D(128, 3, 3, activation='relu', border_mode='same')(conv7)
 
-	model.add(Convolution2D(64, 3, 3, border_mode='same', init='he_normal'))
-	model.add(BatchNormalization(mode=2,axis=1))
-	model.add(LeakyReLU(0.2))
+	up8 = merge([UpSampling2D(size=(2, 2))(conv7), conv2], mode='concat', concat_axis=1)
+	conv8 = Convolution2D(64, 3, 3, activation='relu', border_mode='same')(up8)
+	conv8 = Convolution2D(64, 3, 3, activation='relu', border_mode='same')(conv8)
 
-	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal'))
-	model.add(BatchNormalization(mode=2,axis=1))
-	model.add(LeakyReLU(0.2))
+	up9 = merge([UpSampling2D(size=(2, 2))(conv8), conv1], mode='concat', concat_axis=1)
+	conv9 = Convolution2D(32, 3, 3, activation='relu', border_mode='same')(up9)
+	conv9 = Convolution2D(32, 3, 3, activation='relu', border_mode='same')(conv9)
 
-	model.add(Convolution2D(2, 3, 3, border_mode='same', init='he_normal'))
-	model.add(Lambda(lambda x: K.clip(x, 0.0, 1.0)))
+	conv10 = 	Convolution2D(2, 3, 3, border_mode='same', init='he_normal')(conv9)
+
+	model = Model(input=inputs, output=conv10)
+
 	return model
 
 # DISCRIMINATOR
@@ -343,7 +341,7 @@ def generator_containing_discriminator(generator,discriminator):
 	model.add(discriminator)
 	return model
 
-for i in range(7,len(cifar10_Classes)):
+for i in range(10,len(cifar10_Classes)):
 	chosen_Class = cifar10_Classes[i]
 	outDir = outDire+'/'+str(chosen_Class)
 	# Create folder for tests
