@@ -256,7 +256,7 @@ def plotHistogram(originalImage,fakeImage, nameClass,directory,folder=folder):
 #### Models
 # GENERATOR
 def generator_model():
-	inputs = Input((BATCH_SIZE,1,32,32))
+	inputs = Input((1,32,32))
 	#32x32
 	conv1 = Convolution2D(32, 3, 3, border_mode='same',init='he_normal', subsample=(2,2))(inputs)
 	conv1 = BatchNormalization(mode=2,axis=1)(conv1)
