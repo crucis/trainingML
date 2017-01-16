@@ -328,7 +328,7 @@ def generator_model():
 
 #	m4 = merge([deconv4,inputs],mode='concat',concat_axis=1)
 
-	conv6 = Convolution2D(2, 3, 3, border_mode='same', init='he_normal')(m4)
+	conv6 = Convolution2D(2, 3, 3, border_mode='same', init='he_normal')(deconv4)
 	conv6 = Lambda(lambda x: K.clip(x, 0.0, 1.0))(conv6)
 
 	model = Model(input=inputs, output=conv6)
