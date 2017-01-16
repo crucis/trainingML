@@ -259,15 +259,15 @@ generated_images = numpy.zeros((BATCH_SIZE,2,32,32))
 def generator_model():
 	inputs = Input((1,32,32))
 	#32x32
-	conv1 = Convolution2D(256, 3, 3, border_mode='same',init='he_normal', subsample=(2,2))(inputs)
+	conv1 = Convolution2D(32, 3, 3, border_mode='same',init='he_normal', subsample=(2,2))(inputs)
 	conv1 = BatchNormalization(mode=2,axis=1)(conv1)
 	conv1 = LeakyReLU(alpha=.2)(conv1)
 	#16x16
-	conv2 = Convolution2D(256, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv1)
+	conv2 = Convolution2D(64, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv1)
 	conv2 = BatchNormalization(mode=2,axis=1)(conv2)
 	conv2 = LeakyReLU(alpha=.2)(conv2)
 	#8x8
-	conv3 = Convolution2D(256, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv2)
+	conv3 = Convolution2D(128, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv2)
 	conv3 = BatchNormalization(mode=2,axis=1)(conv3)
 	conv3 = LeakyReLU(alpha=.2)(conv3)
 	#4x4
@@ -275,7 +275,7 @@ def generator_model():
 	conv4 = BatchNormalization(mode=2,axis=1)(conv4)
 	conv4 = LeakyReLU(alpha=.2)(conv4)
 	#2x2
-	conv5 = Convolution2D(256, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv4)
+	conv5 = Convolution2D(512, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv4)
 	conv5 = BatchNormalization(mode=2,axis=1)(conv5)
 	conv5 = LeakyReLU(alpha=.2)(conv5)
 	#1x1
@@ -286,46 +286,50 @@ def generator_model():
 	# 2x2
 	m1 = merge([deconv0,conv4],mode='concat',concat_axis=1)
 
-	deconv1 = Deconvolution2D(256,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,256,4,4))(deconv0)
+	conv7 = Convolution2D(128, 3, 3, border_mode='same',init='he_normal')(m1)
+	conv7 = BatchNormalization(mode=2,axis=1)(conv7)
+	conv7 = LeakyReLU(alpha=.2)(conv7)
+
+	deconv1 = Deconvolution2D(128,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,128,4,4))(conv7)
 	deconv1 = BatchNormalization(mode=2,axis=1)(deconv1)
 	deconv1 = Activation('relu')(deconv1)
 	deconv1 = Dropout(0.2)(deconv1)
 	# 4x4
 	m1 = merge([deconv1,conv3],mode='concat',concat_axis=1)
 
-	deconv2 = Deconvolution2D(256,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,256,8,8))(m1)
+	conv8 = Convolution2D(64, 3, 3, border_mode='same',init='he_normal')(m1)
+	conv8 = BatchNormalization(mode=2,axis=1)(conv8)
+	conv8 = LeakyReLU(alpha=.2)(conv8)
+
+	deconv2 = Deconvolution2D(64,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,64,8,8))(conv8)
 	deconv2 = BatchNormalization(mode=2,axis=1)(deconv2)
 	deconv2 = Activation('relu')(deconv2)
 	# 8x8
 	m2 = merge([deconv2,conv2],mode='concat',concat_axis=1)
 
-	deconv3 = Deconvolution2D(256,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,256,16,16))(m2)
+	conv9 = Convolution2D(32, 3, 3, border_mode='same',init='he_normal')(m2)
+	conv9 = BatchNormalization(mode=2,axis=1)(conv9)
+	conv9 = LeakyReLU(alpha=.2)(conv9)
+
+	deconv3 = Deconvolution2D(32,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,32,16,16))(conv9)
 	deconv3 = BatchNormalization(mode=2,axis=1)(deconv3)
 	deconv3 = Activation('relu')(deconv3)
 	# 16x16
 	m3 = merge([deconv3,conv1],mode='concat',concat_axis=1)
 
-	deconv4 = Deconvolution2D(256,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,256,32,32))(m3)
+	deconv4 = Deconvolution2D(32,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,32,32,32))(m3)
 	deconv4 = BatchNormalization(mode=2,axis=1)(deconv4)
 	deconv4 = Activation('relu')(deconv4)
 	# 32x32
 
-	conv7 = Convolution2D(128, 3, 3, border_mode='same',init='he_normal')(deconv4)
-	conv7 = BatchNormalization(mode=2,axis=1)(conv7)
-	conv7 = LeakyReLU(alpha=.2)(conv7)
+	conv10 = Convolution2D(32, 3, 3, border_mode='same',init='he_normal')(deconv4)
+	conv10 = BatchNormalization(mode=2,axis=1)(conv10)
+	conv10 = LeakyReLU(alpha=.2)(conv10)
 
-	conv8 = Convolution2D(64, 3, 3, border_mode='same',init='he_normal')(conv7)
-	conv8 = BatchNormalization(mode=2,axis=1)(conv8)
-	conv8 = LeakyReLU(alpha=.2)(conv8)
+	conv11 = Convolution2D(2, 3, 3, border_mode='same', init='he_normal')(conv10)
+	conv11 = Lambda(lambda x: K.clip(x, 0.0, 1.0))(conv11)
 
-	conv9 = Convolution2D(32, 3, 3, border_mode='same',init='he_normal')(conv8)
-	conv9 = BatchNormalization(mode=2,axis=1)(conv9)
-	conv9 = LeakyReLU(alpha=.2)(conv9)
-
-	conv10 = Convolution2D(2, 3, 3, border_mode='same', init='he_normal')(conv9)
-	conv10 = Lambda(lambda x: K.clip(x, 0.0, 1.0))(conv10)
-
-	model = Model(input=inputs, output=conv10)
+	model = Model(input=inputs, output=conv11)
 
 	return model
 
