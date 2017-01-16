@@ -9918,3 +9918,15 @@ sequential_1 (Sequential)        (None, 1)             913441      convolution2d
 Total params: 8760067
 ____________________________________________________________________________________________________
 None
+----------------------------------
+('Training with dataset based on class - ', 'all', 'with', 32768, 'samples')
+----------------------------------
+----------------------------------
+('Training with dataset based on class - ', 'all', 'with', 32768, 'samples')
+----------------------------------
+----------------------------------
+('Training with dataset based on class - ', 'all', 'with', 32768, 'samples')
+----------------------------------
+----------------------------------
+('Training with dataset based on class - ', 'all', 'with', 32768, 'samples')
+----------------------------------
