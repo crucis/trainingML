@@ -288,9 +288,9 @@ def generator_model():
 	conv80 = BatchNormalization(mode=2,axis=1)(conv80)
 	conv80 = LeakyReLU(alpha=.2)(conv80)
 
-	m1 = merge([conv80,conv3],mode='concat',concat_axis=1)
+	m2 = merge([conv80,conv3],mode='concat',concat_axis=1)
 
-	conv8 = Convolution2D(64, 3, 3, border_mode='same',init='he_normal')(m1)
+	conv8 = Convolution2D(64, 3, 3, border_mode='same',init='he_normal')(m2)
 	conv8 = BatchNormalization(mode=2,axis=1)(conv8)
 	conv8 = LeakyReLU(alpha=.2)(conv8)
 
@@ -302,9 +302,9 @@ def generator_model():
 	conv90 = BatchNormalization(mode=2,axis=1)(conv90)
 	conv90 = LeakyReLU(alpha=.2)(conv90)
 
-	m2 = merge([conv90,conv2],mode='concat',concat_axis=1)
+	m3 = merge([conv90,conv2],mode='concat',concat_axis=1)
 
-	conv9 = Convolution2D(32, 3, 3, border_mode='same',init='he_normal')(m2)
+	conv9 = Convolution2D(32, 3, 3, border_mode='same',init='he_normal')(m3)
 	conv9 = BatchNormalization(mode=2,axis=1)(conv9)
 	conv9 = LeakyReLU(alpha=.2)(conv9)
 
@@ -316,9 +316,9 @@ def generator_model():
 	conv100 = BatchNormalization(mode=2,axis=1)(conv100)
 	conv100 = LeakyReLU(alpha=.2)(conv100)
 
-	m3 = merge([conv100,conv1],mode='concat',concat_axis=1)
+	m4 = merge([conv100,conv1],mode='concat',concat_axis=1)
 
-	deconv4 = Deconvolution2D(32,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,32,32,32))(m3)
+	deconv4 = Deconvolution2D(32,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,32,32,32))(m4)
 	deconv4 = BatchNormalization(mode=2,axis=1)(deconv4)
 	deconv4 = Activation('relu')(deconv4)
 	# 32x32

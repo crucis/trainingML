@@ -6,7 +6,6 @@ from keras.utils import np_utils
 from keras.datasets import cifar10
 from keras.layers.normalization import BatchNormalization
 from keras.regularizers import l2
-#from keras.regularizers import l2, l1
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, UpSampling2D, Deconvolution2D
 from keras import backend as K
 from random import uniform
@@ -18,9 +17,6 @@ import math
 import sys
 import time
 from datetime import timedelta
-#import subprocess
-
-
 
 
 
@@ -46,7 +42,6 @@ nImages = pow(2,15)
 
 #### CIFAR10 classifications
 cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck','all'];
-#chosen_Class = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'] # Each chosen class from cifar10_Classes is a loop, if 'all' chosen, than it will run the entire cifar10 >>NOT IMPLEMENTED
 
 # Model Options
 folder = "Test28"
@@ -83,23 +78,13 @@ def rgb2yuv(rgb):
 	rgb = rgb.astype('float32')
 	yuv = numpy.zeros(rgb.shape)
 	yuv = yuv.astype('float32')
-	# Analog transformation
-#	yuv[:,:,0] = 0.299*rgb[...,0]+0.587*rgb[...,1]+0.114*rgb[...,2]
-#	yuv[:,:,1] = -0.14713*rgb[...,0]-0.28886*rgb[...,1]+0.436*rgb[...,2]
-#	yuv[:,:,2] = 0.615*rgb[...,0]-0.51499*rgb[...,1]-0.10001*rgb[...,2]
-	# Digital transformation using data range [0,255] BT 601
-#	yuv[:,:,0] = 16 + (65.738/256)*rgb[...,0] + (129.057/256)*rgb[...,1]+(25.064/256)*rgb[...,2]
-#	yuv[:,:,1] = 128 - (37.945/256)*rgb[...,0]-(74.494/256)*rgb[...,1]+(112.439/256)*rgb[...,2]
-#	yuv[:,:,2] = 128 + (112.439/256)*rgb[...,0]-(94.154/256)*rgb[...1]-(18.285/256)*rgb[...,2]
 
 	# Digital transformation using data range [0,255] BT 871
 	yuv[:,:,0] = numpy.minimum(numpy.maximum(0,numpy.around(0 + 0.299*rgb[...,0]+0.587*rgb[...,1]+0.114*rgb[...,2])),255)
 	yuv[:,:,1] = numpy.minimum(numpy.maximum(0,numpy.around(128 - 0.168736*rgb[...,0]-0.331264*rgb[...,1]+0.5*rgb[...,2])),255)
 	yuv[:,:,2] = numpy.minimum(numpy.maximum(0,numpy.around(128 + 0.5*rgb[...,0]-0.418688*rgb[...,1]-0.081312*rgb[...,2])),255)
 
-#	print("yuv.max=",numpy.amax(yuv),"yuv.min=",numpy.amin(yuv))
 	return yuv.transpose(2,0,1)
-#	return numpy.dot(rgb[:,:,0],[[0.299,0.587,0.114],[-0.14713,-0.28886,0.436],[0.615,-0.51499,-0.10001]])
 def converterYUV(a,b):
 	for i in range(0, b.shape[0]):
 		h = b[i].transpose(1,2,0)
@@ -109,13 +94,6 @@ def yuv2rgb(yuv):
 	yuv = yuv.astype('float32')
 	rgb = numpy.zeros(yuv.shape)
 	rgb = rgb.astype('float32')
-#	yuv*=255
-#	print("yuv.shape=",yuv.shape)
-#	print("yuv.max=",numpy.amax(yuv),"yuv.min=",numpy.amin(yuv))
-	# Analog transformation
-#	rgb[:,:,0] = yuv[...,0]+0*yuv[...,1]+1.13983*yuv[...,2]
-#	rgb[:,:,1] = yuv[...,0]-0.39465*yuv[...,1]-0.58060*yuv[...,2]
-#	rgb[:,:,2] = yuv[...,0]+2.03211*yuv[...,1]+0*yuv[...,2]
 
 	# Digital transformation BT871
 	rgb[:,:,0] = numpy.minimum(numpy.maximum(0,numpy.around(yuv[...,0]+1.402*(yuv[...,2]-128))),255)
@@ -146,7 +124,7 @@ def plotGraph (filename, vecTrain, vecTest, nameVec):
 	plt.text(2,min(vecTrain),strAnnotation, fontsize=14)
 	if SAVE_GRAPHS == 1:
 		output_dir=outDir+"/graphs/"
-		mkdir_p(output_dir) # Verifies if directory exists, and creates it if necessary
+		mkdir_p(output_dir) # Checks if directory exists, and creates it if necessary
 		figurestr = output_dir+filename+"_"+nameVec+".png"
 		plt.savefig(figurestr)
 	if SHOW_GRAPHS == 1:
@@ -268,16 +246,10 @@ def generator_model():
 	model.add(Convolution2D(128, 3, 3, border_mode='same', init='he_normal'))
 	model.add(BatchNormalization(mode=2,axis=1))
 	model.add(LeakyReLU(0.2))
-	#model.add(BatchNormalization())
 
 	model.add(Convolution2D(256, 3, 3, border_mode='same', init='he_normal'))
 	model.add(BatchNormalization(mode=2,axis=1))
 	model.add(LeakyReLU(0.2))
-	#model.add(BatchNormalization())
-
-#	model.add(Convolution2D(512,3,3,border_mode='same',init='he_normal'))
-#	model.add(BatchNormalization(mode=2,axis=1))
-#	model.add(LeakyReLU(0.2))
 
 	model.add(Convolution2D(256,3,3,border_mode='same',init='he_normal'))
 	model.add(BatchNormalization(mode=2,axis=1))
@@ -305,33 +277,23 @@ def discriminator_model():
 	model = Sequential()
 	model.add(Convolution2D(32,3,3,border_mode='same',init='he_normal',input_shape=(2,32,32),subsample=(2,2))) #16x16
 	model.add(LeakyReLU(alpha=.2))
-	#model.add(MaxPooling2D(pool_size=(2,2)))
-#	model.add(Dropout(0.2))
 
 	model.add(Convolution2D(64,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #8x8
 	model.add(LeakyReLU(alpha=.2))
-	#model.add(MaxPooling2D(pool_size=(2,2)))
-#	model.add(Dropout(0.2))
 
 	model.add(Convolution2D(128,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #4x4
 	model.add(LeakyReLU(alpha=.2))
-	#model.add(MaxPooling2D(pool_size=(2,2)))
 	model.add(Dropout(0.2))
 
 	model.add(Convolution2D(256,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #2x2
 	model.add(LeakyReLU(alpha=.2))
-	#model.add(MaxPooling2D(pool_size=(2,2)))
 	model.add(Dropout(0.2))
 
 	model.add(Flatten())
-	#model.add(Dense(128,init='he_normal'))
 	model.add(Dense(512,init='he_normal'))
 	model.add(LeakyReLU(alpha=.2))
 	model.add(Dropout(0.2))
 
-	#model.add(Dense(256,init='he_normal',activation='linear',W_regularizer = l2(0.001)))
-	#model.add(LeakyReLU(alpha=.2))
-	#model.add(Dropout(0.2))
 	model.add(Dense(1,init='he_normal',activation='sigmoid'))
 	return model
 
@@ -406,11 +368,13 @@ for i in range(7,len(cifar10_Classes)):
 
 	#### Training
 	discriminator = discriminator_model()
-#	discriminator.load_weights("results/PreTrainedWeights1/"+chosen_Class+"/discriminator_weights")
 	generator = generator_model()
-	# LOADING GENERATOR FROM TEST8
+
+	# LOADS WEIGHTS IF WANTED
 	#generator.load_weights("results/PreTrainedWeightsYUV/"+chosen_Class+"/generator_weights")
-#	generator.load_weights("results/Test23/"+chosen_Class+"/generator_weights")
+	#generator.load_weights("results/Test23/"+chosen_Class+"/generator_weights")
+	#discriminator.load_weights("results/PreTrainedWeights1/"+chosen_Class+"/discriminator_weights")
+
 
 	discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
 	# Optimizer
@@ -430,7 +394,6 @@ for i in range(7,len(cifar10_Classes)):
 	d_acc = 0
 	d_predict_fake = 0
 	d_predict_real = 1
-	 #counter for how many times discriminator not trained
 
 	for epoch in range(EPOCH):
 		print("Epoch", epoch+1,"of",EPOCH)
@@ -444,7 +407,8 @@ for i in range(7,len(cifar10_Classes)):
 			#image_batch_test = F_test[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
 			#BW_image_batch_test = G_test[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
 
-			#gAlone_loss = generator.train_on_batch(BW_image_batch,image_batch)
+
+			#gAlone_loss = generator.train_on_batch(BW_image_batch,image_batch) # Used to train generator alone during GAN trains.
 			#print("Generating images...")
 			generated_images = generator.predict(BW_image_batch)
 
@@ -457,8 +421,7 @@ for i in range(7,len(cifar10_Classes)):
 			z = numpy.array(z)
 			z = z[perm]
 
-			#print("Training discriminator...")
-	        # Does not train discriminator if it is close to overfitting
+	        # Controls discriminator when it is close to overfitting or to lose against the generator
 			if (numpy.mean(d_predict_fake) > 0.50) or (numpy.mean(d_predict_real) < 0.5):
 				discriminator.trainable = True
 			elif (d_acc > 0.65) :
@@ -477,43 +440,28 @@ for i in range(7,len(cifar10_Classes)):
 						break
 
 			for j in range(1):
-				#print("Training generator...")
 				[g_loss,g_acc] = discriminator_on_generator.train_on_batch(BW_image_batch,[1]*BW_image_batch.shape[0])
 				print("GAN loss %.4f "%g_loss, "GAN acc %.4f"%g_acc, "Discriminator loss %.4f"%d_loss,"Discriminator accuracy %.4f"%d_acc, "Total loss: %.4f"%(g_loss+d_loss),"for batch",index)
-				#print("GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss,"Discriminator accuracy %.4f"%d_acc, "Total loss: %.4f"%(g_loss+d_loss),"for batch",index)
-	            #print("Generator loss %.4f"%gAlone_loss,"GAN loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss+gAlone_loss),"For batch",index)
+
 		# Test if discriminator is working
 		d_predict_real = discriminator.predict(F_test)
-		#print(len(d_predict_real))
 		print("DISCRIMINATOR_Imagem REAL=",numpy.mean(d_predict_real))
 		g_predict_fake = generator.predict(G_test)
 		d_predict_fake = discriminator.predict(g_predict_fake)
 		print("DISCRIMINATOR_Imagem FAKE=",numpy.mean(d_predict_fake))
-	#	print("GAN_Imagem FAKE=",numpy.mean(discriminator_on_generator.predict(G_test)))
 		print("Discriminator trained",index-l+1,"times of",index+1,"batchs")
 
 		print("Saving weights...")
 		generator.save_weights(outDir+'/generator_weights',True)
 		discriminator.save_weights(outDir+'/discriminator_weights',True)
 		print("Saving sample images...")
-#		print("generated_images.shape=",generated_images.shape,"image_batch.shape=",image_batch.shape)
-#		256,2,32,32 													256,2,32,32
-#		print("generated_images.max=",numpy.amax(generated_images)*255,"generated_images.min",numpy.amin(generated_images)*255)
-#				[0,1]
-#		print("image_batch.max=",numpy.amax(image_batch)*255,"image_batch.min",numpy.amin(image_batch)*255)
-#				[0.04,0.92]
 		save3images(BW_image_batch,generated_images,image_batch,epoch+1)
-#		print("Storing to histogram values")
 
 
 		print("Elapsed time in epoch = ",str(timedelta(seconds=(time.time()-start_time))))
 		print("----------------------------------")
 		m+=1
 
-
-	# Print important parameters to logfile.log and save histogram
-	#print('fakeImage=',stored_g_predict.shape)
-	#print('originalImage=',F.shape)
 	print('End of training')
 	print('Saving histograms')
 	stored_g_predict = generator.predict(G)
@@ -531,6 +479,5 @@ for i in range(7,len(cifar10_Classes)):
 	print("----------------------------------")
 	print("---GAN---")
 	print(discriminator_on_generator.summary())
-	#print("----------------------------------")
 
 	# eof
