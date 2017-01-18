@@ -309,7 +309,7 @@ def generator_containing_discriminator(generator,discriminator):
 	return model
 
 #for i in range(10,len(cifar10_Classes)):
-chosen_Class = all
+chosen_Class = 'all'
 outDir = outDire+'/'+str(chosen_Class)
 # Create folder for tests
 mkdir_p(outDir)
@@ -386,17 +386,9 @@ generator = generator_model()
 # LOADS WEIGHTS IF WANTED
 #generator.load_weights("results/PreTrainedWeightsYUV/"+chosen_Class+"/generator_weights")
 generator.load_weights(outDir+"/generator_weights")
-#	discriminator.load_weights(outDir+"/discriminator_weights")
 
-
-#	discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
 g_predict_fake = generator.predict(G_test)
-#	d_predict_fake = discriminator.predict(g_predict_fake)
 
-
-#		print("Elapsed time in epoch = ",str(timedelta(seconds=(time.time()-start_time))))#
-#		print("----------------------------------")
-#		m+=1
 print("Saving sample images...")
 save3images(G_test,g_predict_fake,F_test,"Saved_images")
 
