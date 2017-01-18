@@ -398,9 +398,9 @@ for i in range(7,len(cifar10_Classes)):
 	save3images(G_test,g_predict_fake,F_test,"Saved_images")
 
 #	print('End of training')
-#	print('Saving histograms')
-#	stored_g_predict = generator.predict(G)
-#	plotHistogram(originalImage=F,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
+	print('Saving histograms')
+	stored_g_predict = generator.predict(Y_gray)
+	plotHistogram(originalImage=Y_uv,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
 #	print("----------------------------------")
 
 #	print('Total samples = ', G.shape[0], ' Batch size =', BATCH_SIZE, ' Epochs = ', EPOCH)
