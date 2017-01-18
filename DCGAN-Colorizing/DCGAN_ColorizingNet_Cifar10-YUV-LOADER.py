@@ -403,19 +403,8 @@ for i in range(10,len(cifar10_Classes)):
 #	print('End of training')
 	print('Saving histograms')
 	stored_g_predict = generator.predict(Y_gray)
-	plotHistogram(fakeImage=Y_gray,originalImage=Y_uv,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
-#	print("----------------------------------")
+	plotHistogram(grayImage=Y_gray,originalImage=Y_uv,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
+	print("----------------------------------")
 
-#	print('Total samples = ', G.shape[0], ' Batch size =', BATCH_SIZE, ' Epochs = ', EPOCH)
-#	print("Generator loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss))
-#	print("----------------------------------")
-#	print("---DISCRIMINATOR---")
-#	print(discriminator.summary())
-#	print("----------------------------------")
-#	print("---GENERATOR---")
-#	print(generator.summary())
-#	print("----------------------------------")
-#	print("---GAN---")
-#	print(discriminator_on_generator.summary())
 
 	# eof
