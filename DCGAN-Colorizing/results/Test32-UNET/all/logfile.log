@@ -16954,3 +16954,9 @@ None
 ('Loading with dataset based on class - ', 'all', 'with', 10000, 'samples')
 ----------------------------------
 Saving sample images...
+----------------------------------
+('Loading with dataset based on class - ', 'all', 'with', 40, 'samples')
+----------------------------------
+Saving sample images...
+Saving histograms
+----------------------------------
