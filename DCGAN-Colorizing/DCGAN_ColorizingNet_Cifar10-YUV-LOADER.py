@@ -311,7 +311,7 @@ def generator_containing_discriminator(generator,discriminator):
 
 #for i in range(7,len(cifar10_Classes)):
 #chosen_Class = cifar10_Classes[i]
-chosen_Class = 'photos'
+chosen_Class = 'all'
 outDir = outDire+'/'+str(chosen_Class)
 # Create folder for tests
 mkdir_p(outDir)
@@ -390,7 +390,7 @@ generator.load_weights(outDir+"/generator_weights")
 
 print("Saving sample images...")
 g_predict_fake = generator.predict(G_test)
-save3images(G_test,g_predict_fake,F_test,"Saved_images")
+save3images(G_test,g_predict_fake,F_test,"photos/Saved_images")
 
 if chosen_Class == 'all':
 	print('Saving histograms')
