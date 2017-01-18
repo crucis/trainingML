@@ -380,18 +380,18 @@ for i in range(10,len(cifar10_Classes)):
 
 
 	#### Training
-	discriminator = discriminator_model()
+#	discriminator = discriminator_model()
 	generator = generator_model()
 
 	# LOADS WEIGHTS IF WANTED
 	#generator.load_weights("results/PreTrainedWeightsYUV/"+chosen_Class+"/generator_weights")
 	generator.load_weights(outDir+"/generator_weights")
-	discriminator.load_weights(outDir+"/discriminator_weights")
+#	discriminator.load_weights(outDir+"/discriminator_weights")
 
 
-	discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
+#	discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
 	g_predict_fake = generator.predict(G_test)
-	d_predict_fake = discriminator.predict(g_predict_fake)
+#	d_predict_fake = discriminator.predict(g_predict_fake)
 
 
 #		print("Elapsed time in epoch = ",str(timedelta(seconds=(time.time()-start_time))))#
@@ -402,8 +402,8 @@ for i in range(10,len(cifar10_Classes)):
 
 #	print('End of training')
 	print('Saving histograms')
-	stored_g_predict = generator.predict(Y_gray)
-	plotHistogram(grayImage=Y_gray,originalImage=Y_uv,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
+	stored_g_predict = generator.predict(Y_gray_test)
+	plotHistogram(grayImage=Y_gray_test,originalImage=Y_uv_test,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
 	print("----------------------------------")
 
 
