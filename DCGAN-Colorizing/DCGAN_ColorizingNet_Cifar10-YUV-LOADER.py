@@ -168,7 +168,7 @@ def save3images(inp,out,original,folder):
 		ax3.imshow(numpy.uint8(original[n].transpose(1,2,0)))
 		ax3.set_title('Original_%s'%i)
 
-		titlestr = 'Epochs='+str(epoch)+' BATCH_SIZE='+str(BATCH_SIZE)
+		titlestr = 'Sample'
 		plt.title(titlestr)
 		plt.grid(b=False)
 
