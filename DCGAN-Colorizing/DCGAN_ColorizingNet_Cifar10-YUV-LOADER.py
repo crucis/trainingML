@@ -388,9 +388,9 @@ for i in range(7,len(cifar10_Classes)):
 	d_predict_fake = discriminator.predict(g_predict_fake)
 
 
-		print("Elapsed time in epoch = ",str(timedelta(seconds=(time.time()-start_time))))
-		print("----------------------------------")
-		m+=1
+#		print("Elapsed time in epoch = ",str(timedelta(seconds=(time.time()-start_time))))#
+#		print("----------------------------------")
+#		m+=1
 	print("Saving sample images...")
 	save3images(G_test,g_predict_fake,F_test,"Saved_images")
 
