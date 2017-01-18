@@ -566,7 +566,9 @@ for i in range(10,len(cifar10_Classes)):
 	stored_g_predict = generator.predict(G)
 #	plotHistogram(originalImage=F,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
 	print("----------------------------------")
-
+	print("Save generator model")
+	generator.save(outDir+'/model.h5')
+	print("----------------------------------")
 	print('Total samples = ', G.shape[0], ' Batch size =', BATCH_SIZE, ' Epochs = ', EPOCH)
 	print("Generator loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss))
 	print("----------------------------------")
