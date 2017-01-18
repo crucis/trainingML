@@ -154,18 +154,18 @@ def save3images(inp,out,original,folder):
 	original = numpy.concatenate((inp,original),axis=1)
 	converterRGB(original,original*255)
 
-	for i in range(int(numpy.around(original.shape[0]*0.02))):
+	for i in range(original.shape[0]):
 		_,((ax1,ax2),(ax3,_)) = plt.subplots(2,2,sharey='row',sharex='col')
 
-		n = math.floor(uniform(0,original.shape[0]))
+	#	n = math.floor(uniform(0,original.shape[0]))
 
-		ax1.imshow(inp[n,0,:,:],cmap='gray')
+		ax1.imshow(inp[i,0,:,:],cmap='gray')
 		ax1.set_title('Input_%s'%i)
 
-		ax2.imshow(numpy.uint8(out[n].transpose(1,2,0)))
+		ax2.imshow(numpy.uint8(out[i].transpose(1,2,0)))
 		ax2.set_title('Output_%s'%i)
 
-		ax3.imshow(numpy.uint8(original[n].transpose(1,2,0)))
+		ax3.imshow(numpy.uint8(original[i].transpose(1,2,0)))
 		ax3.set_title('Original_%s'%i)
 
 		titlestr = 'Sample'
@@ -360,6 +360,8 @@ for i in range(7,len(cifar10_Classes)):
 	Y_uv = Y_uv[perm]
 	Y_gray_test = Y_gray_test[perm]
 	Y_uv_test = Y_uv_test[perm]
+
+
 
 	G = Y_gray[:nImages]
 	F = Y_uv[:nImages]
