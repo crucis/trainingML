@@ -172,7 +172,7 @@ def save3images(inp,out,original,folder):
 		plt.title(titlestr)
 		plt.grid(b=False)
 
-		mkdir_p(outDir+'/samples/epoch'+str(folder))
+		mkdir_p(outDir+'/samples/'+str(folder))
 
 		plt.savefig(outDir+'/samples/'+str(folder)+'/sample_%s.png'%i)
 		plt.clf()
