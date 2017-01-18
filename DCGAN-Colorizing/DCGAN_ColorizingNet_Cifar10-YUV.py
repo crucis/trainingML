@@ -99,7 +99,7 @@ def yuv2rgb(yuv):
 	rgb[:,:,0] = numpy.minimum(numpy.maximum(0,numpy.around(yuv[...,0]+1.402*(yuv[...,2]-128))),255)
 	rgb[:,:,1] = numpy.minimum(numpy.maximum(0,numpy.around(yuv[...,0]-0.344136*(yuv[...,1]-128)-0.714136*(yuv[...,2]-128))),255)
 	rgb[:,:,2] = numpy.minimum(numpy.maximum(0,numpy.around(yuv[...,0]+1.772*(yuv[...,1]-128))),255)
-#	print("rgb.max=",numpy.amax(rgb),"rgb.min=",numpy.amin(rgb))
+	
 	return rgb.transpose(2,0,1)
 def converterRGB(a,b):
 #	print("b.shape=",b.shape)
@@ -463,8 +463,8 @@ for i in range(7,len(cifar10_Classes)):
 		m+=1
 
 	print('End of training')
-	print('Saving histograms')
-	stored_g_predict = generator.predict(G)
+#	print('Saving histograms')
+#	stored_g_predict = generator.predict(G)
 #	plotHistogram(originalImage=F,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
 	print("----------------------------------")
 
