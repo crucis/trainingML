@@ -1,11 +1,12 @@
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten, Lambda
+from keras.models import Sequential, Model
+from keras.layers import Input, merge, Dense, Dropout, Flatten, Lambda, Activation
 from keras.layers.advanced_activations import LeakyReLU
 from keras.optimizers import Adam
 from keras.utils import np_utils
 from keras.datasets import cifar10
 from keras.layers.normalization import BatchNormalization
 from keras.regularizers import l2
+#from keras.utils.visualize_util import plot
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, UpSampling2D, Deconvolution2D
 from keras import backend as K
 from random import uniform
@@ -16,7 +17,10 @@ import numpy
 import math
 import sys
 import time
+#import pydot
 from datetime import timedelta
+
+
 
 
 
@@ -37,14 +41,15 @@ numpy.random.seed(SEED)
 
 # Training Options
 BATCH_SIZE = 256
-EPOCH = 50
+EPOCH = 121
 nImages = pow(2,15)
 
 #### CIFAR10 classifications
 cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck','all'];
+#chosen_Class = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'] # Each chosen class from cifar10_Classes is a loop, if 'all' chosen, than it will run the entire cifar10 >>NOT IMPLEMENTED
 
 # Model Options
-folder = "Test28"
+folder = "Test29-UNET"
 outDire = 'results/'+folder
 
 d_predict_fake = 0
@@ -84,7 +89,9 @@ def rgb2yuv(rgb):
 	yuv[:,:,1] = numpy.minimum(numpy.maximum(0,numpy.around(128 - 0.168736*rgb[...,0]-0.331264*rgb[...,1]+0.5*rgb[...,2])),255)
 	yuv[:,:,2] = numpy.minimum(numpy.maximum(0,numpy.around(128 + 0.5*rgb[...,0]-0.418688*rgb[...,1]-0.081312*rgb[...,2])),255)
 
+#	print("yuv.max=",numpy.amax(yuv),"yuv.min=",numpy.amin(yuv))
 	return yuv.transpose(2,0,1)
+#	return numpy.dot(rgb[:,:,0],[[0.299,0.587,0.114],[-0.14713,-0.28886,0.436],[0.615,-0.51499,-0.10001]])
 def converterYUV(a,b):
 	for i in range(0, b.shape[0]):
 		h = b[i].transpose(1,2,0)
@@ -99,7 +106,7 @@ def yuv2rgb(yuv):
 	rgb[:,:,0] = numpy.minimum(numpy.maximum(0,numpy.around(yuv[...,0]+1.402*(yuv[...,2]-128))),255)
 	rgb[:,:,1] = numpy.minimum(numpy.maximum(0,numpy.around(yuv[...,0]-0.344136*(yuv[...,1]-128)-0.714136*(yuv[...,2]-128))),255)
 	rgb[:,:,2] = numpy.minimum(numpy.maximum(0,numpy.around(yuv[...,0]+1.772*(yuv[...,1]-128))),255)
-
+#	print("rgb.max=",numpy.amax(rgb),"rgb.min=",numpy.amin(rgb))
 	return rgb.transpose(2,0,1)
 def converterRGB(a,b):
 #	print("b.shape=",b.shape)
@@ -124,7 +131,7 @@ def plotGraph (filename, vecTrain, vecTest, nameVec):
 	plt.text(2,min(vecTrain),strAnnotation, fontsize=14)
 	if SAVE_GRAPHS == 1:
 		output_dir=outDir+"/graphs/"
-		mkdir_p(output_dir) # Checks if directory exists, and creates it if necessary
+		mkdir_p(output_dir) # Verifies if directory exists, and creates it if necessary
 		figurestr = output_dir+filename+"_"+nameVec+".png"
 		plt.savefig(figurestr)
 	if SHOW_GRAPHS == 1:
@@ -154,27 +161,27 @@ def save3images(inp,out,original,folder):
 	original = numpy.concatenate((inp,original),axis=1)
 	converterRGB(original,original*255)
 
-	for i in range(int(numpy.around(original.shape[0]*0.02))):
+	for i in range(original.shape[0]):
 		_,((ax1,ax2),(ax3,_)) = plt.subplots(2,2,sharey='row',sharex='col')
 
-		n = math.floor(uniform(0,original.shape[0]))
+	#	n = math.floor(uniform(0,original.shape[0]))
 
-		ax1.imshow(inp[n,0,:,:],cmap='gray')
+		ax1.imshow(inp[i,0,:,:],cmap='gray')
 		ax1.set_title('Input_%s'%i)
 
-		ax2.imshow(numpy.uint8(out[n].transpose(1,2,0)))
+		ax2.imshow(numpy.uint8(out[i].transpose(1,2,0)))
 		ax2.set_title('Output_%s'%i)
 
-		ax3.imshow(numpy.uint8(original[n].transpose(1,2,0)))
+		ax3.imshow(numpy.uint8(original[i].transpose(1,2,0)))
 		ax3.set_title('Original_%s'%i)
 
-		titlestr = 'Epochs='+str(epoch)+' BATCH_SIZE='+str(BATCH_SIZE)
+		titlestr = 'Sample'
 		plt.title(titlestr)
 		plt.grid(b=False)
 
-		mkdir_p(outDir+'/samples/epoch'+str(folder))
+		mkdir_p(outDir+'/samples/'+str(folder))
 
-		plt.savefig(outDir+'/samples/epoch'+str(folder)+'/sample_%s.png'%i)
+		plt.savefig(outDir+'/samples/'+str(folder)+'/sample_%s.png'%i)
 		plt.clf()
 		plt.close('all')
 
@@ -237,42 +244,98 @@ def plotHistogram(grayImage,originalImage,fakeImage, nameClass,directory,folder=
 #### Models
 # GENERATOR
 def generator_model():
-	model = Sequential()
-	# Layers
-	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal', input_shape=(1, 32, 32)))
-	model.add(LeakyReLU(0.2))
+	inputs = Input((1,32,32))
+	#32x32
+	conv1 = Convolution2D(32, 3, 3, border_mode='same',init='he_normal', subsample=(2,2))(inputs)
+	conv1 = BatchNormalization(mode=2,axis=1)(conv1)
+	conv1 = LeakyReLU(alpha=.2)(conv1)
+	#16x16
+	conv2 = Convolution2D(64, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv1)
+	conv2 = BatchNormalization(mode=2,axis=1)(conv2)
+	conv2 = LeakyReLU(alpha=.2)(conv2)
+	#8x8
+	conv3 = Convolution2D(128, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv2)
+	conv3 = BatchNormalization(mode=2,axis=1)(conv3)
+	conv3 = LeakyReLU(alpha=.2)(conv3)
+	#4x4
+	conv4 = Convolution2D(256, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv3)
+	conv4 = BatchNormalization(mode=2,axis=1)(conv4)
+	conv4 = LeakyReLU(alpha=.2)(conv4)
+	#2x2
+	conv5 = Convolution2D(512, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv4)
+	conv5 = BatchNormalization(mode=2,axis=1)(conv5)
+	conv5 = LeakyReLU(alpha=.2)(conv5)
+	conv5 = Dropout(0.2)(conv5)
+	#1x1
+	deconv0 = Deconvolution2D(512,3,3,border_mode='same',init='he_normal',subsample=(2,2),output_shape=(None,512,2,2))(conv5)
+	deconv0 = BatchNormalization(mode=2,axis=1)(deconv0)
+	deconv0 = Activation('relu')(deconv0)
+	deconv0 = Dropout(0.2)(deconv0)
 
-	model.add(Convolution2D(64, 3, 3, border_mode='same', init='he_normal'))
-	model.add(BatchNormalization(mode=2,axis=1))
-	model.add(LeakyReLU(0.2))
+	conv70 = Convolution2D(256, 3, 3, border_mode='same',init='he_normal')(deconv0)
+	conv70 = BatchNormalization(mode=2,axis=1)(conv70)
+	conv70 = LeakyReLU(alpha=.2)(conv70)
+	conv70 = Dropout(0.2)(conv70)
 
-	model.add(Convolution2D(128, 3, 3, border_mode='same', init='he_normal'))
-	model.add(BatchNormalization(mode=2,axis=1))
-	model.add(LeakyReLU(0.2))
+	# 2x2
+	m1 = merge([conv70,conv4],mode='concat',concat_axis=1)
 
-	model.add(Convolution2D(256, 3, 3, border_mode='same', init='he_normal'))
-	model.add(BatchNormalization(mode=2,axis=1))
-	model.add(LeakyReLU(0.2))
+	conv7 = Convolution2D(128, 3, 3, border_mode='same',init='he_normal')(m1)
+	conv7 = BatchNormalization(mode=2,axis=1)(conv7)
+	conv7 = LeakyReLU(alpha=.2)(conv7)
 
-	model.add(Convolution2D(256,3,3,border_mode='same',init='he_normal'))
-	model.add(BatchNormalization(mode=2,axis=1))
-	model.add(LeakyReLU(0.2))
+	deconv1 = Deconvolution2D(128,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,128,4,4))(conv7)
+	deconv1 = BatchNormalization(mode=2,axis=1)(deconv1)
+	deconv1 = Activation('relu')(deconv1)
+	# 4x4
+	conv80 = Convolution2D(128, 3, 3, border_mode='same',init='he_normal')(deconv1)
+	conv80 = BatchNormalization(mode=2,axis=1)(conv80)
+	conv80 = LeakyReLU(alpha=.2)(conv80)
 
-	model.add(Convolution2D(128, 3, 3, border_mode='same', init='he_normal'))
-	model.add(BatchNormalization(mode=2,axis=1))
-	model.add(LeakyReLU(0.2))
-	#model.add(BatchNormalization())
+	m2 = merge([conv80,conv3],mode='concat',concat_axis=1)
 
-	model.add(Convolution2D(64, 3, 3, border_mode='same', init='he_normal'))
-	model.add(BatchNormalization(mode=2,axis=1))
-	model.add(LeakyReLU(0.2))
+	conv8 = Convolution2D(64, 3, 3, border_mode='same',init='he_normal')(m2)
+	conv8 = BatchNormalization(mode=2,axis=1)(conv8)
+	conv8 = LeakyReLU(alpha=.2)(conv8)
 
-	model.add(Convolution2D(32, 3, 3, border_mode='same', init='he_normal'))
-	model.add(BatchNormalization(mode=2,axis=1))
-	model.add(LeakyReLU(0.2))
+	deconv2 = Deconvolution2D(64,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,64,8,8))(conv8)
+	deconv2 = BatchNormalization(mode=2,axis=1)(deconv2)
+	deconv2 = Activation('relu')(deconv2)
+	# 8x8
+	conv90 = Convolution2D(64, 3, 3, border_mode='same',init='he_normal')(deconv2)
+	conv90 = BatchNormalization(mode=2,axis=1)(conv90)
+	conv90 = LeakyReLU(alpha=.2)(conv90)
 
-	model.add(Convolution2D(2, 3, 3, border_mode='same', init='he_normal'))
-	model.add(Lambda(lambda x: K.clip(x, 0.0, 1.0)))
+	m3 = merge([conv90,conv2],mode='concat',concat_axis=1)
+
+	conv9 = Convolution2D(32, 3, 3, border_mode='same',init='he_normal')(m3)
+	conv9 = BatchNormalization(mode=2,axis=1)(conv9)
+	conv9 = LeakyReLU(alpha=.2)(conv9)
+
+	deconv3 = Deconvolution2D(32,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,32,16,16))(conv9)
+	deconv3 = BatchNormalization(mode=2,axis=1)(deconv3)
+	deconv3 = Activation('relu')(deconv3)
+	# 16x16
+	conv100 = Convolution2D(32, 3, 3, border_mode='same',init='he_normal')(deconv3)
+	conv100 = BatchNormalization(mode=2,axis=1)(conv100)
+	conv100 = LeakyReLU(alpha=.2)(conv100)
+
+	m4 = merge([conv100,conv1],mode='concat',concat_axis=1)
+
+	deconv4 = Deconvolution2D(32,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,32,32,32))(m4)
+	deconv4 = BatchNormalization(mode=2,axis=1)(deconv4)
+	deconv4 = Activation('relu')(deconv4)
+	# 32x32
+
+	conv10 = Convolution2D(32, 3, 3, border_mode='same',init='he_normal')(deconv4)
+	conv10 = BatchNormalization(mode=2,axis=1)(conv10)
+	conv10 = LeakyReLU(alpha=.2)(conv10)
+
+	conv11 = Convolution2D(2, 3, 3, border_mode='same', init='he_normal')(conv10)
+	conv11 = Lambda(lambda x: K.clip(x, 0.0, 1.0))(conv11)
+
+	model = Model(input=inputs, output=conv11)
+
 	return model
 
 # DISCRIMINATOR
@@ -280,23 +343,33 @@ def discriminator_model():
 	model = Sequential()
 	model.add(Convolution2D(32,3,3,border_mode='same',init='he_normal',input_shape=(2,32,32),subsample=(2,2))) #16x16
 	model.add(LeakyReLU(alpha=.2))
+	#model.add(MaxPooling2D(pool_size=(2,2)))
+#	model.add(Dropout(0.2))
 
 	model.add(Convolution2D(64,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #8x8
 	model.add(LeakyReLU(alpha=.2))
+	#model.add(MaxPooling2D(pool_size=(2,2)))
+#	model.add(Dropout(0.2))
 
 	model.add(Convolution2D(128,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #4x4
 	model.add(LeakyReLU(alpha=.2))
+	#model.add(MaxPooling2D(pool_size=(2,2)))
 	model.add(Dropout(0.2))
 
 	model.add(Convolution2D(256,3,3,border_mode='same',init='he_normal',subsample=(2,2))) #2x2
 	model.add(LeakyReLU(alpha=.2))
+	#model.add(MaxPooling2D(pool_size=(2,2)))
 	model.add(Dropout(0.2))
 
 	model.add(Flatten())
+	#model.add(Dense(128,init='he_normal'))
 	model.add(Dense(512,init='he_normal'))
 	model.add(LeakyReLU(alpha=.2))
 	model.add(Dropout(0.2))
 
+	#model.add(Dense(256,init='he_normal',activation='linear',W_regularizer = l2(0.001)))
+	#model.add(LeakyReLU(alpha=.2))
+	#model.add(Dropout(0.2))
 	model.add(Dense(1,init='he_normal',activation='sigmoid'))
 	return model
 
@@ -308,7 +381,8 @@ def generator_containing_discriminator(generator,discriminator):
 	model.add(discriminator)
 	return model
 
-for i in range(7,len(cifar10_Classes)):
+
+for i in range(10,len(cifar10_Classes)):
 	chosen_Class = cifar10_Classes[i]
 	outDir = outDire+'/'+str(chosen_Class)
 	# Create folder for tests
@@ -353,6 +427,12 @@ for i in range(7,len(cifar10_Classes)):
 	Y_uv /= 255
 	Y_gray_test /= 255
 	Y_uv_test /= 255
+	perm = numpy.random.permutation(Y_gray_test.shape[0])
+
+	Y_gray = Y_gray[perm]
+	Y_uv = Y_uv[perm]
+	Y_gray_test = Y_gray_test[perm]
+	Y_uv_test = Y_uv_test[perm]
 
 
 	# limits the number of images to nImages
@@ -363,124 +443,22 @@ for i in range(7,len(cifar10_Classes)):
 
 
 	print("----------------------------------")
-	print('Training with dataset based on class - ',chosen_Class,'with',F.shape[0],'samples')
+	print('Loading with dataset based on class - ',chosen_Class,'with',F.shape[0],'samples')
 	print("----------------------------------")
 
 
-
-
-	#### Training
-	discriminator = discriminator_model()
 	generator = generator_model()
-
-	# LOADS WEIGHTS IF WANTED
-	#generator.load_weights("results/PreTrainedWeightsYUV/"+chosen_Class+"/generator_weights")
-	#generator.load_weights("results/Test23/"+chosen_Class+"/generator_weights")
-	#discriminator.load_weights("results/PreTrainedWeights1/"+chosen_Class+"/discriminator_weights")
+	generator.load_weights(outDir+"/generator_weights")
 
 
-	discriminator_on_generator = generator_containing_discriminator(generator,discriminator)
-	# Optimizer
-	adam=Adam(lr=0.0002, beta_1=0.5, beta_2=0.999, epsilon=1e-08)
-	# Compile generator
-	generator.compile(loss='mean_squared_error',optimizer='adam')
-	generator.summary()
-	discriminator_on_generator.compile(loss='binary_crossentropy',optimizer=adam, metrics=['accuracy'])
-	discriminator_on_generator.summary()
-	discriminator.trainable = True
-	discriminator.compile(loss='binary_crossentropy',optimizer=adam, metrics=['accuracy'])
-	discriminator.summary()
-
-	# Initialize d_loss
-	d_predict_real = 0
-	d_loss = 1
-	d_acc = 0
-	d_predict_fake = 0
-	d_predict_real = 1
-
-	for epoch in range(EPOCH):
-		print("Epoch", epoch+1,"of",EPOCH)
-		print("Number of batches",int(F.shape[0]/BATCH_SIZE))
-		start_time = time.time()
-		l=0 # Counts how many times discriminator was NOT trained
-		m = 0; #Counts batchs
-		for index in range(int(F.shape[0]/BATCH_SIZE)):
-			image_batch = F[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
-			BW_image_batch = G[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
-			#image_batch_test = F_test[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
-			#BW_image_batch_test = G_test[index*BATCH_SIZE:(index+1)*BATCH_SIZE]
-
-
-			#gAlone_loss = generator.train_on_batch(BW_image_batch,image_batch) # Used to train generator alone during GAN trains.
-			#print("Generating images...")
-			generated_images = generator.predict(BW_image_batch)
-
-			# Creating inputs for train_on_batch
-			M = numpy.concatenate((image_batch,generated_images))
-			z = [1]*image_batch.shape[0]+[0]*generated_images.shape[0]
-			# Shuffling M and z
-			perm = numpy.random.permutation(len(z))
-			M = M[perm]
-			z = numpy.array(z)
-			z = z[perm]
-
-	        # Controls discriminator when it is close to overfitting or to lose against the generator
-			if (numpy.mean(d_predict_fake) > 0.50) or (numpy.mean(d_predict_real) < 0.5):
-				discriminator.trainable = True
-			elif (d_acc > 0.65) :
-				discriminator.trainable = False
-				l+=1
-			else:
-				discriminator.trainable = True
-			[d_loss, d_acc] = discriminator.train_on_batch(M,z)
-			if d_acc < 0.48:
-				o=0;
-				while d_acc < 0.48:
-					discriminator.trainable = True
-					[d_loss,d_acc] = discriminator.train_on_batch(M,z)
-					o+=1
-					if o > 30:
-						break
-
-			for j in range(1):
-				[g_loss,g_acc] = discriminator_on_generator.train_on_batch(BW_image_batch,[1]*BW_image_batch.shape[0])
-				print("GAN loss %.4f "%g_loss, "GAN acc %.4f"%g_acc, "Discriminator loss %.4f"%d_loss,"Discriminator accuracy %.4f"%d_acc, "Total loss: %.4f"%(g_loss+d_loss),"for batch",index)
-
-		# Test if discriminator is working
-		d_predict_real = discriminator.predict(F_test)
-		print("DISCRIMINATOR_Imagem REAL=",numpy.mean(d_predict_real))
-		g_predict_fake = generator.predict(G_test)
-		d_predict_fake = discriminator.predict(g_predict_fake)
-		print("DISCRIMINATOR_Imagem FAKE=",numpy.mean(d_predict_fake))
-		print("Discriminator trained",index-l+1,"times of",index+1,"batchs")
-
-		print("Saving weights...")
-		generator.save_weights(outDir+'/generator_weights',True)
-		discriminator.save_weights(outDir+'/discriminator_weights',True)
-		print("Saving sample images...")
-		save3images(BW_image_batch,generated_images,image_batch,epoch+1)
-
-
-		print("Elapsed time in epoch = ",str(timedelta(seconds=(time.time()-start_time))))
+	print("Saving sample images...")
+	g_predict_fake = generator.predict(G_test)
+	save3images(G_test,g_predict_fake,F_test,"Saved_images")
+	if chosen_Class == 'all':
+		print('Saving histograms')
+		stored_g_predict = generator.predict(Y_gray_test)
+		plotHistogram(grayImage=Y_gray_test,originalImage=Y_uv_test,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
 		print("----------------------------------")
-		m+=1
 
-	print('End of training')
-#	print('Saving histograms')
-#	stored_g_predict = generator.predict(G)
-#	plotHistogram(originalImage=F,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
-	print("----------------------------------")
-
-	print('Total samples = ', G.shape[0], ' Batch size =', BATCH_SIZE, ' Epochs = ', EPOCH)
-	print("Generator loss %.4f "%g_loss, "Discriminator loss %.4f"%d_loss, "Total: %.4f"%(g_loss+d_loss))
-	print("----------------------------------")
-	print("---DISCRIMINATOR---")
-	print(discriminator.summary())
-	print("----------------------------------")
-	print("---GENERATOR---")
-	print(generator.summary())
-	print("----------------------------------")
-	print("---GAN---")
-	print(discriminator_on_generator.summary())
 
 	# eof

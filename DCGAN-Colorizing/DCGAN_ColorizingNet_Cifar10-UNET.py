@@ -185,11 +185,14 @@ def save3images(inp,out,original,folder):
 		plt.clf()
 		plt.close('all')
 
-def plotHistogram(originalImage,fakeImage, nameClass,directory,folder=folder):
+def plotHistogram(grayImage,originalImage,fakeImage, nameClass,directory,folder=folder):
 	# Faz 3 histogramas, um para azul outro verde e outro vermelho
+	fakeImage = numpy.concatenate((grayImage, fakeImage), axis=1)
+	converterRGB(fakeImage,fakeImage*255)
+	originalImage = numpy.concatenate((grayImage,originalImage),axis=1)
+	converterRGB(originalImage,originalImage*255)
+
 	name = folder+'using'+nameClass
-	originalImage *= 255
-	fakeImage *= 255
 	originalImage = originalImage.astype('uint8')
 	fakeImage = fakeImage.astype('uint8')
 	numBins = 255
