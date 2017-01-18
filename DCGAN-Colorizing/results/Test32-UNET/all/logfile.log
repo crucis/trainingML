@@ -16950,3 +16950,7 @@ sequential_1 (Sequential)        (None, 1)             0           lambda_1[0][0
 Total params: 7216323
 ____________________________________________________________________________________________________
 None
+----------------------------------
+('Loading with dataset based on class - ', 'all', 'with', 10000, 'samples')
+----------------------------------
+Saving sample images...
