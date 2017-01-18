@@ -174,7 +174,7 @@ def save3images(inp,out,original,folder):
 
 		mkdir_p(outDir+'/samples/epoch'+str(folder))
 
-		plt.savefig(outDir+'/samples/epoch'+str(folder)+'/sample_%s.png'%i)
+		plt.savefig(outDir+'/samples/'+str(folder)+'/sample_%s.png'%i)
 		plt.clf()
 		plt.close('all')
 
@@ -403,7 +403,7 @@ for i in range(10,len(cifar10_Classes)):
 #	print('End of training')
 	print('Saving histograms')
 	stored_g_predict = generator.predict(Y_gray_test)
-	plotHistogram(grayImage=Y_gray_test,originalImage=Y_uv_test,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
+#	plotHistogram(grayImage=Y_gray_test,originalImage=Y_uv_test,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
 	print("----------------------------------")
 
 
