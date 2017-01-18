@@ -353,7 +353,8 @@ for i in range(7,len(cifar10_Classes)):
 
 
 	# limits the number of images to nImages
-	perm = numpy.random.permutation(Y_gray.shape[0])
+	#perm = numpy.random.permutation(Y_gray.shape[0])
+	perm = numpy.random.permutation(Y_gray_test.shape[0])
 
 	Y_gray = Y_gray[perm]
 	Y_uv = Y_uv[perm]
