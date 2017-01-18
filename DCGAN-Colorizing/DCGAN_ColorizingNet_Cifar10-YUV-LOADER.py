@@ -308,95 +308,85 @@ def generator_containing_discriminator(generator,discriminator):
 	model.add(discriminator)
 	return model
 
-#for i in range(10,len(cifar10_Classes)):
-chosen_Class = 'all'
-outDir = outDire+'/'+str(chosen_Class)
-# Create folder for tests
-mkdir_p(outDir)
+for i in range(7,len(cifar10_Classes)):
+	chosen_Class = cifar10_Classes[i]
+	outDir = outDire+'/'+str(chosen_Class)
+	# Create folder for tests
+	mkdir_p(outDir)
 #	sys.stdout = Logger()
 
-# Logger
-#### load cifar10 dataset
-(Y_rgb,labels),(Y_rgb_test, labels_test) = cifar10.load_data()
+	# Logger
+	#### load cifar10 dataset
+	(Y_rgb,labels),(Y_rgb_test, labels_test) = cifar10.load_data()
 
 
-# Choosing only one classification
-#if str(chosen_Class) != 'all':
-#	Y_rgb = Y_rgb[(labels == cifar10_Classes.index(chosen_Class))[:,0]]
-#	Y_rgb_test = Y_rgb_test[(labels_test == cifar10_Classes.index(chosen_Class))[:,0]]
+	# Choosing only one classification
+	if str(chosen_Class) != 'all':
+		Y_rgb = Y_rgb[(labels == cifar10_Classes.index(chosen_Class))[:,0]]
+		Y_rgb_test = Y_rgb_test[(labels_test == cifar10_Classes.index(chosen_Class))[:,0]]
 
-Y_yuv = numpy.zeros((Y_rgb.shape[0],Y_rgb.shape[1],Y_rgb.shape[2],Y_rgb.shape[3]))
-Y_yuv_test = numpy.zeros((Y_rgb_test.shape[0],Y_rgb.shape[1],Y_rgb_test.shape[2],Y_rgb_test.shape[3]))
+	Y_yuv = numpy.zeros((Y_rgb.shape[0],Y_rgb.shape[1],Y_rgb.shape[2],Y_rgb.shape[3]))
+	Y_yuv_test = numpy.zeros((Y_rgb_test.shape[0],Y_rgb.shape[1],Y_rgb_test.shape[2],Y_rgb_test.shape[3]))
 
-# Convert RGB to YUV to create our input
-converterYUV(Y_yuv,Y_rgb)
-converterYUV(Y_yuv_test,Y_rgb_test)
+	# Convert RGB to YUV to create our input
+	converterYUV(Y_yuv,Y_rgb)
+	converterYUV(Y_yuv_test,Y_rgb_test)
 
-# Separate grayscale channel from U and V channels
-Y_gray = numpy.zeros((Y_yuv.shape[0],1,Y_yuv.shape[2],Y_yuv.shape[3]))
-Y_gray[:,0,:,:] = Y_yuv[:,0,:,:]
-Y_uv = numpy.zeros((Y_yuv.shape[0],2,Y_yuv.shape[2],Y_yuv.shape[3]))
-Y_uv = Y_yuv[:,1:,:,:]
-Y_gray_test = numpy.zeros((Y_yuv_test.shape[0],1,Y_yuv_test.shape[2],Y_yuv_test.shape[3]))
-Y_gray_test[:,0,:,:] = Y_yuv_test[:,0,:,:]
-Y_uv_test = numpy.zeros((Y_yuv_test.shape[0],2,Y_yuv_test.shape[2],Y_yuv_test.shape[3]))
-Y_uv_test = Y_yuv_test[:,1:,:,:]
+	# Separate grayscale channel from U and V channels
+	Y_gray = numpy.zeros((Y_yuv.shape[0],1,Y_yuv.shape[2],Y_yuv.shape[3]))
+	Y_gray[:,0,:,:] = Y_yuv[:,0,:,:]
+	Y_uv = numpy.zeros((Y_yuv.shape[0],2,Y_yuv.shape[2],Y_yuv.shape[3]))
+	Y_uv = Y_yuv[:,1:,:,:]
+	Y_gray_test = numpy.zeros((Y_yuv_test.shape[0],1,Y_yuv_test.shape[2],Y_yuv_test.shape[3]))
+	Y_gray_test[:,0,:,:] = Y_yuv_test[:,0,:,:]
+	Y_uv_test = numpy.zeros((Y_yuv_test.shape[0],2,Y_yuv_test.shape[2],Y_yuv_test.shape[3]))
+	Y_uv_test = Y_yuv_test[:,1:,:,:]
 
-#### Data Preprocessing
-# convert inputs and outputs to float32
-Y_gray = Y_gray.astype('float32')
-Y_uv = Y_uv.astype('float32')
-Y_gray_test = Y_gray_test.astype('float32')
-Y_uv_test = Y_uv_test.astype('float32')
-# normalize inputs and outputs from 0-255 to 0.0-1.0
-Y_gray /= 255
-Y_uv /= 255
-Y_gray_test /= 255
-Y_uv_test /= 255
-
-
-# limits the number of images to nImages
-#perm = numpy.random.permutation(Y_gray.shape[0])
-perm = numpy.random.permutation(Y_gray_test.shape[0])
-
-Y_gray = Y_gray[perm]
-Y_uv = Y_uv[perm]
-Y_gray_test = Y_gray_test[perm]
-Y_uv_test = Y_uv_test[perm]
+	#### Data Preprocessing
+	# convert inputs and outputs to float32
+	Y_gray = Y_gray.astype('float32')
+	Y_uv = Y_uv.astype('float32')
+	Y_gray_test = Y_gray_test.astype('float32')
+	Y_uv_test = Y_uv_test.astype('float32')
+	# normalize inputs and outputs from 0-255 to 0.0-1.0
+	Y_gray /= 255
+	Y_uv /= 255
+	Y_gray_test /= 255
+	Y_uv_test /= 255
 
 
+	# limits the number of images to nImages
+	#perm = numpy.random.permutation(Y_gray.shape[0])
+	perm = numpy.random.permutation(Y_gray_test.shape[0])
 
-G = Y_gray[:nImages]
-F = Y_uv[:nImages]
-G_test = Y_gray_test[:nImages]
-F_test = Y_uv_test[:nImages]
-
-
-print("----------------------------------")
-print('Loading with dataset based on class - ',chosen_Class,'with',F.shape[0],'samples')
-print("----------------------------------")
+	Y_gray = Y_gray[perm]
+	Y_uv = Y_uv[perm]
+	Y_gray_test = Y_gray_test[perm]
+	Y_uv_test = Y_uv_test[perm]
 
 
 
+	G = Y_gray[:nImages]
+	F = Y_uv[:nImages]
+	G_test = Y_gray_test[:nImages]
+	F_test = Y_uv_test[:nImages]
 
-#### Training
-#	discriminator = discriminator_model()
-generator = generator_model()
 
-# LOADS WEIGHTS IF WANTED
-#generator.load_weights("results/PreTrainedWeightsYUV/"+chosen_Class+"/generator_weights")
-generator.load_weights(outDir+"/generator_weights")
+	print("----------------------------------")
+	print('Loading with dataset based on class - ',chosen_Class,'with',F.shape[0],'samples')
+	print("----------------------------------")
 
-g_predict_fake = generator.predict(G_test)
+	generator = generator_model()
+	generator.load_weights(outDir+"/generator_weights")
 
-print("Saving sample images...")
-save3images(G_test,g_predict_fake,F_test,"Saved_images")
+	print("Saving sample images...")
+	g_predict_fake = generator.predict(G_test)
+	save3images(G_test,g_predict_fake,F_test,"Saved_images")
 
-#	print('End of training')
-print('Saving histograms')
+	print('Saving histograms')
 #	stored_g_predict = generator.predict(Y_gray_test)
 #	plotHistogram(grayImage=Y_gray_test,originalImage=Y_uv_test,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
-print("----------------------------------")
+	print("----------------------------------")
 
 
-# eof
+	# eof
