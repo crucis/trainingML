@@ -178,11 +178,14 @@ def save3images(inp,out,original,folder):
 		plt.clf()
 		plt.close('all')
 
-def plotHistogram(originalImage,fakeImage, nameClass,directory,folder=folder):
+def plotHistogram(grayImage,originalImage,fakeImage, nameClass,directory,folder=folder):
 	# Faz 3 histogramas, um para azul outro verde e outro vermelho
+	fakeImage = numpy.concatenate((grayImage, fakeImage), axis=1)
+	converterRGB(fakeImage,fakeImage*255)
+	originalImage = numpy.concatenate((grayImage,originalImage),axis=1)
+	converterRGB(originalImage,originalImage*255)
+
 	name = folder+'using'+nameClass
-	originalImage *= 255
-	fakeImage *= 255
 	originalImage = originalImage.astype('uint8')
 	fakeImage = fakeImage.astype('uint8')
 	numBins = 255
@@ -305,7 +308,7 @@ def generator_containing_discriminator(generator,discriminator):
 	model.add(discriminator)
 	return model
 
-for i in range(7,len(cifar10_Classes)):
+for i in range(10,len(cifar10_Classes)):
 	chosen_Class = cifar10_Classes[i]
 	outDir = outDire+'/'+str(chosen_Class)
 	# Create folder for tests
@@ -400,7 +403,7 @@ for i in range(7,len(cifar10_Classes)):
 #	print('End of training')
 	print('Saving histograms')
 	stored_g_predict = generator.predict(Y_gray)
-	plotHistogram(originalImage=Y_uv,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
+	plotHistogram(fakeImage=Y_gray,originalImage=Y_uv,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
 #	print("----------------------------------")
 
 #	print('Total samples = ', G.shape[0], ' Batch size =', BATCH_SIZE, ' Epochs = ', EPOCH)
