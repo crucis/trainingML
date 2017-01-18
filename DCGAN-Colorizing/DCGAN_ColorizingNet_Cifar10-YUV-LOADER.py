@@ -327,6 +327,8 @@ Y_rgb[2,...] = misc.imread('images/2.jpg')
 Y_rgb[3,...] = misc.imread('images/3.jpg')
 
 Y_rgb = Y_rgb.transpose(0,3,1,2)
+
+Y_rgb_test=Y_rgb
 # Choosing only one classification
 #if str(chosen_Class) != 'all':
 #	Y_rgb = Y_rgb[(labels == cifar10_Classes.index(chosen_Class))[:,0]]
