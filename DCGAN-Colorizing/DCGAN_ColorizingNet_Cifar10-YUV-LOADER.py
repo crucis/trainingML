@@ -386,17 +386,20 @@ print('Loading with dataset based on class - ',chosen_Class,'with',F.shape[0],'s
 print("----------------------------------")
 
 generator = generator_model()
-generator.load_weights(outDir+"/generator_weights")
+for i in range(7,len(cifar10_Classes)):
+	chosen_Class = cifar10_Classes[i]
+	outDir = outDire+'/'+str(chosen_Class)
+	generator.load_weights(outDir+"/generator_weights")
 
 print("Saving sample images...")
 g_predict_fake = generator.predict(G_test)
 save3images(G_test,g_predict_fake,F_test,"photos/Saved_images")
 
-if chosen_Class == 'all':
-	print('Saving histograms')
-	stored_g_predict = generator.predict(Y_gray_test)
-	plotHistogram(grayImage=Y_gray_test,originalImage=Y_uv_test,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
-	print("----------------------------------")
+#if chosen_Class == 'all':
+#	print('Saving histograms')
+#	stored_g_predict = generator.predict(Y_gray_test)
+#	plotHistogram(grayImage=Y_gray_test,originalImage=Y_uv_test,fakeImage=stored_g_predict,nameClass = chosen_Class, directory=outDir)
+#	print("----------------------------------")
 
 
 # eof
