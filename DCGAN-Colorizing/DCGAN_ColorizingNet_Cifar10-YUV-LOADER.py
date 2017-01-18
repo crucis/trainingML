@@ -321,10 +321,10 @@ mkdir_p(outDir)
 #### load cifar10 dataset
 #(Y_rgb,labels),(Y_rgb_test, labels_test) = cifar10.load_data()
 Y_rgb = numpy.zeros((4,32,32,3))
-Y_rgb(0,...) = misc.imread('images/0.jpg')
-Y_rgb(1,...) = misc.imread('images/1.jpg')
-Y_rgb(2,...) = misc.imread('images/2.jpg')
-Y_rgb(3,...) = misc.imread('images/3.jpg')
+Y_rgb[0,...] = misc.imread('images/0.jpg')
+Y_rgb[1,...] = misc.imread('images/1.jpg')
+Y_rgb[2,...] = misc.imread('images/2.jpg')
+Y_rgb[3,...] = misc.imread('images/3.jpg')
 
 Y_rgb = Y_rgb.transpose(0,3,1,2)
 # Choosing only one classification
