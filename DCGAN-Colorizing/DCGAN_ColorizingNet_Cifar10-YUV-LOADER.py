@@ -17,6 +17,7 @@ import math
 import sys
 import time
 from datetime import timedelta
+from scipy import misc
 
 
 
@@ -310,7 +311,7 @@ def generator_containing_discriminator(generator,discriminator):
 
 #for i in range(7,len(cifar10_Classes)):
 #chosen_Class = cifar10_Classes[i]
-chosen_Class = 'all'
+chosen_Class = 'photos'
 outDir = outDire+'/'+str(chosen_Class)
 # Create folder for tests
 mkdir_p(outDir)
@@ -318,13 +319,15 @@ mkdir_p(outDir)
 
 # Logger
 #### load cifar10 dataset
-(Y_rgb,labels),(Y_rgb_test, labels_test) = cifar10.load_data()
-
-
+#(Y_rgb,labels),(Y_rgb_test, labels_test) = cifar10.load_data()
+f0 = misc.imread('0.jpg')
+f1 = misc.imread('1.jpg')
+f2 = misc.imread('2.jpg')
+f3 = misc.imread('3.jpg')
 # Choosing only one classification
-if str(chosen_Class) != 'all':
-	Y_rgb = Y_rgb[(labels == cifar10_Classes.index(chosen_Class))[:,0]]
-	Y_rgb_test = Y_rgb_test[(labels_test == cifar10_Classes.index(chosen_Class))[:,0]]
+#if str(chosen_Class) != 'all':
+#	Y_rgb = Y_rgb[(labels == cifar10_Classes.index(chosen_Class))[:,0]]
+#	Y_rgb_test = Y_rgb_test[(labels_test == cifar10_Classes.index(chosen_Class))[:,0]]
 
 Y_yuv = numpy.zeros((Y_rgb.shape[0],Y_rgb.shape[1],Y_rgb.shape[2],Y_rgb.shape[3]))
 Y_yuv_test = numpy.zeros((Y_rgb_test.shape[0],Y_rgb.shape[1],Y_rgb_test.shape[2],Y_rgb_test.shape[3]))
