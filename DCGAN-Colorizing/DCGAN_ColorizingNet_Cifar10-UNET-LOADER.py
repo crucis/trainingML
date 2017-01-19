@@ -1,4 +1,4 @@
-from keras.models import Sequential, Model
+from keras.models import Sequential, Model, load_model
 from keras.layers import Input, merge, Dense, Dropout, Flatten, Lambda, Activation
 from keras.layers.advanced_activations import LeakyReLU
 from keras.optimizers import Adam
@@ -19,6 +19,7 @@ import sys
 import time
 #import pydot
 from datetime import timedelta
+from scipy import misc
 
 
 
@@ -49,7 +50,7 @@ cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','hor
 #chosen_Class = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'] # Each chosen class from cifar10_Classes is a loop, if 'all' chosen, than it will run the entire cifar10 >>NOT IMPLEMENTED
 
 # Model Options
-folder = "Test32-UNET"
+folder = "Test33-UNET"
 outDire = 'results/'+folder
 
 d_predict_fake = 0
