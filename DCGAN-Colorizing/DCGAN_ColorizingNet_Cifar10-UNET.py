@@ -41,7 +41,7 @@ numpy.random.seed(SEED)
 
 # Training Options
 BATCH_SIZE = 256
-EPOCH = 121
+EPOCH = 50
 nImages = pow(2,15)
 
 #### CIFAR10 classifications
@@ -49,7 +49,7 @@ cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','hor
 #chosen_Class = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'] # Each chosen class from cifar10_Classes is a loop, if 'all' chosen, than it will run the entire cifar10 >>NOT IMPLEMENTED
 
 # Model Options
-folder = "Test32-UNET"
+folder = "Test33-UNET"
 outDire = 'results/'+folder
 
 d_predict_fake = 0
