@@ -320,11 +320,15 @@ mkdir_p(outDir)
 # Logger
 #### load cifar10 dataset
 #(Y_rgb,labels),(Y_rgb_test, labels_test) = cifar10.load_data()
-Y_rgb = numpy.zeros((4,32,32,3))
+Y_rgb = numpy.zeros((7,32,32,3))
 Y_rgb[0,...] = misc.imread('images/0.jpg')
 Y_rgb[1,...] = misc.imread('images/1.jpg')
 Y_rgb[2,...] = misc.imread('images/2.jpg')
 Y_rgb[3,...] = misc.imread('images/3.jpg')
+Y_rgb[4,...] = misc.imread('images/4.jpg')
+Y_rgb[5,...] = misc.imread('images/5.jpg')
+Y_rgb[6,...] = misc.imread('images/6.jpg')
+Y_rgb[7,...] = misc.imread('images/7.jpg')
 
 Y_rgb = Y_rgb.transpose(0,3,1,2)
 
@@ -385,8 +389,9 @@ print("----------------------------------")
 print('Loading with dataset based on class - ',chosen_Class,'with',F.shape[0],'samples')
 print("----------------------------------")
 
-generator = generator_model()
-generator.load_weights(outDir+"/generator_weights")
+#generator = generator_model()
+#generator.load_weights(outDir+"/generator_weights")
+generator = load_model(outDir+'/model.h5')
 
 print("Saving sample images...")
 g_predict_fake = generator.predict(G_test)
