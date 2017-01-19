@@ -19,6 +19,7 @@ import sys
 import time
 #import pydot
 from datetime import timedelta
+from scipy import misc
 
 
 
