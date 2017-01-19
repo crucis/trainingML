@@ -392,20 +392,20 @@ for i in range(10,len(cifar10_Classes)):
 
 	# Logger
 	#### load cifar10 dataset
-	#(Y_rgb,labels),(Y_rgb_test, labels_test) = cifar10.load_data()
-	Y_rgb = numpy.zeros((8,32,32,3))
-	Y_rgb[0,...] = misc.imread('images/0.jpg')
-	Y_rgb[1,...] = misc.imread('images/1.jpg')
-	Y_rgb[2,...] = misc.imread('images/2.jpg')
-	Y_rgb[3,...] = misc.imread('images/3.jpg')
-	Y_rgb[4,...] = misc.imread('images/4.jpg')
-	Y_rgb[5,...] = misc.imread('images/5.jpg')
-	Y_rgb[6,...] = misc.imread('images/6.jpg')
-	Y_rgb[7,...] = misc.imread('images/7.jpg')
+	(Y_rgb,labels),(Y_rgb_test, labels_test) = cifar10.load_data()
+#	Y_rgb = numpy.zeros((8,32,32,3))
+#	Y_rgb[0,...] = misc.imread('images/0.jpg')
+#	Y_rgb[1,...] = misc.imread('images/1.jpg')
+#	Y_rgb[2,...] = misc.imread('images/2.jpg')
+#	Y_rgb[3,...] = misc.imread('images/3.jpg')
+#	Y_rgb[4,...] = misc.imread('images/4.jpg')
+#	Y_rgb[5,...] = misc.imread('images/5.jpg')
+#	Y_rgb[6,...] = misc.imread('images/6.jpg')
+#	Y_rgb[7,...] = misc.imread('images/7.jpg')
 
-	Y_rgb = Y_rgb.transpose(0,3,1,2)
+#	Y_rgb = Y_rgb.transpose(0,3,1,2)
 
-	Y_rgb_test=Y_rgb
+#	Y_rgb_test=Y_rgb
 	# Choosing only one classification
 	if str(chosen_Class) != 'all':
 		Y_rgb = Y_rgb[(labels == cifar10_Classes.index(chosen_Class))[:,0]]
@@ -466,7 +466,7 @@ for i in range(10,len(cifar10_Classes)):
 
 	print("Saving sample images...")
 	g_predict_fake = generator.predict(G_test)
-	save3images(G_test,g_predict_fake,F_test,"photos/")
+	save3images(G_test,g_predict_fake,F_test,"Saved_images/")
 	#if chosen_Class == 'all':
 	#	print('Saving histograms')
 	#	stored_g_predict = generator.predict(Y_gray_test)
