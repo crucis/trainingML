@@ -224,7 +224,7 @@ def plotHistogram(grayImage,originalImage,fakeImage, nameClass,directory,folder=
 			generatedBlue2D = numpy.array(fakeImage[j,2,:,:])
 		else:
 			generatedRed2D = numpy.vstack([generatedRed2D,fakeImage[j,0,:,:]])
-			generatedGreen2D = numpy.vstack([generatedGreen2D,fakeImage[j,1,:,:]])
+			generatedGreen2D = numpy.vstack([generatedGreen2D,fakeImgitage[j,1,:,:]])
 			generatedBlue2D = numpy.vstack([generatedBlue2D,fakeImage[j,2,:,:]])
 
 
