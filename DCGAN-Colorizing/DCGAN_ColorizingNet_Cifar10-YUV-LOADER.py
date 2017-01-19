@@ -320,7 +320,7 @@ mkdir_p(outDir)
 # Logger
 #### load cifar10 dataset
 #(Y_rgb,labels),(Y_rgb_test, labels_test) = cifar10.load_data()
-Y_rgb = numpy.zeros((7,32,32,3))
+Y_rgb = numpy.zeros((8,32,32,3))
 Y_rgb[0,...] = misc.imread('images/0.jpg')
 Y_rgb[1,...] = misc.imread('images/1.jpg')
 Y_rgb[2,...] = misc.imread('images/2.jpg')
