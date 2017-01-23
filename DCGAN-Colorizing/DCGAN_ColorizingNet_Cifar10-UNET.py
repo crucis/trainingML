@@ -50,7 +50,7 @@ cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','hor
 #chosen_Class = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'] # Each chosen class from cifar10_Classes is a loop, if 'all' chosen, than it will run the entire cifar10 >>NOT IMPLEMENTED
 
 # Model Options
-folder = "Test34-UNET"
+folder = "Test33-UNET"
 outDire = 'results/'+folder
 
 d_predict_fake = 0
@@ -250,13 +250,7 @@ def generator_model():
 	conv1 = Convolution2D(32, 3, 3, border_mode='same',init='he_normal', subsample=(2,2))(inputs)
 	conv1 = BatchNormalization(mode=2,axis=1)(conv1)
 	conv1 = LeakyReLU(alpha=.2)(conv1)
-	conv1 = Convolution2D(32, 3, 3, border_mode='same',init='he_normal', subsample=(2,2))(inputs)
-	conv1 = BatchNormalization(mode=2,axis=1)(conv1)
-	conv1 = LeakyReLU(alpha=.2)(conv1)
 	#16x16
-	conv2 = Convolution2D(64, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv1)
-	conv2 = BatchNormalization(mode=2,axis=1)(conv2)
-	conv2 = LeakyReLU(alpha=.2)(conv2)
 	conv2 = Convolution2D(64, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv1)
 	conv2 = BatchNormalization(mode=2,axis=1)(conv2)
 	conv2 = LeakyReLU(alpha=.2)(conv2)
@@ -264,13 +258,7 @@ def generator_model():
 	conv3 = Convolution2D(128, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv2)
 	conv3 = BatchNormalization(mode=2,axis=1)(conv3)
 	conv3 = LeakyReLU(alpha=.2)(conv3)
-	conv3 = Convolution2D(128, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv2)
-	conv3 = BatchNormalization(mode=2,axis=1)(conv3)
-	conv3 = LeakyReLU(alpha=.2)(conv3)
 	#4x4
-	conv4 = Convolution2D(256, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv3)
-	conv4 = BatchNormalization(mode=2,axis=1)(conv4)
-	conv4 = LeakyReLU(alpha=.2)(conv4)
 	conv4 = Convolution2D(256, 3, 3, border_mode='same',init='he_normal',subsample=(2,2))(conv3)
 	conv4 = BatchNormalization(mode=2,axis=1)(conv4)
 	conv4 = LeakyReLU(alpha=.2)(conv4)
@@ -335,11 +323,7 @@ def generator_model():
 
 	m4 = merge([conv100,conv1],mode='concat',concat_axis=1)
 
-	conv101 = Convolution2D(32, 3, 3, border_mode='same',init='he_normal')(m4)
-	conv101 = BatchNormalization(mode=2,axis=1)(conv101)
-	conv101 = LeakyReLU(alpha=.2)(conv101)
-
-	deconv4 = Deconvolution2D(32,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,32,32,32))(conv101)
+	deconv4 = Deconvolution2D(32,3,3,subsample=(2,2),border_mode='same',init='he_normal',output_shape=(None,32,32,32))(m4)
 	deconv4 = BatchNormalization(mode=2,axis=1)(deconv4)
 	deconv4 = Activation('relu')(deconv4)
 	# 32x32

@@ -44,7 +44,7 @@ nImages = pow(2,15)
 cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck','all'];
 
 # Model Options
-folder = "Test28"
+folder = "Test29"
 outDire = 'results/'+folder
 
 d_predict_fake = 0
@@ -150,9 +150,9 @@ class Logger(object):
 
 def save3images(inp,out,original,folder):
 	out = numpy.concatenate((inp, out), axis=1)
-	converterRGB(out,out*255)
+	converterRGB(out,out*255+128)
 	original = numpy.concatenate((inp,original),axis=1)
-	converterRGB(original,original*255)
+	converterRGB(original,original*255+128)
 
 	for i in range(int(numpy.around(original.shape[0]*0.02))):
 		_,((ax1,ax2),(ax3,_)) = plt.subplots(2,2,sharey='row',sharex='col')
@@ -181,9 +181,9 @@ def save3images(inp,out,original,folder):
 def plotHistogram(grayImage,originalImage,fakeImage, nameClass,directory,folder=folder):
 	# Faz 3 histogramas, um para azul outro verde e outro vermelho
 	fakeImage = numpy.concatenate((grayImage, fakeImage), axis=1)
-	converterRGB(fakeImage,fakeImage*255)
+	converterRGB(fakeImage,fakeImage*255+128)
 	originalImage = numpy.concatenate((grayImage,originalImage),axis=1)
-	converterRGB(originalImage,originalImage*255)
+	converterRGB(originalImage,originalImage*255+128)
 
 	name = folder+'using'+nameClass
 	originalImage = originalImage.astype('uint8')
@@ -253,10 +253,13 @@ def generator_model():
 	model.add(Convolution2D(256, 3, 3, border_mode='same', init='he_normal'))
 	model.add(BatchNormalization(mode=2,axis=1))
 	model.add(LeakyReLU(0.2))
+	model.add(Dropout(0.5))
+
 
 	model.add(Convolution2D(256,3,3,border_mode='same',init='he_normal'))
 	model.add(BatchNormalization(mode=2,axis=1))
 	model.add(LeakyReLU(0.2))
+	model.add(Dropout(0.5))
 
 	model.add(Convolution2D(128, 3, 3, border_mode='same', init='he_normal'))
 	model.add(BatchNormalization(mode=2,axis=1))
@@ -272,7 +275,8 @@ def generator_model():
 	model.add(LeakyReLU(0.2))
 
 	model.add(Convolution2D(2, 3, 3, border_mode='same', init='he_normal'))
-	model.add(Lambda(lambda x: K.clip(x, 0.0, 1.0)))
+	model.add(Activation('tanh'))
+	#model.add(Lambda(lambda x: K.clip(x, -1.0, 1.0)))
 	return model
 
 # DISCRIMINATOR
@@ -348,11 +352,11 @@ for i in range(7,len(cifar10_Classes)):
 	Y_uv = Y_uv.astype('float32')
 	Y_gray_test = Y_gray_test.astype('float32')
 	Y_uv_test = Y_uv_test.astype('float32')
-	# normalize inputs and outputs from 0-255 to 0.0-1.0
-	Y_gray /= 255
-	Y_uv /= 255
-	Y_gray_test /= 255
-	Y_uv_test /= 255
+	# normalize inputs and outputs from 0-255 to -1.0-1.0
+	Y_gray = Y_gray/255 - 128
+	Y_uv = Y_uv/255 - 128
+	Y_gray_test = Y_gray_test/255 - 128
+	Y_uv_test = Y_uv_test/255 - 128
 
 
 	# limits the number of images to nImages
@@ -388,7 +392,7 @@ for i in range(7,len(cifar10_Classes)):
 	discriminator_on_generator.compile(loss='binary_crossentropy',optimizer=adam, metrics=['accuracy'])
 	discriminator_on_generator.summary()
 	discriminator.trainable = True
-	discriminator.compile(loss='binary_crossentropy',optimizer=adam, metrics=['accuracy'])
+	discriminator.compile(loss='binary_crossentropy',optimizer=sgd, metrics=['accuracy'])
 	discriminator.summary()
 
 	# Initialize d_loss
@@ -417,7 +421,8 @@ for i in range(7,len(cifar10_Classes)):
 
 			# Creating inputs for train_on_batch
 			M = numpy.concatenate((image_batch,generated_images))
-			z = [1]*image_batch.shape[0]+[0]*generated_images.shape[0]
+#			z = [1]*image_batch.shape[0]+[0]*generated_images.shape[0]
+			z = numpy.random.uniform(0.0,0.3,size=image_batch.shape[0])+numpy.random.uniform(0.7,1.2,size=generated_images.shape[0])
 			# Shuffling M and z
 			perm = numpy.random.permutation(len(z))
 			M = M[perm]
