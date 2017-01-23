@@ -422,7 +422,7 @@ for i in range(7,len(cifar10_Classes)):
 			# Creating inputs for train_on_batch
 			M = numpy.concatenate((image_batch,generated_images))
 #			z = [1]*image_batch.shape[0]+[0]*generated_images.shape[0]
-			z =numpy.concatenate((numpy.random.uniform(0.0,0.3,size=image_batch.shape[0]),numpy.random.uniform(0.7,1.2,size=generated_images.shape[0])))
+			z =numpy.concatenate((numpy.random.uniform(0.7,1.2,size=image_batch.shape[0]),numpy.random.uniform(0,0.3,size=generated_images.shape[0])))
 			# Shuffling M and z
 			perm = numpy.random.permutation(len(z))
 			M = M[perm]
