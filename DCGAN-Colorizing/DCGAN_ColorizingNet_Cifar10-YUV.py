@@ -353,10 +353,10 @@ for i in range(7,len(cifar10_Classes)):
 	Y_gray_test = Y_gray_test.astype('float32')
 	Y_uv_test = Y_uv_test.astype('float32')
 	# normalize inputs and outputs from 0-255 to -1.0-1.0
-	Y_gray = (Y_gray - 128)/127
-	Y_uv = (Y_uv - 128)/127
-	Y_gray_test = (Y_gray_test - 128)/127
-	Y_uv_test = (Y_uv_test - 128)/127
+	Y_gray = (Y_gray - 128)/128
+	Y_uv = (Y_uv - 128)/128
+	Y_gray_test = (Y_gray_test - 128)/128
+	Y_uv_test = (Y_uv_test - 128)/128
 
 	# limits the number of images to nImages
 	G = Y_gray[:nImages]
