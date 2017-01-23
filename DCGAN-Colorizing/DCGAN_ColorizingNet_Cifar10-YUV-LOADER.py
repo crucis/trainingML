@@ -45,7 +45,7 @@ nImages = 40
 cifar10_Classes = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck','all'];
 
 # Model Options
-folder = "Test28"
+folder = "Test29"
 outDire = 'results/'+folder
 
 #d_predict_fake = 0

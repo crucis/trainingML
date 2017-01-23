@@ -1,4 +1,4 @@
-from keras.models import Sequential
+from keras.models import Sequential, Activation
 from keras.layers import Dense, Dropout, Flatten, Lambda
 from keras.layers.advanced_activations import LeakyReLU
 from keras.optimizers import Adam
