@@ -357,7 +357,7 @@ for i in range(7,len(cifar10_Classes)):
 	Y_uv = Y_uv/255 - 128
 	Y_gray_test = Y_gray_test/255 - 128
 	Y_uv_test = Y_uv_test/255 - 128
-
+	print("Y_gray.max",numpy.maximum(Y_gray),"Y_gray.min", numpy.minimum(Y_gray))
 
 	# limits the number of images to nImages
 	G = Y_gray[:nImages]
@@ -392,7 +392,7 @@ for i in range(7,len(cifar10_Classes)):
 	discriminator_on_generator.compile(loss='binary_crossentropy',optimizer=adam, metrics=['accuracy'])
 	discriminator_on_generator.summary()
 	discriminator.trainable = True
-	discriminator.compile(loss='binary_crossentropy',optimizer=adam, metrics=['accuracy'])
+	discriminator.compile(loss='binary_crossentropy',optimizer='sgd', metrics=['accuracy'])
 	discriminator.summary()
 
 	# Initialize d_loss
