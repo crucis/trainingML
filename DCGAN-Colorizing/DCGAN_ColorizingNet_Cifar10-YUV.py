@@ -392,7 +392,7 @@ for i in range(7,len(cifar10_Classes)):
 	discriminator_on_generator.compile(loss='binary_crossentropy',optimizer=adam, metrics=['accuracy'])
 	discriminator_on_generator.summary()
 	discriminator.trainable = True
-	discriminator.compile(loss='binary_crossentropy',optimizer=sgd, metrics=['accuracy'])
+	discriminator.compile(loss='binary_crossentropy',optimizer='sgd', metrics=['accuracy'])
 	discriminator.summary()
 
 	# Initialize d_loss

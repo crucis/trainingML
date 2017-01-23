@@ -158,9 +158,9 @@ class Logger(object):
 
 def save3images(inp,out,original,folder):
 	out = numpy.concatenate((inp, out), axis=1)
-	converterRGB(out,out*255)
+	converterRGB(out,out*255+128)
 	original = numpy.concatenate((inp,original),axis=1)
-	converterRGB(original,original*255)
+	converterRGB(original,original*255+128)
 
 	for i in range(original.shape[0]):
 		_,((ax1,ax2),(ax3,_)) = plt.subplots(2,2,sharey='row',sharex='col')
@@ -189,9 +189,9 @@ def save3images(inp,out,original,folder):
 def plotHistogram(grayImage,originalImage,fakeImage, nameClass,directory,folder=folder):
 	# Faz 3 histogramas, um para azul outro verde e outro vermelho
 	fakeImage = numpy.concatenate((grayImage, fakeImage), axis=1)
-	converterRGB(fakeImage,fakeImage*255)
+	converterRGB(fakeImage,fakeImage*255+128)
 	originalImage = numpy.concatenate((grayImage,originalImage),axis=1)
-	converterRGB(originalImage,originalImage*255)
+	converterRGB(originalImage,originalImage*255+128)
 
 	name = folder+'using'+nameClass
 	originalImage = originalImage.astype('uint8')
@@ -435,10 +435,11 @@ for i in range(10,len(cifar10_Classes)):
 	Y_gray_test = Y_gray_test.astype('float32')
 	Y_uv_test = Y_uv_test.astype('float32')
 	# normalize inputs and outputs from 0-255 to 0.0-1.0
-	Y_gray /= 255
-	Y_uv /= 255
-	Y_gray_test /= 255
-	Y_uv_test /= 255
+	# normalize inputs and outputs from 0-255 to -1.0-1.0
+	Y_gray = Y_gray/255 - 128
+	Y_uv = Y_uv/255 - 128
+	Y_gray_test = Y_gray_test/255 - 128
+	Y_uv_test = Y_uv_test/255 - 128
 	perm = numpy.random.permutation(Y_gray_test.shape[0])
 
 	Y_gray = Y_gray[perm]
